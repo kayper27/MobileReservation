@@ -85,8 +85,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         }
 
         @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
+        protected void publishResults(CharSequence constraint, FilterResults results) {
             mData = (List<String>) results.values;
             notifyDataSetChanged();
         }
