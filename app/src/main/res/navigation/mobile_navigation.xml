@@ -27,9 +27,4 @@
         android:name="com.example.mobilereservation.ui.facilities.Facility"
         android:label="facility_fragment"
         tools:layout="@layout/facility_fragment" />
-    <activity
-        android:id="@+id/infoListActivity"
-        android:name="com.example.mobilereservation.infoListActivity"
-        android:label="activity_info_list"
-        tools:layout="@layout/activity_info_list" />
 </navigation>
