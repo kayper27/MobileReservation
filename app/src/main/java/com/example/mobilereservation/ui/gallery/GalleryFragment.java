@@ -8,27 +8,39 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mobilereservation.CustomAdapter;
 import com.example.mobilereservation.DataModel;
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.SearchListAdapter;
 import com.google.android.material.snackbar.Snackbar;
+
+import com.example.mobilereservation.databinding.FragmentGalleryBinding;
 
 import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
-    ArrayList<DataModel> dataModels;
+    // Data Binding variables
+    FragmentGalleryBinding mBinding;
+    SearchListAdapter adapterList;
+
+
+    //Layout variables
+    ArrayList<DataModel> dataModels = new ArrayList<>();
+
     private static CustomAdapter adapter;
     private GalleryViewModel galleryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false);
+        View root = mBinding.getRoot();
         final ListView listView = root.findViewById(R.id.list);
-        dataModels= new ArrayList<>();
+
 
         dataModels.add(new DataModel("Apple Pie", "Android 1.0", "1","September 23, 2008"));
         dataModels.add(new DataModel("Banana Bread", "Android 1.1", "2","February 9, 2009"));
