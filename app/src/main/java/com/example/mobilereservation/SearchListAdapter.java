@@ -15,14 +15,14 @@ import com.example.mobilereservation.databinding.SearchRowItemBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAdapter extends BaseAdapter implements Filterable {
+public class SearchListAdapter extends BaseAdapter implements Filterable {
 
     List<String> mData;
     List<String> mStringFilterList;
     private ValueFilter valueFilter;
     private LayoutInflater inflater;
 
-    public ListAdapter(List<String> cancel_type) {
+    public SearchListAdapter(List<String> cancel_type) {
         mData=cancel_type;
         mStringFilterList = cancel_type;
     }
