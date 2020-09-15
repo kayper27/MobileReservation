@@ -13,16 +13,15 @@ import androidx.databinding.DataBindingUtil;
 import com.example.mobilereservation.databinding.SearchRowItemBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchListAdapter extends BaseAdapter implements Filterable {
 
-    List<String> mData;
-    List<String> mStringFilterList;
+    ArrayList<DataModel> mData;
+    ArrayList<DataModel> mStringFilterList;
     private ValueFilter valueFilter;
     private LayoutInflater inflater;
 
-    public SearchListAdapter(List<String> cancel_type) {
+    public SearchListAdapter(ArrayList<DataModel> cancel_type) {
         mData=cancel_type;
         mStringFilterList = cancel_type;
     }
@@ -36,7 +35,7 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
     @Override
     public String getItem(int position) {
         System.out.println("Test Item:S "+mData.get(position));
-        return mData.get(position);
+        return mData.get(position).toString();
     }
 
     @Override
@@ -76,9 +75,9 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
             FilterResults results = new FilterResults();
             System.out.println("Test Res:S "+results);
             if (constraint != null && constraint.length() > 0) {
-                List<String> filterList = new ArrayList<>();
+                ArrayList<DataModel> filterList = new ArrayList<>();
                 for (int i = 0; i < mStringFilterList.size(); i++) {
-                    if ((mStringFilterList.get(i).toUpperCase()).contains(constraint.toString().toUpperCase())) {
+                    if ((mStringFilterList.get(i).getName().toUpperCase()).contains(constraint.toString().toUpperCase())) {
                         filterList.add(mStringFilterList.get(i));
                     }
                 }
@@ -91,16 +90,14 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
             System.out.println("Test Res:Ctr:S "+results.count);
             System.out.println("Test Res:Val:S "+results.values);
             return results;
-
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mData = (List<String>) results.values;
+            mData = (ArrayList<DataModel>) results.values;
             System.out.println("Test Pul:S "+mData);
             notifyDataSetChanged();
         }
-
     }
 
 }
