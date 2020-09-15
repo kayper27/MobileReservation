@@ -4,42 +4,31 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.mobilereservation.CustomAdapter;
 import com.example.mobilereservation.DataModel;
-import com.example.mobilereservation.R;
+import com.example.mobilereservation.DisplaySearchAdapter;
 import com.example.mobilereservation.SearchListAdapter;
-import com.google.android.material.snackbar.Snackbar;
-
-import com.example.mobilereservation.databinding.FragmentGalleryBinding;
 
 import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
     // Data Binding variables
-    FragmentGalleryBinding mBinding;
     SearchListAdapter adapterList;
 
 
     //Layout variables
     ArrayList<DataModel> dataModels = new ArrayList<>();
 
-    private static CustomAdapter adapter;
+
     private GalleryViewModel galleryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false);
-        View root = mBinding.getRoot();
-        final ListView listView = root.findViewById(R.id.list);
 
 
         dataModels.add(new DataModel("Apple Pie", "Android 1.0", "1","September 23, 2008"));
@@ -56,19 +45,8 @@ public class GalleryFragment extends Fragment {
         dataModels.add(new DataModel("Lollipop","Android 5.0","21","November 12, 2014"));
         dataModels.add(new DataModel("Marshmallow", "Android 6.0", "23","October 5, 2015"));
 
-        adapter= new CustomAdapter(dataModels, getActivity().getApplicationContext() );
+        DisplaySearchAdapter root = new DisplaySearchAdapter(getActivity().getApplicationContext(), inflater, container, dataModels);
 
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                DataModel dataModel= dataModels.get(position);
-
-                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-            }
-        });
-        return root;
+        return root.setDisplay();
     }
 }
