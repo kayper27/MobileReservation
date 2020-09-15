@@ -54,7 +54,6 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
         SearchRowItemBinding rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.search_row_item, parent, false);
-        rowItemBinding.stringName.setText(String.valueOf(mData.get(position)));
 
         return rowItemBinding.getRoot();
     }
