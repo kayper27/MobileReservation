@@ -17,9 +17,10 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnClickListener{
 
-    private ArrayList<DataModel> dataSet;
-    Context mContext;
 
+    private ArrayList<DataModel> dataSet;
+    private Context mContext;
+    private int ctr;
     // View lookup cache
     private static class ViewHolder {
         TextView txtName;
@@ -28,8 +29,9 @@ public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnCli
         ImageView info;
     }
 
-    public CustomAdapter(ArrayList<DataModel> data, Context context) {
+    public CustomAdapter(ArrayList<DataModel> data, int ctr, Context context) {
         super(context, R.layout.row_item, data);
+        this.ctr = ctr;
         this.dataSet = data;
         this.mContext=context;
 
@@ -49,14 +51,17 @@ public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnCli
                         .setAction("No action", null).show();
                 break;
         }
+
     }
+
+
 
     private int lastPosition = -1;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        DataModel dataModel = getItem(position);
+        DataModel dataModel = getItem(ctr);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
@@ -80,15 +85,15 @@ public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnCli
             result=convertView;
         }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+        Animation animation = AnimationUtils.loadAnimation(mContext, (ctr > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         result.startAnimation(animation);
-        lastPosition = position;
+        lastPosition = ctr;
 
         viewHolder.txtName.setText(dataModel.getName());
         viewHolder.txtType.setText(dataModel.getType());
         viewHolder.txtVersion.setText(dataModel.getVersion_number());
         viewHolder.info.setOnClickListener(this);
-        viewHolder.info.setTag(position);
+        viewHolder.info.setTag(ctr);
         // Return the completed view to render on screen
         return convertView;
     }

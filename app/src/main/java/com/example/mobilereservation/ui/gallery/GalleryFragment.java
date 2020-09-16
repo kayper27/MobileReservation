@@ -4,32 +4,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mobilereservation.DataModel;
-import com.example.mobilereservation.DisplaySearchAdapter;
+import com.example.mobilereservation.R;
 import com.example.mobilereservation.SearchListAdapter;
+import com.example.mobilereservation.databinding.FragmentGalleryBinding;
 
 import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
-    // Data Binding variables
-    SearchListAdapter adapterList;
-
+    private FragmentGalleryBinding maindBinding;
+    private SearchListAdapter adapterSearch;
 
     //Layout variables
     ArrayList<DataModel> dataModels = new ArrayList<>();
 
-
-    private GalleryViewModel galleryViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
-
+        maindBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false);
 
         dataModels.add(new DataModel("Apple Pie", "Android 1.0", "1","September 23, 2008"));
         dataModels.add(new DataModel("Banana Bread", "Android 1.1", "2","February 9, 2009"));
@@ -45,8 +42,28 @@ public class GalleryFragment extends Fragment {
         dataModels.add(new DataModel("Lollipop","Android 5.0","21","November 12, 2014"));
         dataModels.add(new DataModel("Marshmallow", "Android 6.0", "23","October 5, 2015"));
 
-        DisplaySearchAdapter root = new DisplaySearchAdapter(getActivity().getApplicationContext(), inflater, container, dataModels);
+        adapterSearch = new SearchListAdapter(getActivity().getApplicationContext(), dataModels);
+        maindBinding.list.setAdapter(adapterSearch);
 
-        return root.setDisplay();
+        maindBinding.searchList.setActivated(true);
+        maindBinding.searchList.setQueryHint("Type your keyword here");
+        maindBinding.searchList.onActionViewExpanded();
+        maindBinding.searchList.setIconified(false);
+        maindBinding.searchList.clearFocus();
+
+        maindBinding.searchList.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("Test Here !");
+                adapterSearch.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return maindBinding.getRoot();
     }
 }
