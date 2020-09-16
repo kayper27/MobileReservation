@@ -29,28 +29,28 @@ public class ListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public int getCount() {
-        System.out.println("Test Ctr:L "+mData.size());
+        System.out.println("Test L Ctr:L "+mData.size());
         return mData.size();
     }
 
     @Override
     public String getItem(int position) {
-        System.out.println("Test Item:L "+mData.get(position));
+        System.out.println("Test L Item:L "+mData.get(position));
         return mData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        System.out.println("Test Pos:L "+position);
+        System.out.println("Test L Pos:L "+position);
         return position;
     }
 
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
-        System.out.println("Test Get:Pos:L "+position);
-        System.out.println("Test Get:CnV:L "+convertView);
-        System.out.println("Test Get:Par:L "+parent);
-        System.out.println("Test Get:Inf:L "+inflater);
+        System.out.println("Test L Get:Pos:L "+position);
+        System.out.println("Test L Get:CnV:L "+convertView);
+        System.out.println("Test L Get:Par:L "+parent);
+        System.out.println("Test L Get:Inf:L "+inflater);
         if (inflater == null) {
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -62,11 +62,11 @@ public class ListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Filter getFilter() {
-        System.out.println("Test Fil:L:1 "+valueFilter);
+        System.out.println("Test L Fil:L:1 "+valueFilter);
         if (valueFilter == null) {
             valueFilter = new ValueFilter();
         }
-        System.out.println("Test Fil:L:@ "+valueFilter);
+        System.out.println("Test L Fil:L:@ "+valueFilter);
         return valueFilter;
     }
 
@@ -74,7 +74,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
-            System.out.println("Test Res:L "+results);
+            System.out.println("Test L Res:L "+results);
             if (constraint != null && constraint.length() > 0) {
                 List<String> filterList = new ArrayList<>();
                 for (int i = 0; i < mStringFilterList.size(); i++) {
@@ -88,8 +88,8 @@ public class ListAdapter extends BaseAdapter implements Filterable {
                 results.count = mStringFilterList.size();
                 results.values = mStringFilterList;
             }
-            System.out.println("Test Res:Ctr:L "+results);
-            System.out.println("Test Res:Val:L "+results);
+            System.out.println("Test L Res:Ctr:L "+results);
+            System.out.println("Test L Res:Val:L "+results);
             return results;
 
         }
@@ -98,7 +98,7 @@ public class ListAdapter extends BaseAdapter implements Filterable {
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
             mData = (List<String>) results.values;
-            System.out.println("Test Pul:L "+mData);
+            System.out.println("Test L Pul:L "+mData);
             notifyDataSetChanged();
         }
 

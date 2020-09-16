@@ -47,9 +47,10 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
         System.out.println("Test Get:Pos:S "+position);
-        System.out.println("Test Get:CnV:S "+convertView);
         System.out.println("Test Get:Par:S "+parent);
         System.out.println("Test Get:Inf:S "+inflater);
+        System.out.println("Test HERE :)");
+
         if (inflater == null) {
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -71,6 +72,8 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
     private class ValueFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+
+            System.out.println("Test Res:S "+ context);
             FilterResults results = new FilterResults();
             System.out.println("Test Res:S "+results);
             if (constraint != null && constraint.length() > 0) {
