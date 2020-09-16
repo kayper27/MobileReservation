@@ -10,7 +10,7 @@ import android.widget.Filterable;
 
 import androidx.databinding.DataBindingUtil;
 
-import com.example.mobilereservation.databinding.SearchRowItemBinding;
+import com.example.mobilereservation.databinding.DebugRowItemBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,16 +47,17 @@ public class ListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
-        System.out.println("Test L Get:Pos:L "+position);
-        System.out.println("Test L Get:CnV:L "+convertView);
-        System.out.println("Test L Get:Par:L "+parent);
-        System.out.println("Test L Get:Inf:L "+inflater);
+        System.out.println("Test L 1 Get:Pos:L "+position);
+        System.out.println("Test L 1 Get:CnV:L "+convertView);
+        System.out.println("Test L 1 Get:Par:L "+parent);
+        System.out.println("Test L 1 Get:Inf:L "+inflater);
         if (inflater == null) {
+            System.out.println("Test NULL "+inflater);
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        SearchRowItemBinding rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.search_row_item, parent, false);
-//        rowItemBinding.stringName.setText(String.valueOf(mData.get(position)));
-
+        DebugRowItemBinding rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.debug_row_item, parent, false);
+        rowItemBinding.stringName.setText(String.valueOf(mData.get(position)));
+        System.out.println("Test L 1 PassValue Filter "+mData.get(position));
         return rowItemBinding.getRoot();
     }
 
@@ -88,8 +89,8 @@ public class ListAdapter extends BaseAdapter implements Filterable {
                 results.count = mStringFilterList.size();
                 results.values = mStringFilterList;
             }
-            System.out.println("Test L Res:Ctr:L "+results);
-            System.out.println("Test L Res:Val:L "+results);
+            System.out.println("Test L Res:Ctr:L "+results.count);
+            System.out.println("Test L Res:Val:L "+results.values);
             return results;
 
         }
