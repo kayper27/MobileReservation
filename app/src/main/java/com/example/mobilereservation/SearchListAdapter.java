@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import androidx.databinding.DataBindingUtil;
 
-import com.example.mobilereservation.databinding.FragmentGalleryBinding;
 import com.example.mobilereservation.databinding.SearchRowItemBinding;
 
 import java.util.ArrayList;
@@ -19,7 +18,8 @@ import java.util.ArrayList;
 public class SearchListAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
-    FragmentGalleryBinding maindBinding;
+    private SearchRowItemBinding rowItemBinding;
+    private ListView listView;
 
     ArrayList<DataModel> mData;
     ArrayList<DataModel> mStringFilterList;
@@ -62,12 +62,17 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
         System.out.println("Test HERE :)");
 
         if (inflater == null) {
+            System.out.println("Test NULL "+inflater);
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            adapter= new CustomAdapter(mData, position, parent.getContext().getApplicationContext());
         }
-        SearchRowItemBinding rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.search_row_item, parent, false);
-        ListView listView = rowItemBinding.getRoot().findViewById(R.id.saerchlist);
-        adapter= new CustomAdapter(mStringFilterList, position, parent.getContext().getApplicationContext());
-//        rowItemBinding.stringName.setText(String.valueOf(mData.get(position)));
+        else{
+            System.out.println("Test NULL ! "+inflater);
+            adapter= new CustomAdapter(mStringFilterList, position, parent.getContext().getApplicationContext());
+        }
+        rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.search_row_item, parent, false);
+        listView = rowItemBinding.getRoot().findViewById(R.id.saerchlist);
+
         listView.setAdapter(adapter);
         return rowItemBinding.getRoot();
     }
