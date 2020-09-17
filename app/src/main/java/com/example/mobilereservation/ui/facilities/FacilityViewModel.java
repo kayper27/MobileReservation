@@ -1,8 +1,6 @@
 package com.example.mobilereservation.ui.facilities;
 
-import androidx.lifecycle.ViewModel;
-
-public class FacilityViewModel extends ViewModel {
+public class FacilityViewModel {
 
     private String facility_id;
     private String type;

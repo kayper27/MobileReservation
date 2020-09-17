@@ -34,7 +34,6 @@ public class CustomAdapter extends ArrayAdapter<DataModel> implements View.OnCli
         this.ctr = ctr;
         this.dataSet = data;
         this.mContext=context;
-
     }
 
     @Override
