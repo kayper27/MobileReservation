@@ -11,7 +11,6 @@ public class DataModel {
         this.type=type;
         this.version_number=version_number;
         this.feature=feature;
-
     }
 
     public String getName() {
@@ -29,5 +28,4 @@ public class DataModel {
     public String getFeature() {
         return feature;
     }
-
 }
