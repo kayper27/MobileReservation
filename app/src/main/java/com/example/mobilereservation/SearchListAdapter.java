@@ -64,12 +64,9 @@ public class SearchListAdapter extends BaseAdapter implements Filterable {
         if (inflater == null) {
             System.out.println("Test NULL "+inflater);
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            adapter= new CustomAdapter(mData, position, parent.getContext().getApplicationContext());
         }
-        else{
-            System.out.println("Test NULL ! "+inflater);
-            adapter= new CustomAdapter(mStringFilterList, position, parent.getContext().getApplicationContext());
-        }
+
+        adapter= new CustomAdapter(mData, position, parent.getContext().getApplicationContext());
         rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.search_row_item, parent, false);
         listView = rowItemBinding.getRoot().findViewById(R.id.saerchlist);
 
