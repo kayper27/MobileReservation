@@ -22,18 +22,18 @@ public class Facility extends Fragment {
     private FacilityFragmentBinding facilityBinding;
     private FacilitySearchAdapter adapterSearch;
 
-    ArrayList<FacilityViewModel> facilityModel = new ArrayList<>();
+    ArrayList<FacilityModel> facilityModel = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         facilityBinding =  DataBindingUtil.inflate(inflater, R.layout.facility_fragment, container, false);
 
-        facilityModel.add(new FacilityViewModel("R00","Facility","Available", "This is data is hard coded 0"));
-        facilityModel.add(new FacilityViewModel("R01","Facility","Available", "This is data is hard coded 1"));
-        facilityModel.add(new FacilityViewModel("R02","Facility","Available", "This is data is hard coded 2"));
-        facilityModel.add(new FacilityViewModel("R03","Facility","Available", "This is data is hard coded 3"));
-        facilityModel.add(new FacilityViewModel("R04","Facility","Available", "This is data is hard coded 4"));
-        facilityModel.add(new FacilityViewModel("R05","Facility","Available", "This is data is hard coded 5"));
+        facilityModel.add(new FacilityModel("R00","Facility","Available", "This is data is hard coded 0"));
+        facilityModel.add(new FacilityModel("R01","Facility","Available", "This is data is hard coded 1"));
+        facilityModel.add(new FacilityModel("R02","Facility","Available", "This is data is hard coded 2"));
+        facilityModel.add(new FacilityModel("R03","Facility","Available", "This is data is hard coded 3"));
+        facilityModel.add(new FacilityModel("R04","Facility","Available", "This is data is hard coded 4"));
+        facilityModel.add(new FacilityModel("R05","Facility","Available", "This is data is hard coded 5"));
 
         adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), facilityModel);
         facilityBinding.facilityList.setAdapter(adapterSearch);

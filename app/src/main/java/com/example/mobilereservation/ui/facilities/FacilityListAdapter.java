@@ -15,9 +15,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class FacilityListAdapter extends ArrayAdapter<FacilityViewModel> implements View.OnClickListener {
+public class FacilityListAdapter extends ArrayAdapter<FacilityModel> implements View.OnClickListener {
 
-    private ArrayList<FacilityViewModel> facilityDataSet;
+    private ArrayList<FacilityModel> facilityDataSet;
     private Context Context;
     private int ctr;
     private int lastPosition = -1;
@@ -28,7 +28,7 @@ public class FacilityListAdapter extends ArrayAdapter<FacilityViewModel> impleme
         ImageView facility_info;
     }
 
-    public FacilityListAdapter(ArrayList<FacilityViewModel> data, int ctr, Context context) {
+    public FacilityListAdapter(ArrayList<FacilityModel> data, int ctr, Context context) {
         super(context, R.layout.facility_row_item, data);
         this.ctr = ctr;
         this.facilityDataSet = data;
@@ -39,7 +39,7 @@ public class FacilityListAdapter extends ArrayAdapter<FacilityViewModel> impleme
     public void onClick(View v) {
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        FacilityViewModel facilityDataModel=(FacilityViewModel)object;
+        FacilityModel facilityDataModel=(FacilityModel)object;
         switch (v.getId())
         {
             case R.id.facility_info:
@@ -51,7 +51,7 @@ public class FacilityListAdapter extends ArrayAdapter<FacilityViewModel> impleme
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        FacilityViewModel facilityDataModel = getItem(ctr);
+        FacilityModel facilityDataModel = getItem(ctr);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 

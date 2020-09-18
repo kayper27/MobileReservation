@@ -1,6 +1,6 @@
 package com.example.mobilereservation.ui.facilities;
 
-public class FacilityViewModel {
+public class FacilityModel {
 
     private String facility_id;
     private String type;
@@ -8,7 +8,7 @@ public class FacilityViewModel {
     private String description;
 
 
-    public FacilityViewModel(String facility_id, String type, String status, String description) {
+    public FacilityModel(String facility_id, String type, String status, String description) {
         this.facility_id = facility_id;
         this.type = type;
         this.status = status;

@@ -22,12 +22,12 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
     private FacilitySearchListBinding facilityRowBinding;
     private FacilityListAdapter adapter;
 
-    private ArrayList<FacilityViewModel> fStringFilterList;
-    private ArrayList<FacilityViewModel> fData;
+    private ArrayList<FacilityModel> fStringFilterList;
+    private ArrayList<FacilityModel> fData;
     private ValueFilter valueFilter;
     private LayoutInflater inflater;
 
-    public FacilitySearchAdapter(Context context, ArrayList<FacilityViewModel> cancel_type) {
+    public FacilitySearchAdapter(Context context, ArrayList<FacilityModel> cancel_type) {
         this.context = context;
         fData = cancel_type;
         fStringFilterList = cancel_type;
@@ -73,7 +73,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint != null && constraint.length() > 0) {
-                ArrayList<FacilityViewModel> filterList = new ArrayList<>();
+                ArrayList<FacilityModel> filterList = new ArrayList<>();
                 for (int i = 0; i < fStringFilterList.size(); i++) {
                     if ((fStringFilterList.get(i).getFacility_id().toUpperCase()).contains(constraint.toString().toUpperCase())) {
                         filterList.add(fStringFilterList.get(i));
@@ -90,7 +90,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            fData = (ArrayList<FacilityViewModel>) results.values;
+            fData = (ArrayList<FacilityModel>) results.values;
             notifyDataSetChanged();
         }
     }
