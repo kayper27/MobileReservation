@@ -16,7 +16,7 @@ import com.example.mobilereservation.databinding.FacilityFragmentBinding;
 
 import java.util.ArrayList;
 
-public class Facility extends Fragment {
+public class FacilityFragment extends Fragment {
 
     private static final String URL = "http://192.168.85.194:3000/";
     private FacilityFragmentBinding facilityBinding;
