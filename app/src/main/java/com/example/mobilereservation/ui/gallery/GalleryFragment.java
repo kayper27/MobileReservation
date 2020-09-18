@@ -31,11 +31,12 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        maindBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        expandableListView = root.findViewById(R.id.expandableListView);
+        expandableListView = root.findViewById(R.id.debugexpandableListView);
         expandableListDetail = ExpandableListDataPump.getData();
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new CustomExpandableListAdapter(getActivity().getApplicationContext(), expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
+
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {

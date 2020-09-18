@@ -5,7 +5,7 @@
     tools:context=".ui.gallery.GalleryFragment">
 
     <ExpandableListView
-        android:id="@+id/expandableListView"
+        android:id="@+id/debugexpandableListView"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
