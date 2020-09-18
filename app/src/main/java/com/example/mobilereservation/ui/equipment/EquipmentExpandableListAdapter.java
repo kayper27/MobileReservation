@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mobilereservation.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,15 +40,15 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int listPosition, final int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
+        ArrayList<EquipmentModel> expandedListText = (ArrayList<EquipmentModel>) getChild(listPosition, expandedListPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
-//        adapter = new EquipmentListAdapter( expandableListDetail , expandedListPosition, parent.getContext().getApplicationContext());
-//        ListView expandedListTextView = (ListView) convertView.findViewById(R.id.equipment_list);
-//        expandedListTextView.setAdapter(adapter);
-        return null;
+        adapter = new EquipmentListAdapter( expandedListText , expandedListPosition, parent.getContext().getApplicationContext());
+        ListView expandedListTextView = (ListView) convertView.findViewById(R.id.equipment_list);
+        expandedListTextView.setAdapter(adapter);
+        return convertView;
     }
 
     @Override
