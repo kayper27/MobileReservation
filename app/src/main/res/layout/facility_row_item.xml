@@ -23,6 +23,7 @@
         android:layout_below="@+id/facility_id"
         android:layout_marginTop="5dp"
         android:text="Available"
+        android:textStyle="bold"
         android:textColor="@android:color/black" />
 
     <ImageView
