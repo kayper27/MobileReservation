@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.mobilereservation.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition)).get(expandedListPosition);
+        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition));
     }
 
     @Override
@@ -40,12 +39,12 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int listPosition, final int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ArrayList<EquipmentModel> expandedListText = (ArrayList<EquipmentModel>) getChild(listPosition, expandedListPosition);
+
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
-        adapter = new EquipmentListAdapter( expandedListText , expandedListPosition, parent.getContext().getApplicationContext());
+        adapter = new EquipmentListAdapter( this.expandableListDetail.get(this.expandableListTitle.get(listPosition)) , expandedListPosition, context);
         ListView expandedListTextView = (ListView) convertView.findViewById(R.id.equipment_list);
         expandedListTextView.setAdapter(adapter);
         return convertView;
@@ -73,6 +72,7 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int listPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+
         String listTitle = (String) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

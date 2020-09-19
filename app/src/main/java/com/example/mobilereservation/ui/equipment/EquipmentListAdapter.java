@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,12 +11,12 @@ import android.widget.TextView;
 import com.example.mobilereservation.R;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implements View.OnClickListener {
 
-    private ArrayList<EquipmentModel> equipmentDataSet;
-    private Context Context;
+    private List<EquipmentModel> equipmentDataSet;
+    private Context context;
     private int ctr;
     private int lastPosition = -1;
 
@@ -28,11 +26,11 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
         ImageView equipment_info;
     }
 
-    public EquipmentListAdapter(ArrayList<EquipmentModel> data, int ctr, Context context) {
+    public EquipmentListAdapter(List<EquipmentModel> data, int ctr, Context context) {
         super(context, R.layout.equipment_row_item, data);
         this.ctr = ctr;
         this.equipmentDataSet = data;
-        this.Context = context;
+        this.context = context;
     }
 
     @Override
@@ -42,7 +40,7 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
         EquipmentModel equipmentDataModel = (EquipmentModel)object;
         switch (v.getId())
         {
-            case R.id.facility_info:
+            case R.id.equipment_info:
                 Snackbar.make(v, "Type: " +equipmentDataModel.getType()+
                         "\nBrand: "+equipmentDataModel.getBrand() +
                         "\nModel No: "+ equipmentDataModel.getModel_no() +
@@ -64,7 +62,7 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.facility_row_item, parent, false);
+            convertView = inflater.inflate(R.layout.equipment_row_item, parent, false);
             viewHolder.equipment_id = (TextView) convertView.findViewById(R.id.equipment_id);
             viewHolder.equipment_status = (TextView) convertView.findViewById(R.id.equipment_status);
             viewHolder.equipment_info = (ImageView) convertView.findViewById(R.id.equipment_info);
@@ -76,8 +74,6 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
-        Animation animation = AnimationUtils.loadAnimation(Context, (ctr > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-        result.startAnimation(animation);
         lastPosition = ctr;
 
         viewHolder.equipment_id.setText(equipmentDataSet.getEquipment_id());
