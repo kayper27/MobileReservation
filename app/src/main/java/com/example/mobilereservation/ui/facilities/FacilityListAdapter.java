@@ -10,17 +10,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.example.mobilereservation.R;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 public class FacilityListAdapter extends ArrayAdapter<FacilityModel> implements View.OnClickListener {
 
     private ArrayList<FacilityModel> facilityDataSet;
+
+    private FragmentManager fragmentManager;
     private Context Context;
+
     private int ctr;
     private int lastPosition = -1;
+
     // View lookup cache
     private static class ViewHolder {
         TextView facility_id;
@@ -28,22 +33,26 @@ public class FacilityListAdapter extends ArrayAdapter<FacilityModel> implements 
         ImageView facility_info;
     }
 
-    public FacilityListAdapter(ArrayList<FacilityModel> data, int ctr, Context context) {
+    public FacilityListAdapter(ArrayList<FacilityModel> data, int ctr, Context context, FragmentManager fragmentManager) {
         super(context, R.layout.facility_row_item, data);
         this.ctr = ctr;
         this.facilityDataSet = data;
         this.Context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
     public void onClick(View v) {
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        FacilityModel facilityDataModel=(FacilityModel)object;
+        FacilityModel facilityDataModel = (FacilityModel)object;
         switch (v.getId())
         {
             case R.id.facility_info:
-                Snackbar.make(v, "Type: " +facilityDataModel.getType()+ "\nDecription: " +facilityDataModel.getDescription(), Snackbar.LENGTH_LONG).setAction("No action", null).show();
+                String details = "Status: " + facilityDataModel.getStatus() +
+                                "\nDecription: " +facilityDataModel.getDescription();
+                FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facilityDataModel.getFacility_id().toUpperCase(), details);
+                facilityDialogFragment.show(fragmentManager, "facility_details");
                 break;
         }
     }

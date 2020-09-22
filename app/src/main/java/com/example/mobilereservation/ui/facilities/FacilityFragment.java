@@ -35,11 +35,11 @@ public class FacilityFragment extends Fragment {
         facilityModel.add(new FacilityModel("R04","Facility","Available", "This is data is hard coded 4"));
         facilityModel.add(new FacilityModel("R05","Facility","Available", "This is data is hard coded 5"));
 
-        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), facilityModel);
+        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilityModel);
         facilityBinding.facilityList.setAdapter(adapterSearch);
 
         facilityBinding.facilitySearch.setActivated(true);
-        facilityBinding.facilitySearch.setQueryHint("Ex. R100");
+        facilityBinding.facilitySearch.setQueryHint("Search Facility");
         facilityBinding.facilitySearch.onActionViewExpanded();
         facilityBinding.facilitySearch.setIconified(false);
         facilityBinding.facilitySearch.clearFocus();
