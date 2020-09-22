@@ -9,6 +9,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.example.mobilereservation.R;
 
 import java.util.HashMap;
@@ -17,12 +19,16 @@ import java.util.List;
 public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
 
     private EquipmentListAdapter adapter;
+
+    private FragmentManager fragmentManager;
     private Context context;
+
     private List<String> expandableListTitle;
     private HashMap<String, List<EquipmentModel>> expandableListDetail;
 
-    public EquipmentExpandableListAdapter(Context context, List<String> expandableListTitle, HashMap<String, List<EquipmentModel>> expandableListDetail) {
+    public EquipmentExpandableListAdapter(Context context, FragmentManager fragmentManager, List<String> expandableListTitle, HashMap<String, List<EquipmentModel>> expandableListDetail) {
         this.context = context;
+        this.fragmentManager = fragmentManager;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
     }
@@ -44,7 +50,7 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
-        adapter = new EquipmentListAdapter( this.expandableListDetail.get(this.expandableListTitle.get(listPosition)) , expandedListPosition, context);
+        adapter = new EquipmentListAdapter( this.expandableListDetail.get(this.expandableListTitle.get(listPosition)) , expandedListPosition, context, fragmentManager);
         ListView expandedListTextView = (ListView) convertView.findViewById(R.id.equipment_list);
         expandedListTextView.setAdapter(adapter);
         return convertView;

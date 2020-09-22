@@ -24,11 +24,11 @@ public class EquipmentExpandableListDataPump {
         computer.add(new EquipmentModel("computer4","Equipment", "Available", "MSI", "x0000", "Projector", "This is computer data hard data 4"));
 
         ArrayList<EquipmentModel> mouse = new ArrayList<>();
-        mouse.add(new EquipmentModel("mouse0","Equipment", "Available", "Logitech", "x0000", "Projector", "This is projector data hard data 0"));
-        mouse.add(new EquipmentModel("mouse1","Equipment", "Available", "Logitech", "x0000", "Projector", "This is projector data hard data 1"));
-        mouse.add(new EquipmentModel("mouse2","Equipment", "Available", "Logitech", "x0000", "Projector", "This is projector data hard data 2"));
-        mouse.add(new EquipmentModel("mouse3","Equipment", "Available", "Logitech", "x0000", "Projector", "This is projector data hard data 3"));
-        mouse.add(new EquipmentModel("mouse4","Equipment", "Available", "Logitech", "x0000", "Projector", "This is projector data hard data 4"));
+        mouse.add(new EquipmentModel("mouse0","Equipment", "Available", "Logitech", "x0000", "Projector", "This is mouse data hard data 0"));
+        mouse.add(new EquipmentModel("mouse1","Equipment", "Available", "Logitech", "x0000", "Projector", "This is mouse data hard data 1"));
+        mouse.add(new EquipmentModel("mouse2","Equipment", "Available", "Logitech", "x0000", "Projector", "This is mouse data hard data 2"));
+        mouse.add(new EquipmentModel("mouse3","Equipment", "Available", "Logitech", "x0000", "Projector", "This is mouse data hard data 3"));
+        mouse.add(new EquipmentModel("mouse4","Equipment", "Available", "Logitech", "x0000", "Projector", "This is mouse data hard data 4"));
 
         expandableListDetail.put("PROJECTORS", projector);
         expandableListDetail.put("COMPUTERS", computer);

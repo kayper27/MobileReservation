@@ -8,17 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.example.mobilereservation.R;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implements View.OnClickListener {
 
+    private FragmentManager fragmentManager;
     private List<EquipmentModel> equipmentDataSet;
-    private Context context;
     private int ctr;
-    private int lastPosition = -1;
 
     private static class ViewHolder {
         TextView equipment_id;
@@ -26,11 +26,11 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
         ImageView equipment_info;
     }
 
-    public EquipmentListAdapter(List<EquipmentModel> data, int ctr, Context context) {
+    public EquipmentListAdapter(List<EquipmentModel> data, int ctr, Context context,  FragmentManager fragmentManager) {
         super(context, R.layout.equipment_row_item, data);
         this.ctr = ctr;
         this.equipmentDataSet = data;
-        this.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -41,10 +41,13 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
         switch (v.getId())
         {
             case R.id.equipment_info:
-                Snackbar.make(v, "Type: " +equipmentDataModel.getType()+
-                        "\nBrand: "+equipmentDataModel.getBrand() +
-                        "\nModel No: "+ equipmentDataModel.getModel_no() +
-                        "\nDecription: " +equipmentDataModel.getDescription(), Snackbar.LENGTH_LONG).setAction("No action", null).show();
+                String details = "Status: " + equipmentDataModel.getStatus() +
+                                "\nType: " + equipmentDataModel.getType() +
+                                "\nBrand: "+ equipmentDataModel.getBrand() +
+                                "\nModel No: "+ equipmentDataModel.getModel_no() +
+                                "\nDecription: " +equipmentDataModel.getDescription();
+                EquipmentDialogFragment equipmentDialogFragment = EquipmentDialogFragment.newInstance(equipmentDataModel.getEquipment_id().toUpperCase(), details);
+                equipmentDialogFragment.show(fragmentManager, "equipment_details");
                 break;
         }
     }
@@ -74,7 +77,6 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
-        lastPosition = ctr;
 
         viewHolder.equipment_id.setText(equipmentDataSet.getEquipment_id());
         viewHolder.equipment_status.setText(equipmentDataSet.getStatus());

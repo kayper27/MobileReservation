@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +23,6 @@ public class EquipmentFragment extends Fragment {
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<EquipmentModel>> expandableListDetail;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_equipment, container, false);
@@ -32,7 +30,7 @@ public class EquipmentFragment extends Fragment {
         expandableListView = root.findViewById(R.id.expandableListView);
         expandableListDetail = EquipmentExpandableListDataPump.getData();
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), expandableListTitle, expandableListDetail);
+        expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
