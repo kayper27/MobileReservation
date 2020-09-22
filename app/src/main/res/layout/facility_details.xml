@@ -1,0 +1,19 @@
+<!-- fragment_edit_name.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/facility_details"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_gravity="center" android:orientation="vertical"  >
+
+    <TextView
+        android:id="@+id/facility_title"
+        android:layout_width="201dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="Facility Title"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/facility_detail"
+        android:layout_width="201dp"
+        android:layout_height="295dp"
+        android:text="Facility Information"/>
+</LinearLayout>

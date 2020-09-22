@@ -10,6 +10,7 @@ import android.widget.Filterable;
 import android.widget.ListView;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FacilitySearchListBinding;
@@ -18,16 +19,18 @@ import java.util.ArrayList;
 
 public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
 
+    private FragmentManager fragmentManager;
     private Context context;
+
     private FacilitySearchListBinding facilityRowBinding;
     private FacilityListAdapter adapter;
-
     private ArrayList<FacilityModel> fStringFilterList;
     private ArrayList<FacilityModel> fData;
     private ValueFilter valueFilter;
     private LayoutInflater inflater;
 
-    public FacilitySearchAdapter(Context context, ArrayList<FacilityModel> cancel_type) {
+    public FacilitySearchAdapter(Context context, FragmentManager fragmentManager, ArrayList<FacilityModel> cancel_type) {
+        this.fragmentManager = fragmentManager;
         this.context = context;
         fData = cancel_type;
         fStringFilterList = cancel_type;
@@ -53,7 +56,8 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
         if (inflater == null) {
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        adapter = new FacilityListAdapter(fData, position, parent.getContext().getApplicationContext());
+
+        adapter = new FacilityListAdapter(fData, position, parent.getContext().getApplicationContext(), fragmentManager) ;
         facilityRowBinding = DataBindingUtil.inflate(inflater, R.layout.facility_search_list, parent, false);
         ListView listView = facilityRowBinding.getRoot().findViewById(R.id.facility_search_List);
         listView.setAdapter(adapter);

@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.equipment;
+package com.example.mobilereservation.ui.facilities;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,17 +11,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.mobilereservation.R;
 
-public class EquipmentDialogFragment extends DialogFragment {
-    private TextView titleView, detailView;
+public class FacilityDialogFragment extends DialogFragment {
 
-    public EquipmentDialogFragment() {
+    public FacilityDialogFragment() {
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
         // Use `newInstance` instead as shown below
     }
-
-    public static EquipmentDialogFragment newInstance(String title, String details) {
-        EquipmentDialogFragment frag = new EquipmentDialogFragment();
+    public static FacilityDialogFragment newInstance(String title, String details) {
+        FacilityDialogFragment frag = new FacilityDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putString("details", details);
@@ -31,15 +29,15 @@ public class EquipmentDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.equipment_details, container);
+        return inflater.inflate(R.layout.facility_details, container);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
-        titleView = (TextView) view.findViewById(R.id.facility_title);
-        detailView = (TextView) view.findViewById(R.id.facility_detail);
+        TextView titleView = (TextView) view.findViewById(R.id.facility_title);
+        TextView detailView = (TextView) view.findViewById(R.id.facility_detail);
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title");
         String details = getArguments().getString("details");
