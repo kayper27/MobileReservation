@@ -27,7 +27,7 @@ public class EquipmentFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_equipment, container, false);
 
-        expandableListView = root.findViewById(R.id.expandableListView);
+        expandableListView = root.findViewById(R.id.equipmentExpandableListView);
         expandableListDetail = EquipmentExpandableListDataPump.getData();
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);

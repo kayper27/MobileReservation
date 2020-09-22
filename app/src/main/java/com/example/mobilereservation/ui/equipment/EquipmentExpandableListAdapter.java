@@ -51,7 +51,7 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
         adapter = new EquipmentListAdapter( this.expandableListDetail.get(this.expandableListTitle.get(listPosition)) , expandedListPosition, context, fragmentManager);
-        ListView expandedListTextView = (ListView) convertView.findViewById(R.id.equipment_list);
+        ListView expandedListTextView = (ListView) convertView.findViewById(R.id.expandedListItem);
         expandedListTextView.setAdapter(adapter);
         return convertView;
     }
@@ -78,7 +78,6 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int listPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
         String listTitle = (String) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
