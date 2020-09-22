@@ -44,9 +44,9 @@ public class RequestListAdapter extends ArrayAdapter<RequestModel> implements Vi
         {
             case R.id.request_info:
                 String details = "Status: " +requestDataModel.getStatus() +
-                                "\nnusername: " +requestDataModel.getUsername() +
-                                "\nStart: " +requestDataModel.getStartAt() +
-                                "\nEnd:  " +requestDataModel.getEndAt() +
+                                "\nUsername: " +requestDataModel.getUsername() +
+                                "\nStart:\n" +requestDataModel.getStartAt() +
+                                "\nEnd:\n" +requestDataModel.getEndAt() +
                                 "\nFacility: " +requestDataModel.getFacility() +
                                 "\nEqupment/s:  " +requestDataModel.getEquipments()[0];
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
@@ -83,10 +83,10 @@ public class RequestListAdapter extends ArrayAdapter<RequestModel> implements Vi
             result=convertView;
         }
 
-        viewHolder.request_id.setText(requestDataSet.getRequest_id());
+        viewHolder.request_id.setText("ID: "+requestDataSet.getRequest_id());
         viewHolder.request_status.setText(requestDataSet.getStatus());
-        viewHolder.request_endAt.setText(requestDataSet.getEndAt());
-        viewHolder.request_startAt.setText(requestDataSet.getStartAt());
+        viewHolder.request_startAt.setText("Start: "+requestDataSet.getStartAt());
+        viewHolder.request_endAt.setText("End: "+requestDataSet.getEndAt());
         viewHolder.request_info.setOnClickListener(this);
         viewHolder.request_info.setTag(ctr);
         // Return the completed view to render on screen

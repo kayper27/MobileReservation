@@ -7,16 +7,16 @@
     <fragment
         android:id="@+id/nav_facility"
         android:name="com.example.mobilereservation.ui.facilities.FacilityFragment"
-        android:label="facility_fragment"
+        android:label="Facilities"
         tools:layout="@layout/fragment_facility" />
     <fragment
         android:id="@+id/nav_equipment"
         android:name="com.example.mobilereservation.ui.equipment.EquipmentFragment"
-        android:label="fragment_equipment"
+        android:label="Equipments"
         tools:layout="@layout/fragment_equipment" />
     <fragment
         android:id="@+id/nav_request"
         android:name="com.example.mobilereservation.ui.request.ReqeuestFragment"
-        android:label="fragment_equipment"
+        android:label="Requests"
         tools:layout="@layout/fragment_reqeuest" />
 </navigation>

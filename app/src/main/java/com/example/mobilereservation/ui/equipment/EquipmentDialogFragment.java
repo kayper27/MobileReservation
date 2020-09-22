@@ -38,8 +38,8 @@ public class EquipmentDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
-        titleView = (TextView) view.findViewById(R.id.facility_title);
-        detailView = (TextView) view.findViewById(R.id.facility_detail);
+        titleView = (TextView) view.findViewById(R.id.equipment_title);
+        detailView = (TextView) view.findViewById(R.id.equipment_detail);
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title");
         String details = getArguments().getString("details");
