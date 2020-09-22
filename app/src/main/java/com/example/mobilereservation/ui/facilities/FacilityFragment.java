@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class FacilityFragment extends Fragment {
 
-    private static final String URL = "http://192.168.85.194:3000/";
     private FragmentFacilityBinding facilityBinding;
     private FacilitySearchAdapter adapterSearch;
 
