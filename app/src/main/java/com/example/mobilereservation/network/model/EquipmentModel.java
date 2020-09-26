@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.model;
+package com.example.mobilereservation.network.model;
 
 public class EquipmentModel {
     private String equipment_id;

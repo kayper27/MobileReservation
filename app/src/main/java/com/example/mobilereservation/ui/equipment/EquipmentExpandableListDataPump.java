@@ -1,6 +1,6 @@
 package com.example.mobilereservation.ui.equipment;
 
-import com.example.mobilereservation.ui.model.EquipmentModel;
+import com.example.mobilereservation.network.model.EquipmentModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

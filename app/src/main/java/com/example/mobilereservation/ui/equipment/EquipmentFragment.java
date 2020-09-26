@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.ui.model.EquipmentModel;
+import com.example.mobilereservation.network.model.EquipmentModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

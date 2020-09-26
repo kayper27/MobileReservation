@@ -10,7 +10,7 @@ import android.widget.ExpandableListView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.ui.model.RequestModel;
+import com.example.mobilereservation.network.model.RequestModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

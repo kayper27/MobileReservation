@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.ui.equipment.EquipmentDialogFragment;
-import com.example.mobilereservation.ui.model.EquipmentModel;
+import com.example.mobilereservation.network.model.EquipmentModel;
 
 import java.util.List;
 

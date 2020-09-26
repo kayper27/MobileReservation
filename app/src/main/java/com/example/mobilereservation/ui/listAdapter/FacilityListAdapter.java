@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.ui.facilities.FacilityDialogFragment;
-import com.example.mobilereservation.ui.model.FacilityModel;
+import com.example.mobilereservation.network.model.FacilityModel;
 
 import java.util.ArrayList;
 
