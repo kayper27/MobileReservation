@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.facilities;
+package com.example.mobilereservation.ui.model;
 
 public class FacilityModel {
 

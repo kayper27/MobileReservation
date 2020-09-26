@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
+import com.example.mobilereservation.ui.model.FacilityModel;
 
 import java.util.ArrayList;
 

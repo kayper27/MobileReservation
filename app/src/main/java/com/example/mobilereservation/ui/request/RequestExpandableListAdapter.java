@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.ui.listAdapter.RequestListAdapter;
+import com.example.mobilereservation.ui.model.RequestModel;
 
 import java.util.HashMap;
 import java.util.List;

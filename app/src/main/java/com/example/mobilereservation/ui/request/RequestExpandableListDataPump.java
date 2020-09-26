@@ -1,5 +1,7 @@
 package com.example.mobilereservation.ui.request;
 
+import com.example.mobilereservation.ui.model.RequestModel;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.request;
+package com.example.mobilereservation.ui.model;
 
 public class RequestModel {
 

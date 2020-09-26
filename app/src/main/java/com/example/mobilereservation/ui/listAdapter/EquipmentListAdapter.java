@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.equipment;
+package com.example.mobilereservation.ui.listAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.ui.equipment.EquipmentDialogFragment;
+import com.example.mobilereservation.ui.model.EquipmentModel;
 
 import java.util.List;
 
