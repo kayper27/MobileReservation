@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.ui.listAdapter.RequestListAdapter;
-import com.example.mobilereservation.network.model.RequestModel;
+import com.example.mobilereservation.network.model.Request;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +26,9 @@ public class RequestExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
 
     private List<String> expandableListTitle;
-    private HashMap<String, List<RequestModel>> expandableListDetail;
+    private HashMap<String, List<Request>> expandableListDetail;
 
-    public RequestExpandableListAdapter(Context context, FragmentManager fragmentManager, List<String> expandableListTitle, HashMap<String, List<RequestModel>> expandableListDetail) {
+    public RequestExpandableListAdapter(Context context, FragmentManager fragmentManager, List<String> expandableListTitle, HashMap<String, List<Request>> expandableListDetail) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.expandableListTitle = expandableListTitle;

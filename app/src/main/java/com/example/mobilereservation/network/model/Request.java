@@ -1,6 +1,6 @@
 package com.example.mobilereservation.network.model;
 
-public class RequestModel {
+public class Request {
 
     private String request_id;
     private String status;
@@ -11,7 +11,7 @@ public class RequestModel {
     private String[] equipments = new String[5];
     private String[] equipmentStatus = new String[5];
 
-    public RequestModel(String request_id, String status, String username, String startAt, String endAt, String facility, String[] equipments) {
+    public Request(String request_id, String status, String username, String startAt, String endAt, String facility, String[] equipments) {
         this.request_id = request_id;
         this.status = status;
         this.username = username;

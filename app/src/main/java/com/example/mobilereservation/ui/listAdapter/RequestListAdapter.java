@@ -12,14 +12,14 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.ui.request.RequestDialogFragment;
-import com.example.mobilereservation.network.model.RequestModel;
+import com.example.mobilereservation.network.model.Request;
 
 import java.util.List;
 
-public class RequestListAdapter extends ArrayAdapter<RequestModel> implements View.OnClickListener{
+public class RequestListAdapter extends ArrayAdapter<Request> implements View.OnClickListener{
 
     private FragmentManager fragmentManager;
-    private List<RequestModel> requestDataSet;
+    private List<Request> requestDataSet;
     private int ctr;
 
     private static class ViewHolder {
@@ -30,7 +30,7 @@ public class RequestListAdapter extends ArrayAdapter<RequestModel> implements Vi
         ImageView request_info;
     }
 
-    public RequestListAdapter(List<RequestModel> data, int ctr, Context context, FragmentManager fragmentManager) {
+    public RequestListAdapter(List<Request> data, int ctr, Context context, FragmentManager fragmentManager) {
         super(context, R.layout.request_row_item, data);
         this.ctr = ctr;
         this.requestDataSet = data;
@@ -41,7 +41,7 @@ public class RequestListAdapter extends ArrayAdapter<RequestModel> implements Vi
     public void onClick(View v) {
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        RequestModel requestDataModel = (RequestModel)object;
+        Request requestDataModel = (Request)object;
         switch (v.getId())
         {
             case R.id.request_info:
@@ -60,7 +60,7 @@ public class RequestListAdapter extends ArrayAdapter<RequestModel> implements Vi
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        RequestModel requestDataSet = getItem(ctr);
+        Request requestDataSet = getItem(ctr);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
