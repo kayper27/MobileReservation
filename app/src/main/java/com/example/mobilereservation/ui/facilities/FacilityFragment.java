@@ -37,7 +37,7 @@ public class FacilityFragment extends Fragment {
         facilityBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_facility, container, false);
 
         com.example.mobilereservation.network.apiService.facility api = ApiClient.getClient(getContext().getApplicationContext()).create(com.example.mobilereservation.network.apiService.facility.class);
-        api.getfacilities()
+        api.getFacilities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
@@ -60,14 +60,6 @@ public class FacilityFragment extends Fragment {
                         alertDialog.show();
                     }
                 });
-//        facilityModel.add(new FacilityModel("R00","Facility","Available", "This is data is hard coded 0"));
-//        facilityModel.add(new FacilityModel("R01","Facility","Available", "This is data is hard coded 1"));
-//        facilityModel.add(new FacilityModel("R02","Facility","Available", "This is data is hard coded 2"));
-//        facilityModel.add(new FacilityModel("R03","Facility","Available", "This is data is hard coded 3"));
-//        facilityModel.add(new FacilityModel("R04","Facility","Available", "This is data is hard coded 4"));
-//        facilityModel.add(new FacilityModel("R05","Facility","Available", "This is data is hard coded 5"));
-
-
 
         facilityBinding.facilitySearch.setActivated(true);
         facilityBinding.facilitySearch.setQueryHint("Search Facility");

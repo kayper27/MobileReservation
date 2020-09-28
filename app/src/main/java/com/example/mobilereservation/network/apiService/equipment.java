@@ -7,8 +7,8 @@ import java.util.List;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 
-public interface facility {
+public interface equipment {
     // Fetch all Facility
-    @GET("facility_management")
-    Single<List<Facility>> getFacilities();
+    @GET("equipment_management")
+    Single<List<Facility>> getEqupments();
 }
