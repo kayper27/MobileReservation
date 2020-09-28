@@ -44,7 +44,11 @@ public class FacilityFragment extends Fragment {
                 .subscribeWith(new DisposableSingleObserver<List<FacilityModel>>() {
                     @Override
                     public void onSuccess(List<FacilityModel> facilities) {
-                        System.out.println("Test "+facilities);
+                        for(int i = 0; i < facilities.size(); i++){
+                            facilityModel.add(new FacilityModel(facilities.get(i).getFacility_id(),facilities.get(i).getType(),facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                        }
+                        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilityModel);
+                        facilityBinding.facilityList.setAdapter(adapterSearch);
                     }
 
                     @Override
@@ -64,8 +68,7 @@ public class FacilityFragment extends Fragment {
 //        facilityModel.add(new FacilityModel("R04","Facility","Available", "This is data is hard coded 4"));
 //        facilityModel.add(new FacilityModel("R05","Facility","Available", "This is data is hard coded 5"));
 
-        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilityModel);
-        facilityBinding.facilityList.setAdapter(adapterSearch);
+
 
         facilityBinding.facilitySearch.setActivated(true);
         facilityBinding.facilitySearch.setQueryHint("Search Facility");
