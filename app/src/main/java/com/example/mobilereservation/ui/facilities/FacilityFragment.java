@@ -16,7 +16,7 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.ApiService;
-import com.example.mobilereservation.network.model.FacilityModel;
+import com.example.mobilereservation.network.model.Facility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class FacilityFragment extends Fragment {
     private FragmentFacilityBinding facilityBinding;
     private FacilitySearchAdapter adapterSearch;
 
-    ArrayList<FacilityModel> facilityModel = new ArrayList<>();
+    ArrayList<Facility> facility = new ArrayList<>();
 
 
     @Override
@@ -41,13 +41,13 @@ public class FacilityFragment extends Fragment {
         api.getfacilities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<List<FacilityModel>>() {
+                .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
                     @Override
-                    public void onSuccess(List<FacilityModel> facilities) {
+                    public void onSuccess(List<Facility> facilities) {
                         for(int i = 0; i < facilities.size(); i++){
-                            facilityModel.add(new FacilityModel(facilities.get(i).getFacility_id(),facilities.get(i).getType(),facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                            facility.add(new Facility(facilities.get(i).getFacility_id(),facilities.get(i).getType(),facilities.get(i).getStatus(), facilities.get(i).getDescription()));
                         }
-                        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilityModel);
+                        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facility);
                         facilityBinding.facilityList.setAdapter(adapterSearch);
                     }
 

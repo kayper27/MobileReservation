@@ -1,6 +1,6 @@
 package com.example.mobilereservation.network;
 
-import com.example.mobilereservation.network.model.FacilityModel;
+import com.example.mobilereservation.network.model.Facility;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import retrofit2.http.GET;
 public interface ApiService {
     // Fetch all Facility
     @GET("facility_management")
-    Single<List<FacilityModel>> getfacilities();
+    Single<List<Facility>> getfacilities();
 }

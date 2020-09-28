@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FacilitySearchListBinding;
 import com.example.mobilereservation.ui.listAdapter.FacilityListAdapter;
-import com.example.mobilereservation.network.model.FacilityModel;
+import com.example.mobilereservation.network.model.Facility;
 
 import java.util.ArrayList;
 
@@ -26,12 +26,12 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
 
     private FacilitySearchListBinding facilityRowBinding;
     private FacilityListAdapter adapter;
-    private ArrayList<FacilityModel> fStringFilterList;
-    private ArrayList<FacilityModel> fData;
+    private ArrayList<Facility> fStringFilterList;
+    private ArrayList<Facility> fData;
     private ValueFilter valueFilter;
     private LayoutInflater inflater;
 
-    public FacilitySearchAdapter(Context context, FragmentManager fragmentManager, ArrayList<FacilityModel> cancel_type) {
+    public FacilitySearchAdapter(Context context, FragmentManager fragmentManager, ArrayList<Facility> cancel_type) {
         this.fragmentManager = fragmentManager;
         this.context = context;
         fData = cancel_type;
@@ -79,7 +79,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint != null && constraint.length() > 0) {
-                ArrayList<FacilityModel> filterList = new ArrayList<>();
+                ArrayList<Facility> filterList = new ArrayList<>();
                 for (int i = 0; i < fStringFilterList.size(); i++) {
                     if ((fStringFilterList.get(i).getFacility_id().toUpperCase()).contains(constraint.toString().toUpperCase())) {
                         filterList.add(fStringFilterList.get(i));
@@ -96,7 +96,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            fData = (ArrayList<FacilityModel>) results.values;
+            fData = (ArrayList<Facility>) results.values;
             notifyDataSetChanged();
         }
     }

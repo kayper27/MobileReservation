@@ -14,13 +14,13 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.ui.facilities.FacilityDialogFragment;
-import com.example.mobilereservation.network.model.FacilityModel;
+import com.example.mobilereservation.network.model.Facility;
 
 import java.util.ArrayList;
 
-public class FacilityListAdapter extends ArrayAdapter<FacilityModel> implements View.OnClickListener {
+public class FacilityListAdapter extends ArrayAdapter<Facility> implements View.OnClickListener {
 
-    private ArrayList<FacilityModel> facilityDataSet;
+    private ArrayList<Facility> facilityDataSet;
 
     private FragmentManager fragmentManager;
     private Context Context;
@@ -35,7 +35,7 @@ public class FacilityListAdapter extends ArrayAdapter<FacilityModel> implements 
         ImageView facility_info;
     }
 
-    public FacilityListAdapter(ArrayList<FacilityModel> data, int ctr, Context context, FragmentManager fragmentManager) {
+    public FacilityListAdapter(ArrayList<Facility> data, int ctr, Context context, FragmentManager fragmentManager) {
         super(context, R.layout.facility_row_item, data);
         this.ctr = ctr;
         this.facilityDataSet = data;
@@ -47,7 +47,7 @@ public class FacilityListAdapter extends ArrayAdapter<FacilityModel> implements 
     public void onClick(View v) {
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        FacilityModel facilityDataModel = (FacilityModel)object;
+        Facility facilityDataModel = (Facility)object;
         switch (v.getId())
         {
             case R.id.facility_info:
@@ -62,7 +62,7 @@ public class FacilityListAdapter extends ArrayAdapter<FacilityModel> implements 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        FacilityModel facilityDataModel = getItem(ctr);
+        Facility facilityDataModel = getItem(ctr);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
