@@ -1,5 +1,6 @@
 package com.example.mobilereservation.ui.facilities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class FacilityFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
+                    @SuppressLint("CheckResult")
                     @Override
                     public void onSuccess(List<Facility> facilities) {
                         for(int i = 0; i < facilities.size(); i++){
