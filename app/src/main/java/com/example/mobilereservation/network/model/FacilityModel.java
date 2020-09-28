@@ -1,6 +1,6 @@
 package com.example.mobilereservation.network.model;
 
-public class FacilityModel extends BaseResponse {
+public class FacilityModel{
 
     private String facility_id;
     private String type;
