@@ -1,6 +1,6 @@
 package com.example.mobilereservation.network.model;
 
-public class EquipmentModel {
+public class Equipment {
     private String equipment_id;
     private String type;
     private String status;
@@ -9,7 +9,7 @@ public class EquipmentModel {
     private String equipment_type;
     private String description;
 
-    public EquipmentModel(String equipment_id, String type, String status, String brand, String model_no, String equipment_type, String description) {
+    public Equipment(String equipment_id, String type, String status, String brand, String model_no, String equipment_type, String description) {
         this.equipment_id = equipment_id;
         this.type = type;
         this.status = status;

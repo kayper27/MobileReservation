@@ -12,14 +12,14 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.ui.equipment.EquipmentDialogFragment;
-import com.example.mobilereservation.network.model.EquipmentModel;
+import com.example.mobilereservation.network.model.Equipment;
 
 import java.util.List;
 
-public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implements View.OnClickListener {
+public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements View.OnClickListener {
 
     private FragmentManager fragmentManager;
-    private List<EquipmentModel> equipmentDataSet;
+    private List<Equipment> equipmentDataSet;
     private int ctr;
 
     private static class ViewHolder {
@@ -28,7 +28,7 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
         ImageView equipment_info;
     }
 
-    public EquipmentListAdapter(List<EquipmentModel> data, int ctr, Context context,  FragmentManager fragmentManager) {
+    public EquipmentListAdapter(List<Equipment> data, int ctr, Context context, FragmentManager fragmentManager) {
         super(context, R.layout.equipment_row_item, data);
         this.ctr = ctr;
         this.equipmentDataSet = data;
@@ -39,7 +39,7 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
     public void onClick(View v) {
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        EquipmentModel equipmentDataModel = (EquipmentModel)object;
+        Equipment equipmentDataModel = (Equipment)object;
         switch (v.getId())
         {
             case R.id.equipment_info:
@@ -57,7 +57,7 @@ public class EquipmentListAdapter extends ArrayAdapter<EquipmentModel> implement
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        EquipmentModel equipmentDataSet = getItem(ctr);
+        Equipment equipmentDataSet = getItem(ctr);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.network.model.EquipmentModel;
+import com.example.mobilereservation.network.model.Equipment;
 import com.example.mobilereservation.ui.listAdapter.EquipmentListAdapter;
 
 import java.util.HashMap;
@@ -26,9 +26,9 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
 
     private List<String> expandableListTitle;
-    private HashMap<String, List<EquipmentModel>> expandableListDetail;
+    private HashMap<String, List<Equipment>> expandableListDetail;
 
-    public EquipmentExpandableListAdapter(Context context, FragmentManager fragmentManager, List<String> expandableListTitle, HashMap<String, List<EquipmentModel>> expandableListDetail) {
+    public EquipmentExpandableListAdapter(Context context, FragmentManager fragmentManager, List<String> expandableListTitle, HashMap<String, List<Equipment>> expandableListDetail) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.expandableListTitle = expandableListTitle;
