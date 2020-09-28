@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
 import com.example.mobilereservation.network.ApiClient;
-import com.example.mobilereservation.network.ApiService;
 import com.example.mobilereservation.network.model.Facility;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class FacilityFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         facilityBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_facility, container, false);
 
-        ApiService api = ApiClient.getClient(getContext().getApplicationContext()).create(ApiService.class);
+        com.example.mobilereservation.network.apiService.facility api = ApiClient.getClient(getContext().getApplicationContext()).create(com.example.mobilereservation.network.apiService.facility.class);
         api.getfacilities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
