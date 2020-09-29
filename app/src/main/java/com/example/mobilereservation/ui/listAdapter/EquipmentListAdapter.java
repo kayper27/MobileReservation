@@ -44,7 +44,7 @@ public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements Vie
         {
             case R.id.equipment_info:
                 String details = "Status: " + equipmentDataModel.getStatus() +
-                                "\nType: " + equipmentDataModel.getType() +
+                                "\nType: " + equipmentDataModel.getType()+
                                 "\nBrand: "+ equipmentDataModel.getBrand() +
                                 "\nModel No: "+ equipmentDataModel.getModel_no() +
                                 "\nDecription: " +equipmentDataModel.getDescription();
