@@ -1,6 +1,5 @@
 package com.example.mobilereservation.ui.facilities;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
 import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.facility;
 import com.example.mobilereservation.network.model.Facility;
 
 import java.util.ArrayList;
@@ -30,25 +30,23 @@ public class FacilityFragment extends Fragment {
     private FragmentFacilityBinding facilityBinding;
     private FacilitySearchAdapter adapterSearch;
 
-    ArrayList<Facility> facility = new ArrayList<>();
-
+    ArrayList<Facility> facilitySet = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         facilityBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_facility, container, false);
 
-        com.example.mobilereservation.network.apiService.facility api = ApiClient.getClient(getContext().getApplicationContext()).create(com.example.mobilereservation.network.apiService.facility.class);
-        api.getFacilities()
+        facility api = ApiClient.getClient(getContext().getApplicationContext()).create(facility.class);
+        DisposableSingleObserver<List<Facility>> error = api.getFacilities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
-                    @SuppressLint("CheckResult")
                     @Override
                     public void onSuccess(List<Facility> facilities) {
-                        for(int i = 0; i < facilities.size(); i++){
-                            facility.add(new Facility(facilities.get(i).getFacility_id(),facilities.get(i).getType(),facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                        for (int i = 0; i < facilities.size(); i++) {
+                            facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getType(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
                         }
-                        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facility);
+                        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
                         facilityBinding.facilityList.setAdapter(adapterSearch);
                     }
 
@@ -56,8 +54,8 @@ public class FacilityFragment extends Fragment {
                     public void onError(Throwable e) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                         alertDialog.setTitle("Error");
-                        System.out.println("Test "+e);
-                        System.out.println("Test "+e.getMessage());
+                        System.out.println("Test "+ e);
+                        System.out.println("Test "+ e.getMessage());
                         alertDialog.setMessage(e.getMessage());
                         alertDialog.show();
                     }
