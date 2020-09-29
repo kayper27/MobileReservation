@@ -3,14 +3,14 @@ package com.example.mobilereservation.network.model;
 public class Facility {
 
     private String facility_id;
-    private String type;
+    private String category;
     private String status;
     private String description;
 
 
-    public Facility(String facility_id, String type, String status, String description) {
+    public Facility(String facility_id, String category, String status, String description) {
         this.facility_id = facility_id;
-        this.type = type;
+        this.category = category;
         this.status = status;
         this.description = description;
     }
@@ -19,8 +19,8 @@ public class Facility {
         return facility_id;
     }
 
-    public String getType() {
-        return type;
+    public String getCategory(){
+        return category;
     }
 
     public String getStatus() {

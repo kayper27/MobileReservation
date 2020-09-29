@@ -44,7 +44,7 @@ public class FacilityFragment extends Fragment {
                     @Override
                     public void onSuccess(List<Facility> facilities) {
                         for (int i = 0; i < facilities.size(); i++) {
-                            facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getType(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                            facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
                         }
                         adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
                         facilityBinding.facilityList.setAdapter(adapterSearch);
