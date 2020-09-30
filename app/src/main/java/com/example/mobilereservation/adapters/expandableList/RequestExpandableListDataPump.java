@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.request;
+package com.example.mobilereservation.adapters.expandableList;
 
 import com.example.mobilereservation.network.model.Request;
 

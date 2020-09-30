@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.listAdapter;
+package com.example.mobilereservation.adapters.listAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

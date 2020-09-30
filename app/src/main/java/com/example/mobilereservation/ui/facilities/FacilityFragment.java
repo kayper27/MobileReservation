@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.facility;

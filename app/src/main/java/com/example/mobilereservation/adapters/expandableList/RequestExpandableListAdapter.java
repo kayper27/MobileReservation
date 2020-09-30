@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.request;
+package com.example.mobilereservation.adapters.expandableList;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.ui.listAdapter.RequestListAdapter;
+import com.example.mobilereservation.adapters.listAdapter.RequestListAdapter;
 import com.example.mobilereservation.network.model.Request;
 
 import java.util.HashMap;

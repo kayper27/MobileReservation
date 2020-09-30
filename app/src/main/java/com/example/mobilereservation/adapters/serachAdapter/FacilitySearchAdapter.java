@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.facilities;
+package com.example.mobilereservation.adapters.serachAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FacilitySearchListBinding;
-import com.example.mobilereservation.ui.listAdapter.FacilityListAdapter;
+import com.example.mobilereservation.adapters.listAdapter.FacilityListAdapter;
 import com.example.mobilereservation.network.model.Facility;
 
 import java.util.ArrayList;

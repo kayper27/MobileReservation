@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.equipment;
+package com.example.mobilereservation.adapters.expandableList;
 
 import android.content.Context;
 import android.util.Log;
