@@ -10,6 +10,8 @@ import android.widget.ExpandableListView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.adapters.expandableList.RequestExpandableListAdapter;
+import com.example.mobilereservation.adapters.expandableList.RequestExpandableListDataPump;
 import com.example.mobilereservation.network.model.Request;
 
 import java.util.ArrayList;

@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.adapters.expandableList.EquipmentExpandableListAdapter;
+import com.example.mobilereservation.adapters.expandableList.EquipmentExpandableListDataPump;
 import com.example.mobilereservation.network.model.Equipment;
 
 import java.util.ArrayList;
