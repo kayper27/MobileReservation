@@ -10,4 +10,5 @@
     <string name="menu_facilities">Facilities</string>
     <string name="menu_equipments">Equipment</string>
     <string name="menu_request">Requests</string>
+    <string name="menu_reservation">Request Reservation</string>
 </resources>
