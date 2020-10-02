@@ -1,5 +1,6 @@
 package com.example.mobilereservation.ui.equipment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,10 +29,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public class EquipmentFragment extends Fragment {
 
-    ExpandableListView expandableListView;
-    ExpandableListAdapter expandableListAdapter;
-    List<String> expandableListTitle;
-    HashMap<String, List<Equipment>> expandableListDetail;
+    private ExpandableListView expandableListView;
+    private ExpandableListAdapter expandableListAdapter;
+    private List<String> expandableListTitle;
+    private HashMap<String, List<Equipment>> expandableListDetail;
+
+    private ArrayList<List<Equipment>> equipmentSeparated = new ArrayList<>();
+    private List<Equipment> equips = new ArrayList<>();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_equipment, container, false);
@@ -47,43 +52,40 @@ public class EquipmentFragment extends Fragment {
                     public void onSuccess(List<Equipment> equipments) {
                         final HashMap<String, List<Equipment>> expandalbleList = new HashMap<>();
 
-                        ArrayList<List<Equipment>> equipmentSort = new ArrayList<>();
-                        List<Equipment> equips = new ArrayList<>();
-
-                        equips.add(new Equipment("projector0","Equipment", "Available", "EPSON", "x0000", "Projector", "This is projector data hard data 0"));
-                        equips.add(new Equipment("projector1","Equipment", "Available", "EPSON", "x0000", "Projector", "This is projector data hard data 1"));
-                        equips.add(new Equipment("projector2","Equipment", "Available", "EPSON", "x0000", "Projector", "This is projector data hard data 2"));
-                        equips.add(new Equipment("projector3","Equipment", "Available", "EPSON", "x0000", "Projector", "This is projector data hard data 3"));
-                        equips.add(new Equipment("projector4","Equipment", "Available", "EPSON", "x0000", "Projector", "This is projector data hard data 4"));
-                        equipmentSort.add(equips);
-                        equips = new ArrayList<>();
-                        equips.add(new Equipment("computer0","Equipment", "Available", "MSI", "x0000", "Computer", "This is computer data hard data 0"));
-                        equips.add(new Equipment("computer1","Equipment", "Available", "MSI", "x0000", "Computer", "This is computer data hard data 1"));
-                        equips.add(new Equipment("computer2","Equipment", "Available", "MSI", "x0000", "Computer", "This is computer data hard data 2"));
-                        equips.add(new Equipment("computer3","Equipment", "Available", "MSI", "x0000", "Computer", "This is computer data hard data 3"));
-                        equips.add(new Equipment("computer4","Equipment", "Available", "MSI", "x0000", "Computer", "This is computer data hard data 4"));
-                        equipmentSort.add(equips);
-
-                        System.out.println("TEST "+equipmentSort.size());
-                        System.out.println("TEST "+equipmentSort.get(0).size());
-                        System.out.println("TEST "+equipmentSort.get(1).size());
-                        for(int i = 0; i < equipmentSort.size(); i++){
-                            expandalbleList.put(equipmentSort.get(i).get(0).getType().toUpperCase(), equipmentSort.get(i));
-                            for(int x = 0; x < equipmentSort.get(i).size(); x++){
-                                System.out.println("TEST Data |"+ i +"| "+ x +" "+equipmentSort.get(i).get(x).getType());
+                        for(int i = 0; i < equipments.size(); i++){
+                            equips.add(new Equipment(
+                                    equipments.get(i).getEquipment_id(),
+                                    equipments.get(i).getStatus(),
+                                    equipments.get(i).getCategory(),
+                                    equipments.get(i).getBrand(),
+                                    equipments.get(i).getModel_no(),
+                                    equipments.get(i).getType(),
+                                    equipments.get(i).getDescription())
+                            );
+                            if(i == equipments.size()-1){
+                                saveSeparatedEquipment();
+                            }
+                            else if(!equipments.get(i).getType().equals(equipments.get(i+1).getType())) {
+                                saveSeparatedEquipment();
                             }
                         }
+                        for(int i = 0; i < equipmentSeparated.size(); i++){
+                            expandalbleList.put(equipmentSeparated.get(i).get(0).getType().toUpperCase(), equipmentSeparated.get(i));
+                        }
 
-
-                        System.out.println("TEST END");
-
-                        expandableListDetail =  expandalbleList;
+                        expandableListDetail = expandalbleList;
                         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
                         expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
                         expandableListView.setAdapter(expandableListAdapter);
                     }
                     @Override
                     public void onError(Throwable e) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("Error");
+                        System.out.println("Test "+ e);
+                        System.out.println("Test "+ e.getMessage());
+                        alertDialog.setMessage(e.getMessage());
+                        alertDialog.show();
                         Log.d(String.valueOf(getActivity().getApplicationContext()), "Error in fetching Equipment "+e.getMessage());
                     }
                 });
@@ -110,5 +112,10 @@ public class EquipmentFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void saveSeparatedEquipment(){
+        equipmentSeparated.add(equips);
+        equips = new ArrayList<>();
     }
 }
