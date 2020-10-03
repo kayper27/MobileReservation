@@ -8,17 +8,15 @@ public class Request {
     private String startAt;
     private String endAt;
     private String facility_id;
-    private String[] equipment_id;
-    private String[] equipmentStatus = new String[5];
 
-    public Request(String _id, String status, String username, String startAt, String endAt, String facility_id, String[] equipment_id) {
+
+    public Request(String _id, String status, String username, String startAt, String endAt, String facility_id) {
         this._id = _id;
         this.status = status;
         this.username = username;
         this.startAt = startAt;
         this.endAt = endAt;
         this.facility_id = facility_id;
-        this.equipment_id = equipment_id;
     }
 
     public String getRequest_id() {
@@ -45,8 +43,6 @@ public class Request {
         return facility_id;
     }
 
-    public String[] getEquipments() {
-        return equipment_id;
-    }
+
 
 }

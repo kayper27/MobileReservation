@@ -65,8 +65,7 @@ public class ReqeuestFragment extends Fragment {
                                     requests.get(i).getUsername(),
                                     requests.get(i).getStartAt(),
                                     requests.get(i).getEndAt(),
-                                    requests.get(i).getFacility(),
-                                    requests.get(i).getEquipments()));
+                                    requests.get(i).getFacility()));
 
                             if(i == requests.size()-1){
                                 saveSeparatedRequest();
