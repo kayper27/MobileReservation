@@ -21,7 +21,12 @@ import com.example.mobilereservation.network.model.Equipment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -73,7 +78,16 @@ public class EquipmentFragment extends Fragment {
                             expandalbleList.put(equipmentSeparated.get(i).get(0).getType().toUpperCase(), equipmentSeparated.get(i));
                         }
 
-                        expandableListDetail = expandalbleList;
+                        HashMap arrangedEquipment = new LinkedHashMap();
+                        TreeMap<String, List<Equipment>> map = new TreeMap<>(expandalbleList);
+                        Set set2 = map.entrySet();
+                        Iterator iterator2 = set2.iterator();
+                        while(iterator2.hasNext()) {
+                            Map.Entry me2 = (Map.Entry)iterator2.next();
+                            arrangedEquipment.put(me2.getKey().toString(), (List<Equipment>)me2.getValue());
+                        }
+
+                        expandableListDetail = arrangedEquipment;
                         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
                         expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
                         expandableListView.setAdapter(expandableListAdapter);
@@ -82,8 +96,8 @@ public class EquipmentFragment extends Fragment {
                     public void onError(Throwable e) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                         alertDialog.setTitle("Error");
-                        System.out.println("Test "+ e);
-                        System.out.println("Test "+ e.getMessage());
+                        System.out.println("|Test| "+ e);
+                        System.out.println("|Test| "+ e.getMessage());
                         alertDialog.setMessage(e.getMessage());
                         alertDialog.show();
                         Log.d(String.valueOf(getActivity().getApplicationContext()), "Error in fetching Equipment "+e.getMessage());
