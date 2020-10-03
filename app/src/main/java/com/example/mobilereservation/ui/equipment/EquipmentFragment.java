@@ -45,7 +45,6 @@ public class EquipmentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_equipment, container, false);
-
         expandableListView = root.findViewById(R.id.equipmentExpandableListView);
 
         equipment api = ApiClient.getClient(getActivity().getApplicationContext()).create(equipment.class);
