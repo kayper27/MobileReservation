@@ -44,6 +44,10 @@ public class FacilityFragment extends Fragment {
                 .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
                     @Override
                     public void onSuccess(List<Facility> facilities) {
+                        if(0 > facilities.size()){
+                            return;
+                        }
+
                         for (int i = 0; i < facilities.size(); i++) {
                             facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
                         }
@@ -55,8 +59,6 @@ public class FacilityFragment extends Fragment {
                     public void onError(Throwable e) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                         alertDialog.setTitle("Error");
-                        System.out.println("Test "+ e);
-                        System.out.println("Test "+ e.getMessage());
                         alertDialog.setMessage(e.getMessage());
                         alertDialog.show();
                     }

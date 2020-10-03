@@ -55,6 +55,9 @@ public class EquipmentFragment extends Fragment {
                     @Override
                     public void onSuccess(List<Equipment> equipments) {
                         final HashMap<String, List<Equipment>> expandalbleList = new HashMap<>();
+                        if(0 > equipments.size()){
+                            return;
+                        }
 
                         for(int i = 0; i < equipments.size(); i++){
                             equips.add(new Equipment(
@@ -95,8 +98,6 @@ public class EquipmentFragment extends Fragment {
                     public void onError(Throwable e) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                         alertDialog.setTitle("Error");
-                        System.out.println("|Test| "+ e);
-                        System.out.println("|Test| "+ e.getMessage());
                         alertDialog.setMessage(e.getMessage());
                         alertDialog.show();
                         Log.d(String.valueOf(getActivity().getApplicationContext()), "Error in fetching Equipment "+e.getMessage());
