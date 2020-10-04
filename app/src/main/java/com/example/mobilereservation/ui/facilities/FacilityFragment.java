@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,7 +78,12 @@ public class FacilityFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapterSearch.getFilter().filter(newText);
+                if(0 <  facilitySet.size()){
+                    adapterSearch.getFilter().filter(newText);
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Facility is empty", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });
