@@ -6,12 +6,13 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="End">End</string>
+    <string name="Start">Start</string>
+    <string name="Schedule">Schedule</string>
 
     <string name="menu_facilities">Facilities</string>
     <string name="menu_equipments">Equipment</string>
     <string name="menu_request">Requests</string>
     <string name="menu_reservation">Request Reservation</string>
-    <string name="End">End</string>
-    <string name="Start">Start</string>
-    <string name="Schedule">Schedule</string>
+    <string name="menu_schedule">Schedules</string>
 </resources>
