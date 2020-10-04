@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.listAdapter.RequestListAdapter;
-import com.example.mobilereservation.network.model.Request;
+import com.example.mobilereservation.model.Request;
 
 import java.util.HashMap;
 import java.util.List;

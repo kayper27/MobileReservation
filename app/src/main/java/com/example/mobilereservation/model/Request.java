@@ -1,4 +1,4 @@
-package com.example.mobilereservation.network.model;
+package com.example.mobilereservation.model;
 
 import java.util.List;
 

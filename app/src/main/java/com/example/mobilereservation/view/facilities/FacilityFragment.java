@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.facilities;
+package com.example.mobilereservation.view.facilities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapte
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.facility;
-import com.example.mobilereservation.network.model.Facility;
+import com.example.mobilereservation.model.Facility;
 
 import java.util.ArrayList;
 import java.util.List;

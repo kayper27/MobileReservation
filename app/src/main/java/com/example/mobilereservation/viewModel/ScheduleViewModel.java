@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.schedule;
+package com.example.mobilereservation.viewModel;
 
 import androidx.lifecycle.ViewModel;
 

@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.schedule;
+package com.example.mobilereservation.view.reservation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,24 +11,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.viewModel.ReservationViewModel;
 
-public class ScheduleFragment extends Fragment {
+public class ReservationFragment extends Fragment {
 
-    private ScheduleViewModel mViewModel;
+    private ReservationViewModel mViewModel;
 
-    public static ScheduleFragment newInstance() {
-        return new ScheduleFragment();
+    public static ReservationFragment newInstance() {
+        return new ReservationFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_schedule, container, false);
+        return inflater.inflate(R.layout.fragment_reservation, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ScheduleViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ReservationViewModel.class);
         // TODO: Use the ViewModel
     }
 

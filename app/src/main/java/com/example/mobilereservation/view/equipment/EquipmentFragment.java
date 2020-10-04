@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.equipment;
+package com.example.mobilereservation.view.equipment;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.expandableList.EquipmentExpandableListAdapter;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.equipment;
-import com.example.mobilereservation.network.model.Equipment;
+import com.example.mobilereservation.model.Equipment;
 
 import java.util.ArrayList;
 import java.util.HashMap;

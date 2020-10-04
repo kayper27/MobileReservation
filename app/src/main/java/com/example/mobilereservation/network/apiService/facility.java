@@ -1,6 +1,6 @@
 package com.example.mobilereservation.network.apiService;
 
-import com.example.mobilereservation.network.model.Facility;
+import com.example.mobilereservation.model.Facility;
 
 import java.util.List;
 

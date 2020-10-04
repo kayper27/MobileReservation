@@ -6,27 +6,27 @@
     app:startDestination="@id/nav_facility">
     <fragment
         android:id="@+id/nav_facility"
-        android:name="com.example.mobilereservation.ui.facilities.FacilityFragment"
+        android:name="com.example.mobilereservation.view.facilities.FacilityFragment"
         android:label="Facilities"
         tools:layout="@layout/fragment_facility" />
     <fragment
         android:id="@+id/nav_equipment"
-        android:name="com.example.mobilereservation.ui.equipment.EquipmentFragment"
+        android:name="com.example.mobilereservation.view.equipment.EquipmentFragment"
         android:label="Equipments"
         tools:layout="@layout/fragment_equipment" />
     <fragment
         android:id="@+id/nav_request"
-        android:name="com.example.mobilereservation.ui.request.ReqeuestFragment"
+        android:name="com.example.mobilereservation.view.request.ReqeuestFragment"
         android:label="Requests"
         tools:layout="@layout/fragment_reqeuest" />
     <fragment
         android:id="@+id/nav_reservation"
-        android:name="com.example.mobilereservation.ui.reservation.ReservationFragment"
+        android:name="com.example.mobilereservation.view.reservation.ReservationFragment"
         android:label="Request Reservation"
         tools:layout="@layout/fragment_reservation" />
     <fragment
         android:id="@+id/nav_schedule"
-        android:name="com.example.mobilereservation.ui.schedule.ScheduleFragment"
+        android:name="com.example.mobilereservation.view.schedule.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
 </navigation>

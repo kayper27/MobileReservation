@@ -1,4 +1,4 @@
-package com.example.mobilereservation.ui.request;
+package com.example.mobilereservation.view.request;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

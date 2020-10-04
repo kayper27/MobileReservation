@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.network.model.Equipment;
+import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.adapters.listAdapter.EquipmentListAdapter;
 
 import java.util.HashMap;

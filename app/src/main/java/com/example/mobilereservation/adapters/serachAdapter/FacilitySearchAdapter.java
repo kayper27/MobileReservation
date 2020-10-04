@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FacilitySearchListBinding;
 import com.example.mobilereservation.adapters.listAdapter.FacilityListAdapter;
-import com.example.mobilereservation.network.model.Facility;
+import com.example.mobilereservation.model.Facility;
 
 import java.util.ArrayList;
 
