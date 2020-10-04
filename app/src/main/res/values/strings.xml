@@ -11,4 +11,7 @@
     <string name="menu_equipments">Equipment</string>
     <string name="menu_request">Requests</string>
     <string name="menu_reservation">Request Reservation</string>
+    <string name="End">End</string>
+    <string name="Start">Start</string>
+    <string name="Schedule">Schedule</string>
 </resources>
