@@ -22,22 +22,21 @@ public class ReservationViewModel extends BaseObservable {
     private Context context;
     private Request request;
     private Equips equipment;
+    private int mYear, mMonth, mDay, mHour, mMinute;
     private List<String> equipment_id;
     private List<String> equipment_status;
-    private int mYear, mMonth, mDay, mHour, mMinute;
-
 
     public ReservationViewModel(Context context){
         this.context = context;
 
-        equipment.add(equipment_id)
+
 
         request = new Request(
                 "",
                 "",
                 "",
                 "",
-                equipment
+                new Equips(equipment_id, equipment_status)
         );
     }
 
