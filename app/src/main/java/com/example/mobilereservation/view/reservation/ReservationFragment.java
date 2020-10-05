@@ -7,15 +7,16 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.databinding.FragmentReservationBinding;
 import com.example.mobilereservation.viewModel.ReservationViewModel;
 
 public class ReservationFragment extends Fragment {
 
-    private ReservationViewModel mViewModel;
+    FragmentReservationBinding fragmentReservationBinding;
 
     public static ReservationFragment newInstance() {
         return new ReservationFragment();
@@ -23,14 +24,11 @@ public class ReservationFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reservation, container, false);
+        fragmentReservationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation, container, false);
+        fragmentReservationBinding.setViewModel((new ReservationViewModel(getActivity().getApplicationContext())));
+        fragmentReservationBinding.executePendingBindings();
+        return fragmentReservationBinding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ReservationViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
 }
