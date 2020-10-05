@@ -5,12 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.mobilereservation.viewModel.ReservationViewModel" />
     </data>
-
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -54,8 +52,6 @@
                             android:layout_height="wrap_content"
                             android:text="@string/Schedule"
                             android:textSize="20sp" />
-
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -88,12 +84,14 @@
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="14dp"
+                            android:layout_marginTop="13dp"
                             android:layout_marginEnd="30dp"
                             android:layout_marginBottom="2dp"
                             android:layout_toEndOf="@+id/textViewDate"
                             android:ems="10"
+                            android:focusable="false"
                             android:importantForAutofill="no"
+                            android:onClick="@{()-> viewModel.onClickeTest()}"
                             android:text="@={viewModel.requestStartAt}"
                             tools:ignore="LabelFor" />
 
@@ -108,7 +106,6 @@
                             android:text="@string/Start"
                             android:textSize="13sp" />
 
-
                         <EditText
                             android:id="@+id/editTextEndAt"
                             android:layout_width="189dp"
@@ -116,13 +113,15 @@
                             android:layout_below="@+id/editTextStratAt"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginStart="23dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginBottom="18dp"
+                            android:layout_marginStart="22dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginEnd="31dp"
+                            android:layout_marginBottom="15dp"
                             android:layout_toEndOf="@+id/textViewTime"
+                            android:focusable="false"
                             android:ems="10"
                             android:importantForAutofill="no"
+                            android:onClick="@{()-> viewModel.onClickeTest()}"
                             android:text="@={viewModel.requestEndAt}"
                             tools:ignore="LabelFor" />
 

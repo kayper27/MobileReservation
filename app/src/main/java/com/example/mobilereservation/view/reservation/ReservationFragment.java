@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -30,5 +32,10 @@ public class ReservationFragment extends Fragment {
         return fragmentReservationBinding.getRoot();
     }
 
+    @BindingAdapter({"toastMessage"})
+    public static void runMe(View view, String message) {
+        if (message != null)
+            Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
 }

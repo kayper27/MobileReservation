@@ -1,11 +1,8 @@
 package com.example.mobilereservation.viewModel;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TimePicker;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -26,11 +23,11 @@ public class ReservationViewModel extends BaseObservable {
     private List<String> equipment_id;
     private List<String> equipment_status;
 
+    @Bindable
+    private String toastMessage = null;
+
     public ReservationViewModel(Context context){
         this.context = context;
-
-
-
         request = new Request(
                 "",
                 "",
@@ -61,7 +58,7 @@ public class ReservationViewModel extends BaseObservable {
     }
 
 
-    public void setDateTime(View v){
+    public void setDateTime(){
 
         // Get Current Date
         final Calendar date = Calendar.getInstance();
@@ -69,36 +66,41 @@ public class ReservationViewModel extends BaseObservable {
         mMonth = date.get(Calendar.MONTH);
         mDay = date.get(Calendar.DAY_OF_MONTH);
 
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
-                new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
 
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
+                        setRequestStartAt(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 //                        txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
         // Get Current Time
-        final Calendar time = Calendar.getInstance();
-        mHour = time.get(Calendar.HOUR_OF_DAY);
-        mMinute = time.get(Calendar.MINUTE);
-
-        // Launch Time Picker Dialog
-        TimePickerDialog timePickerDialog;
-        timePickerDialog = new TimePickerDialog(context,
-                new TimePickerDialog.OnTimeSetListener() {
-
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+//        final Calendar time = Calendar.getInstance();
+//        mHour = time.get(Calendar.HOUR_OF_DAY);
+//        mMinute = time.get(Calendar.MINUTE);
+//
+//        // Launch Time Picker Dialog
+//        TimePickerDialog timePickerDialog;
+//        timePickerDialog = new TimePickerDialog(context,
+//                new TimePickerDialog.OnTimeSetListener() {
+//
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//
 //                        txtTime.setText(hourOfDay + ":" + minute);
-                    }
-                }, mHour, mMinute, false);
-        timePickerDialog.show();
+//                    }
+//                }, mHour, mMinute, false);
+//        timePickerDialog.show();
+    }
 
+    public void onClickeTest() {
+        setToastMessage("Set Date");
+    }
 
+    private void setToastMessage(String toastMessage) {
+        this.toastMessage = toastMessage;
+        notifyPropertyChanged(BR.toastMessage);
     }
 }
