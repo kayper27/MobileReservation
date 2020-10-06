@@ -32,10 +32,5 @@ public class ReservationFragment extends Fragment {
         return fragmentReservationBinding.getRoot();
     }
 
-    @BindingAdapter({"toastMessage"})
-    public static void runMe(View view, String message) {
-        if (message != null)
-            Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-    }
 
 }
