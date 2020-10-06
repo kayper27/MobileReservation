@@ -1,14 +1,14 @@
 package com.example.mobilereservation.view.reservation;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -18,7 +18,8 @@ import com.example.mobilereservation.viewModel.ReservationViewModel;
 
 public class ReservationFragment extends Fragment {
 
-    FragmentReservationBinding fragmentReservationBinding;
+    private FragmentReservationBinding fragmentReservationBinding;
+    private EditText textStratAt, textEndAt;
 
     public static ReservationFragment newInstance() {
         return new ReservationFragment();
@@ -27,10 +28,14 @@ public class ReservationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentReservationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation, container, false);
-        fragmentReservationBinding.setViewModel((new ReservationViewModel(getActivity().getApplicationContext())));
+        View root = fragmentReservationBinding.getRoot();
+        fragmentReservationBinding.setViewModel((new ReservationViewModel(getContext().getApplicationContext())));
         fragmentReservationBinding.executePendingBindings();
-        return fragmentReservationBinding.getRoot();
+        textStratAt = (EditText) root.findViewById(R.id.editTextStratAt);
+        textEndAt = (EditText) root.findViewById(R.id.editTextEndAt);
+        return root;
     }
 
 
 }
+
