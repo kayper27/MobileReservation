@@ -95,8 +95,11 @@ public class ReqeuestFragment extends Fragment {
                         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
                         expandableListAdapter = new RequestExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
                         expandableListView.setAdapter(expandableListAdapter);
-                        expandableListView.expandGroup(0);
-                        expandableListView.expandGroup(1);
+                        for(int i = 0; i < requestSeparated.size(); i++){
+                            if(requestSeparated.get(i).size() != 0){
+                                expandableListView.expandGroup(i);
+                            }
+                        }
                     }
                     @Override
                     public void onError(Throwable e) {
