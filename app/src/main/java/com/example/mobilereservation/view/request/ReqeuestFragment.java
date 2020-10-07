@@ -1,6 +1,7 @@
 package com.example.mobilereservation.view.request;
 
 import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
@@ -17,6 +19,7 @@ import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
+import com.example.mobilereservation.util.convertUtcToLocal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,9 +54,11 @@ public class ReqeuestFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<Request>>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onSuccess(List<Request> requests) {
                         final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
+                        convertUtcToLocal cenvert = new convertUtcToLocal();
                         if(0 > requests.size()){
                             return;
                         }
@@ -63,8 +68,8 @@ public class ReqeuestFragment extends Fragment {
                                     requests.get(i).getRequest_id(),
                                     requests.get(i).getStatus(),
                                     requests.get(i).getUsername(),
-                                    requests.get(i).getStartAt(),
-                                    requests.get(i).getEndAt(),
+                                    cenvert.convertUtcDateTime(requests.get(i).getStartAt()),
+                                    cenvert.convertUtcDateTime(requests.get(i).getEndAt()),
                                     requests.get(i).getFacility(),
                                     requests.get(i).getEquipment()));
 
