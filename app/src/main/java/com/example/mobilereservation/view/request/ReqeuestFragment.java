@@ -15,11 +15,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.expandableList.RequestExpandableListAdapter;
-import com.example.mobilereservation.network.ApiClient;
-import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
-import com.example.mobilereservation.util.convertUtcToLocal;
+import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.request;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +57,6 @@ public class ReqeuestFragment extends Fragment {
                     @Override
                     public void onSuccess(List<Request> requests) {
                         final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
-                        convertUtcToLocal cenvert = new convertUtcToLocal();
                         if(0 > requests.size()){
                             return;
                         }
@@ -68,8 +66,8 @@ public class ReqeuestFragment extends Fragment {
                                     requests.get(i).getRequest_id(),
                                     requests.get(i).getStatus(),
                                     requests.get(i).getUsername(),
-                                    cenvert.convertUtcDateTime(requests.get(i).getStartAt()),
-                                    cenvert.convertUtcDateTime(requests.get(i).getEndAt()),
+                                    requests.get(i).getStartAt(),
+                                    requests.get(i).getEndAt(),
                                     requests.get(i).getFacility(),
                                     requests.get(i).getEquipment()));
 

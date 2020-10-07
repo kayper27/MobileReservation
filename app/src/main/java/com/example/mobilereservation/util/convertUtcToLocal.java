@@ -17,7 +17,8 @@ public class convertUtcToLocal {
     public String convertUtcDateTime(String dateTime) {
         OffsetDateTime parsed = LocalDateTime.parse(dateTime.replace("Z", "")).atOffset(ZoneOffset.UTC);
         ZoneId zone = ZoneId.of("Asia/Manila");
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm:ss a");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
         return outputFormatter.format(parsed.atZoneSameInstant(zone));
     }
+
 }
