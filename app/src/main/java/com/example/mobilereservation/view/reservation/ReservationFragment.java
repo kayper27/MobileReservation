@@ -20,13 +20,14 @@ import androidx.fragment.app.FragmentManager;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.FragmentReservationBinding;
 import com.example.mobilereservation.util.DatePickerFragment;
+import com.example.mobilereservation.util.TimePickerFragment;
 import com.example.mobilereservation.viewModel.ReservationViewModel;
 
 public class ReservationFragment extends Fragment {
 
     private FragmentReservationBinding fragmentReservationBinding;
     private EditText textStratAt, textEndAt;
-    String selectedDate;
+    String schedule, selectedDate, selectedTime;
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
@@ -57,6 +58,12 @@ public class ReservationFragment extends Fragment {
                 datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
                 // show the datePicker
                 datePicker.show(getFragmentManager(), "datePicker");
+
+                DialogFragment timePicker  = new TimePickerFragment();
+                // set the targetFragment to receive the results, specifying the request code
+                timePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
+                // show the timePicker
+                timePicker.show(getFragmentManager(), "timePicker");
             }
         });
 
@@ -69,8 +76,10 @@ public class ReservationFragment extends Fragment {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // get date from string
             selectedDate = data.getStringExtra("selectedDate");
+            selectedTime = data.getStringExtra("selectedTime");
+            schedule = selectedDate +"-"+ selectedTime;
             // set the value of the editText
-            textStratAt.setText(selectedDate);
+            textStratAt.setText(schedule);
         }
     }
 
