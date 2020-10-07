@@ -48,22 +48,17 @@ public class ReservationFragment extends Fragment {
 
         final FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
 
-        // Using an onclick listener on the editText to show the datePicker
         textStratAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // create the datePickerFragment
-                DialogFragment datePicker = new DatePickerFragment();
-                // set the targetFragment to receive the results, specifying the request code
-                datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
-                // show the datePicker
-                datePicker.show(getFragmentManager(), "datePicker");
+                getDateTime();
+            }
+        });
 
-                DialogFragment timePicker  = new TimePickerFragment();
-                // set the targetFragment to receive the results, specifying the request code
-                timePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
-                // show the timePicker
-                timePicker.show(getFragmentManager(), "timePicker");
+        textEndAt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDateTime();
             }
         });
 
@@ -75,12 +70,30 @@ public class ReservationFragment extends Fragment {
         // check for the results
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // get date from string
-            selectedDate = data.getStringExtra("selectedDate");
-            selectedTime = data.getStringExtra("selectedTime");
-            schedule = selectedDate +"-"+ selectedTime;
+            if(data.getStringExtra("selectedDate") != null){
+                selectedDate = data.getStringExtra("selectedDate");
+            }
+            if(data.getStringExtra("selectedTime") != null){
+                selectedTime = data.getStringExtra("selectedTime");
+            }
+            schedule = selectedDate +" "+ selectedTime;
             // set the value of the editText
             textStratAt.setText(schedule);
         }
+    }
+
+    private void getDateTime(){
+        // create the datePickerFragment
+        DialogFragment datePicker = new DatePickerFragment();
+        // set the targetFragment to receive the results, specifying the request code
+        datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
+        // show the datePicker
+        datePicker.show(getFragmentManager(), "datePicker");
+        DialogFragment timePicker  = new TimePickerFragment();
+        // set the targetFragment to receive the results, specifying the request code
+        timePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
+        // show the timePicker
+        timePicker.show(getFragmentManager(), "timePicker");
     }
 
 }
