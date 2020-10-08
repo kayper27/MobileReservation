@@ -17,6 +17,7 @@ import java.util.Locale;
 public class DatePickerFragment  extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private static final String TAG = "DatePickerFragment";
     final Calendar c = Calendar.getInstance();
+    private DatePickerDialog datePickerDialog;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,8 +28,10 @@ public class DatePickerFragment  extends DialogFragment implements DatePickerDia
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
+        datePickerDialog = new DatePickerDialog(getActivity(), DatePickerFragment.this, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         // Return a new instance of DatePickerDialog
-        return new DatePickerDialog(getActivity(), DatePickerFragment.this, year, month, day);
+        return datePickerDialog;
     }
 
     // called when a date has been selected
@@ -36,6 +39,7 @@ public class DatePickerFragment  extends DialogFragment implements DatePickerDia
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
+
         String selectedDate = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(c.getTime());
 
         Log.d(TAG, "onDateSet: " + selectedDate);
