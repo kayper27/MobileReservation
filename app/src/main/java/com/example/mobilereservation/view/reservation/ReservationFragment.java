@@ -79,21 +79,23 @@ public class ReservationFragment extends Fragment {
             schedule = selectedDate +" "+ selectedTime;
             // set the value of the editText
             textStratAt.setText(schedule);
+
         }
     }
 
     private void getDateTime(){
+        DialogFragment timePicker  = new TimePickerFragment();
+        // set the targetFragment to receive the results, specifying the request code
+        timePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
+        // show the timePicker
+        timePicker.show(getFragmentManager(), "timePicker");
         // create the datePickerFragment
         DialogFragment datePicker = new DatePickerFragment();
         // set the targetFragment to receive the results, specifying the request code
         datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
         // show the datePicker
         datePicker.show(getFragmentManager(), "datePicker");
-        DialogFragment timePicker  = new TimePickerFragment();
-        // set the targetFragment to receive the results, specifying the request code
-        timePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
-        // show the timePicker
-        timePicker.show(getFragmentManager(), "timePicker");
+
     }
 
 }
