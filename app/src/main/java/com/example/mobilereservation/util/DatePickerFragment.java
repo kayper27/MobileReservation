@@ -39,9 +39,8 @@ public class DatePickerFragment  extends DialogFragment implements DatePickerDia
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
-
+//        boolean isSunday = c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
         String selectedDate = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(c.getTime());
-
         Log.d(TAG, "onDateSet: " + selectedDate);
         // send date back to the target fragment
         getTargetFragment().onActivityResult(
