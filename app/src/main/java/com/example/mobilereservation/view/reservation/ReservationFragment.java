@@ -51,14 +51,14 @@ public class ReservationFragment extends Fragment {
         textStratAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDateTime();
+                getDateTime(true);
             }
         });
 
         textEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDateTime();
+                getDateTime(false);
             }
         });
 
@@ -79,12 +79,12 @@ public class ReservationFragment extends Fragment {
             schedule = selectedDate +" "+ selectedTime;
             // set the value of the editText
             textStratAt.setText(schedule);
-
+            textEndAt.setText("asdfasdf asdfasdf asdf asdfas fasdf ");
         }
     }
 
-    private void getDateTime(){
-        DialogFragment timePicker  = new TimePickerFragment();
+    private void getDateTime(boolean isStartAt ){
+        DialogFragment timePicker  = new TimePickerFragment(isStartAt);
         // set the targetFragment to receive the results, specifying the request code
         timePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
         // show the timePicker

@@ -18,7 +18,11 @@ import java.util.Locale;
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
     private static final String TAG = "TimePickerDialog";
     final Calendar c = Calendar.getInstance();
+    private final boolean isStartAt;
 
+    public TimePickerFragment(boolean isStartAt){
+        this.isStartAt = isStartAt;
+    }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -36,18 +40,16 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         Calendar validateTime = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hour);
         c.set(Calendar.MINUTE, minute);
-        if( c.getTimeInMillis() >= validateTime.getTimeInMillis()){
-            String selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
-            System.out.println("|TEST| Validet time" + selectedTime);
-            Log.d(TAG, "onDateSet: " + selectedTime);
-            getTargetFragment().onActivityResult(
-                    getTargetRequestCode(),
-                    Activity.RESULT_OK,
-                    new Intent().putExtra("selectedTime", selectedTime)
-            );
+        String selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
+        if((c.getTimeInMillis() >= validateTime.getTimeInMillis()) && isStartAt){
+             selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
         }
-
-
-
+        System.out.println("|TEST| Validet time" + selectedTime);
+        Log.d(TAG, "onDateSet: " + selectedTime);
+        getTargetFragment().onActivityResult(
+                getTargetRequestCode(),
+                Activity.RESULT_OK,
+                new Intent().putExtra("selectedTime", selectedTime)
+        );
     }
 }
