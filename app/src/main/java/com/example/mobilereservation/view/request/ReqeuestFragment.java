@@ -19,6 +19,7 @@ import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
+import com.example.mobilereservation.util.convertUtcToLocal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +58,7 @@ public class ReqeuestFragment extends Fragment {
                     @Override
                     public void onSuccess(List<Request> requests) {
                         final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
+                        convertUtcToLocal dateTime = new convertUtcToLocal();
                         if(0 > requests.size()){
                             return;
                         }
@@ -66,8 +68,8 @@ public class ReqeuestFragment extends Fragment {
                                     requests.get(i).getRequest_id(),
                                     requests.get(i).getStatus(),
                                     requests.get(i).getUsername(),
-                                    requests.get(i).getStartAt(),
-                                    requests.get(i).getEndAt(),
+                                    dateTime.formatDateTime(requests.get(i).getStartAt()),
+                                    dateTime.formatDateTime(requests.get(i).getEndAt()),
                                     requests.get(i).getFacility(),
                                     requests.get(i).getEquipment()));
 
