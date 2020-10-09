@@ -16,7 +16,6 @@ public class ReservationViewModel extends BaseObservable {
     private Context context;
     private Request request;
     private Equips equipment;
-    private int mYear, mMonth, mDay, mHour, mMinute;
     private List<String> equipment_id;
     private List<String> equipment_status;
 
@@ -44,7 +43,7 @@ public class ReservationViewModel extends BaseObservable {
     }
 
     public void setRequestEndAt(String requestEnd) {
-        request.setStartAt(requestEnd);
+        request.setEndAt(requestEnd);
         notifyPropertyChanged(BR.requestEndAt);
     }
 
