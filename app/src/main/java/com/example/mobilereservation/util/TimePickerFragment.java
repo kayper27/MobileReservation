@@ -1,12 +1,11 @@
 package com.example.mobilereservation.util;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
@@ -18,10 +17,10 @@ import java.util.Locale;
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
     private static final String TAG = "TimePickerDialog";
     final Calendar c = Calendar.getInstance();
-    private final boolean isStartAt;
+    private final EditText dateTime;
 
-    public TimePickerFragment(boolean isStartAt){
-        this.isStartAt = isStartAt;
+    public TimePickerFragment(EditText dateTime){
+        this.dateTime = dateTime;
     }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,15 +40,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         c.set(Calendar.HOUR_OF_DAY, hour);
         c.set(Calendar.MINUTE, minute);
         String selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
-        if((c.getTimeInMillis() >= validateTime.getTimeInMillis()) && isStartAt){
-             selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
-        }
         System.out.println("|TEST| Validet time" + selectedTime);
         Log.d(TAG, "onDateSet: " + selectedTime);
-        getTargetFragment().onActivityResult(
-                getTargetRequestCode(),
-                Activity.RESULT_OK,
-                new Intent().putExtra("selectedTime", selectedTime)
-        );
+        dateTime.setText(dateTime.getText()+" "+selectedTime);
     }
 }

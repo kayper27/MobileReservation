@@ -1,7 +1,6 @@
 package com.example.mobilereservation.view.reservation;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,51 +50,37 @@ public class ReservationFragment extends Fragment {
         textStratAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDateTime(true);
+                textStratAt.setText("");
+                getDateTime(textStratAt);
             }
         });
-
         textEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDateTime(false);
+                textEndAt.setText("");
+                getDateTime(textEndAt);
             }
         });
-
         return root;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // check for the results
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // get date from string
-            if(data.getStringExtra("selectedDate") != null){
-                selectedDate = data.getStringExtra("selectedDate");
-            }
-            if(data.getStringExtra("selectedTime") != null){
-                selectedTime = data.getStringExtra("selectedTime");
-            }
-            schedule = selectedDate +" "+ selectedTime;
-            // set the value of the editText
-            textStratAt.setText(schedule);
-            textEndAt.setText("asdfasdf asdfasdf asdf asdfas fasdf ");
-        }
     }
 
-    private void getDateTime(boolean isStartAt ){
-        DialogFragment timePicker  = new TimePickerFragment(isStartAt);
+    private void getDateTime(EditText dateTime){
+        DialogFragment timePicker  = new TimePickerFragment(dateTime);
         // set the targetFragment to receive the results, specifying the request code
-        timePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
+        timePicker.setTargetFragment(ReservationFragment.this,  REQUEST_CODE);
         // show the timePicker
         timePicker.show(getFragmentManager(), "timePicker");
         // create the datePickerFragment
-        DialogFragment datePicker = new DatePickerFragment();
+        DialogFragment datePicker = new DatePickerFragment(dateTime);
         // set the targetFragment to receive the results, specifying the request code
         datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
         // show the datePicker
         datePicker.show(getFragmentManager(), "datePicker");
-
     }
 
 }

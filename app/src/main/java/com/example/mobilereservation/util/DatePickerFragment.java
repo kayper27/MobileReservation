@@ -1,12 +1,10 @@
 package com.example.mobilereservation.util;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
+import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -18,10 +16,14 @@ public class DatePickerFragment  extends DialogFragment implements DatePickerDia
     private static final String TAG = "DatePickerFragment";
     final Calendar c = Calendar.getInstance();
     private DatePickerDialog datePickerDialog;
+    private EditText dateTime;
+
+    public DatePickerFragment(EditText dateTime){
+        this.dateTime = dateTime;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         // Set the current date as the default date
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -42,13 +44,7 @@ public class DatePickerFragment  extends DialogFragment implements DatePickerDia
         c.set(Calendar.DAY_OF_MONTH, day);
 //        boolean isSunday = c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY; // for disabling for sundays
         String selectedDate = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(c.getTime());
-        Log.d(TAG, "onDateSet: " + selectedDate);
-        // send date back to the target fragment
-        getTargetFragment().onActivityResult(
-                getTargetRequestCode(),
-                Activity.RESULT_OK,
-                new Intent().putExtra("selectedDate", selectedDate)
-        );
+        dateTime.setText(selectedDate);
     }
 }
 
