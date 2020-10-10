@@ -54,7 +54,7 @@ public class FacilityListAdapter extends ArrayAdapter<Facility> implements View.
                 String details = "Status: " + facilityDataModel.getStatus() +
                                 "\nDecription: " +facilityDataModel.getDescription();
                 FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facilityDataModel.getFacility_id().toUpperCase(), details);
-                facilityDialogFragment.show(fragmentManager, "facility_details");
+                facilityDialogFragment.show(fragmentManager, "dialog_facility");
                 break;
         }
     }

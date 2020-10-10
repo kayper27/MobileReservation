@@ -29,7 +29,7 @@ public class FacilityDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.facility_details, container);
+        return inflater.inflate(R.layout.dialog_facility, container);
     }
 
     @Override
