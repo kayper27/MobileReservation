@@ -29,7 +29,7 @@ public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements Vie
     }
 
     public EquipmentListAdapter(List<Equipment> data, int ctr, Context context, FragmentManager fragmentManager) {
-        super(context, R.layout.equipment_row_item, data);
+        super(context, R.layout.row_equipment_item, data);
         this.ctr = ctr;
         this.equipmentDataSet = data;
         this.fragmentManager = fragmentManager;
@@ -67,7 +67,7 @@ public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements Vie
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.equipment_row_item, parent, false);
+            convertView = inflater.inflate(R.layout.row_equipment_item, parent, false);
             viewHolder.equipment_id = (TextView) convertView.findViewById(R.id.equipment_id);
             viewHolder.equipment_status = (TextView) convertView.findViewById(R.id.equipment_status);
             viewHolder.equipment_info = (ImageView) convertView.findViewById(R.id.equipment_info);
