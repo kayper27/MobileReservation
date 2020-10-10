@@ -31,7 +31,7 @@ public class EquipmentDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.equipment_details, container);
+        return inflater.inflate(R.layout.dialog_equipment, container);
     }
 
     @Override
