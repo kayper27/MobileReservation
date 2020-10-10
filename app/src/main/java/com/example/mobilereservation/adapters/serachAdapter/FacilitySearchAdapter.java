@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.databinding.FacilitySearchListBinding;
+import com.example.mobilereservation.databinding.SearchFacilityListBinding;
 import com.example.mobilereservation.adapters.listAdapter.FacilityListAdapter;
 import com.example.mobilereservation.model.Facility;
 
@@ -24,7 +24,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
     private FragmentManager fragmentManager;
     private Context context;
 
-    private FacilitySearchListBinding facilityRowBinding;
+    private SearchFacilityListBinding facilityRowBinding;
     private FacilityListAdapter adapter;
     private ArrayList<Facility> fStringFilterList;
     private ArrayList<Facility> fData;
@@ -60,7 +60,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
         }
 
         adapter = new FacilityListAdapter(fData, position, parent.getContext().getApplicationContext(), fragmentManager) ;
-        facilityRowBinding = DataBindingUtil.inflate(inflater, R.layout.facility_search_list, parent, false);
+        facilityRowBinding = DataBindingUtil.inflate(inflater, R.layout.search_facility_list, parent, false);
         ListView listView = facilityRowBinding.getRoot().findViewById(R.id.facility_search_List);
         listView.setAdapter(adapter);
         return facilityRowBinding.getRoot();
