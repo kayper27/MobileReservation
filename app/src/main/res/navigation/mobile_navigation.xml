@@ -29,4 +29,9 @@
         android:name="com.example.mobilereservation.view.schedule.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
+    <fragment
+        android:id="@+id/nav_toReturn"
+        android:name="com.example.mobilereservation.view.toReturn.ToReturnFragment"
+        android:label="To Return"
+        tools:layout="@layout/fragment_to_return" />
 </navigation>

@@ -25,4 +25,13 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_schedule"/>
     </group>
+
+    <item android:title="Administrative">
+        <menu>
+            <item
+                android:id="@+id/nav_toReturn"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/menu_toReturn"/>
+        </menu>
+    </item>
 </menu>
