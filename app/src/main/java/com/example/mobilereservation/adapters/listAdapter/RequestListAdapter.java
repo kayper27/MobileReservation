@@ -31,7 +31,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
     }
 
     public RequestListAdapter(List<Request> data, int ctr, Context context, FragmentManager fragmentManager) {
-        super(context, R.layout.request_row_item, data);
+        super(context, R.layout.row_request_item, data);
         this.ctr = ctr;
         this.requestDataSet = data;
         this.fragmentManager = fragmentManager;
@@ -70,7 +70,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.request_row_item, parent, false);
+            convertView = inflater.inflate(R.layout.row_request_item, parent, false);
             viewHolder.request_id = (TextView) convertView.findViewById(R.id.request_id);
             viewHolder.request_status = (TextView) convertView.findViewById(R.id.request_status);
             viewHolder.request_startAt = (TextView) convertView.findViewById(R.id.request_startAt);
