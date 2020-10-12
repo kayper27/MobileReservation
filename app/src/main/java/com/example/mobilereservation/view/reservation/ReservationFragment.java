@@ -10,23 +10,22 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.databinding.FragmentReservationBinding;
+import com.example.mobilereservation.databinding.MainReservationBinding;
+import com.example.mobilereservation.databinding.SlideupReservationBinding;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
 import com.example.mobilereservation.viewModel.ReservationViewModel;
 
 public class ReservationFragment extends Fragment {
 
-    private FragmentReservationBinding fragmentReservationBinding;
+    private MainReservationBinding mainReservationBinding;
+    private SlideupReservationBinding slideupReservationBinding;
     private EditText textStratAt, textEndAt;
-    String schedule, selectedDate, selectedTime;
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
@@ -36,16 +35,23 @@ public class ReservationFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentReservationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation, container, false);
-        View root = fragmentReservationBinding.getRoot();
+        View root = inflater.inflate(R.layout.fragment_reservation, container, false);
+        mainReservationBinding = DataBindingUtil.inflate(inflater, R.layout.main_reservation, container, false);
+        View childRootMain = mainReservationBinding.getRoot();
+        mainReservationBinding.setViewModel((new ReservationViewModel(getContext().getApplicationContext())));
+        mainReservationBinding.executePendingBindings();
 
-        fragmentReservationBinding.setViewModel((new ReservationViewModel(getContext().getApplicationContext())));
-        fragmentReservationBinding.executePendingBindings();
+        slideupReservationBinding = DataBindingUtil.inflate(inflater, R.layout.slideup_reservation, container, false);
+        View childRootSlideUp = slideupReservationBinding.getRoot();
+        slideupReservationBinding.reservationSearch.setActivated(true);
+        slideupReservationBinding.reservationSearch.setQueryHint("Search");
+        slideupReservationBinding.reservationSearch.onActionViewExpanded();
+        slideupReservationBinding.reservationSearch.setIconified(false);
+        slideupReservationBinding.reservationSearch.clearFocus();
 
         textStratAt = (EditText) root.findViewById(R.id.editTextStratAt);
         textEndAt = (EditText) root.findViewById(R.id.editTextEndAt);
 
-        final FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
 
         textStratAt.setOnClickListener(new View.OnClickListener() {
             @Override
