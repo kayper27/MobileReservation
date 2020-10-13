@@ -10,6 +10,7 @@
     <string name="Start">Start</string>
     <string name="Schedule">Schedule</string>
     <string name="facility">Facility</string>
+    <string name="equpment">Equipment</string>
 
     <string name="menu_facilities">Facilities</string>
     <string name="menu_equipments">Equipment</string>
