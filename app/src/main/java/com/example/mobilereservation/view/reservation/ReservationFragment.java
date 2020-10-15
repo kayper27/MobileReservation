@@ -25,7 +25,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 public class ReservationFragment extends Fragment {
 
     private MainReservationBinding mainReservationBinding;
-    private EditText textStratAt, textEndAt;
+    private EditText textStartAt, textEndAt, textFacility;
     private Button buttonAddEquipment;
     private SlidingUpPanelLayout slidingUpPanelLayout;
 
@@ -39,7 +39,6 @@ public class ReservationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_reservation, container, false);
 
-
         mainReservationBinding = DataBindingUtil.inflate(inflater, R.layout.main_reservation, container, false);
         View childRootMain = mainReservationBinding.getRoot();
         mainReservationBinding.setViewModel((new ReservationViewModel(getContext().getApplicationContext())));
@@ -48,16 +47,18 @@ public class ReservationFragment extends Fragment {
         slidingUpPanelLayout = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
 
-        textStratAt = (EditText) root.findViewById(R.id.editTextStratAt);
         slidingUpPanelLayout = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
+        textStartAt = (EditText) root.findViewById(R.id.editTextStratAt);
         textEndAt = (EditText) root.findViewById(R.id.editTextEndAt);
+        textFacility = (EditText) root.findViewById(R.id.editTextFacility);
         buttonAddEquipment = (Button) root.findViewById(R.id.reservation_add_equipment);
 
-        textStratAt.setOnClickListener(new View.OnClickListener() {
+        textStartAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textStratAt.setText("");
-                getDateTime(textStratAt);
+                textStartAt.setText("");
+                getDateTime(textStartAt);
+
             }
         });
         textEndAt.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +66,9 @@ public class ReservationFragment extends Fragment {
             public void onClick(View view) {
                 textEndAt.setText("");
                 getDateTime(textEndAt);
+            }
+        });
+
         textFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
