@@ -41,7 +41,7 @@ public class ReservationFragment extends Fragment {
 
         mainReservationBinding = DataBindingUtil.inflate(inflater, R.layout.main_reservation, container, false);
         View childRootMain = mainReservationBinding.getRoot();
-        mainReservationBinding.setViewModel((new ReservationViewModel(getContext().getApplicationContext())));
+        mainReservationBinding.setViewModel(new ReservationViewModel(getContext().getApplicationContext()));
         mainReservationBinding.executePendingBindings();
 
         slidingUpPanelLayout = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
