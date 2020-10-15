@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -19,11 +20,14 @@ import com.example.mobilereservation.databinding.MainReservationBinding;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
 import com.example.mobilereservation.viewModel.ReservationViewModel;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class ReservationFragment extends Fragment {
 
     private MainReservationBinding mainReservationBinding;
     private EditText textStratAt, textEndAt;
+    private Button buttonAddEquipment;
+    private SlidingUpPanelLayout slidingUpPanelLayout;
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
@@ -41,9 +45,13 @@ public class ReservationFragment extends Fragment {
         mainReservationBinding.setViewModel((new ReservationViewModel(getContext().getApplicationContext())));
         mainReservationBinding.executePendingBindings();
 
+        slidingUpPanelLayout = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
 
         textStratAt = (EditText) root.findViewById(R.id.editTextStratAt);
+        slidingUpPanelLayout = (SlidingUpPanelLayout) root.findViewById(R.id.sliding_layout);
         textEndAt = (EditText) root.findViewById(R.id.editTextEndAt);
+        buttonAddEquipment = (Button) root.findViewById(R.id.reservation_add_equipment);
 
         textStratAt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +65,16 @@ public class ReservationFragment extends Fragment {
             public void onClick(View view) {
                 textEndAt.setText("");
                 getDateTime(textEndAt);
+        textFacility.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            }
+        });
+        buttonAddEquipment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
         return root;
