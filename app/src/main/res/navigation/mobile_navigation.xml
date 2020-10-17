@@ -19,11 +19,11 @@
         android:name="com.example.mobilereservation.view.request.ReqeuestFragment"
         android:label="Requests"
         tools:layout="@layout/fragment_reqeuest" />
-    <fragment
-        android:id="@+id/nav_reservation"
-        android:name="com.example.mobilereservation.view.reservation.ReservationFragment"
-        android:label="Request Reservation"
-        tools:layout="@layout/fragment_reservation" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_reservation"-->
+<!--        android:name="com.example.mobilereservation.view.reservation.ReservationFragment"-->
+<!--        android:label="Request Reservation"-->
+<!--        tools:layout="@layout/fragment_reservation" />-->
     <fragment
         android:id="@+id/nav_schedule"
         android:name="com.example.mobilereservation.view.schedule.ScheduleFragment"
