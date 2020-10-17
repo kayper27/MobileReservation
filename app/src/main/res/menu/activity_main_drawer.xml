@@ -16,10 +16,10 @@
             android:id="@+id/nav_request"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_request"/>
-<!--        <item-->
-<!--            android:id="@+id/nav_reservation"-->
-<!--            android:icon="@drawable/ic_menu_slideshow"-->
-<!--            android:title="@string/menu_reservation"/>-->
+        <item
+            android:id="@+id/nav_reservation"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_reservation"/>
         <item
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_menu_slideshow"
