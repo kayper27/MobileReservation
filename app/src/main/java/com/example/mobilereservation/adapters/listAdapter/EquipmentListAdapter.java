@@ -47,7 +47,7 @@ public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements Vie
                                 "\nType: " + equipmentDataModel.getType()+
                                 "\nBrand: "+ equipmentDataModel.getBrand() +
                                 "\nModel No: "+ equipmentDataModel.getModel_no() +
-                                "\nDecription: " +equipmentDataModel.getDescription();
+                                "\nDecription: \n" +equipmentDataModel.getDescription();
                 EquipmentDialogFragment equipmentDialogFragment = EquipmentDialogFragment.newInstance(equipmentDataModel.getEquipment_id().toUpperCase(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;

@@ -50,7 +50,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                                 "\nStart:\n" +requestDataModel.getStartAt() +
                                 "\nEnd:\n" +requestDataModel.getEndAt() +
                                 "\nFacility: " +requestDataModel.getFacility() +
-                                "\nEqupment/s:  " +requestDataModel.getEquipment_id();
+                                "\nEquipments: \n" +requestDataModel.getEquipment_id();
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;

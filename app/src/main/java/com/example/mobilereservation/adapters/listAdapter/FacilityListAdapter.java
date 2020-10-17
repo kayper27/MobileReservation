@@ -52,7 +52,7 @@ public class FacilityListAdapter extends ArrayAdapter<Facility> implements View.
         {
             case R.id.facility_info:
                 String details = "Status: " + facilityDataModel.getStatus() +
-                                "\nDecription: " +facilityDataModel.getDescription();
+                                "\nDecription: \n" +facilityDataModel.getDescription();
                 FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facilityDataModel.getFacility_id().toUpperCase(), details);
                 facilityDialogFragment.show(fragmentManager, "dialog_facility");
                 break;
