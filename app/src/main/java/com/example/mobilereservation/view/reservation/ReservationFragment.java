@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
+import com.example.mobilereservation.view.request.RequestDialogFragment;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 /**
@@ -75,16 +76,22 @@ public class ReservationFragment extends Fragment {
             }
         });
 
-
         textFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance("Test", "THIS IS DISPLAYING NOTHING");
+                equipmentDialogFragment.show(getFragmentManager(), "dialog_equipment");
+
+                SlideupFragment slideupFragment = SlideupFragment.newInstance("facility");
+                getFragmentManager ().beginTransaction().replace(R.id.slidup_fragment, slideupFragment).commit();
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
         buttonAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SlideupFragment slideupFragment = SlideupFragment.newInstance("equipment");
+                getFragmentManager ().beginTransaction().replace(R.id.slidup_fragment, slideupFragment).commit();
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
