@@ -22,7 +22,6 @@ public class SlideUpFragment extends Fragment {
     private ListView listInterest;
     private Button buttonOK;
 
-
     public SlideUpFragment() {
         // Required empty public constructor
     }
@@ -38,9 +37,6 @@ public class SlideUpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            category = getArguments().getString(CATEGORY);
-        }
     }
 
     @Override
@@ -50,7 +46,6 @@ public class SlideUpFragment extends Fragment {
 
         listInterest = (ListView) childRoot.findViewById(R.id.reservation_list);
         buttonOK = (Button) childRoot.findViewById(R.id.reservation_ok);
-
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {

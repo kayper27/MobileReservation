@@ -17,12 +17,21 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.databinding.MainReservationBinding;
+import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
 import com.example.mobilereservation.viewModel.ReservationViewModel;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.util.ArrayList;
+
 public class ReservationFragment extends Fragment {
+
+    private static final String EQUIPMENTLIST = "equipmentList";
+    private ArrayList<Equipment> reservationEquipment;
+
+    private static final String FACILITY = "facility";
+    private String reservationFacility;
 
     private MainReservationBinding mainReservationBinding;
     private EditText textStartAt, textEndAt, textFacility;
@@ -31,9 +40,18 @@ public class ReservationFragment extends Fragment {
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
-    public static ReservationFragment newInstance() {
-        return new ReservationFragment();
+
+    public static ReservationFragment newInstance(@Nullable String facility, @Nullable ArrayList<Equipment> reserverEquipment) {
+        ReservationFragment fragment = new ReservationFragment();
+        Bundle args = new Bundle();
+        return fragment;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +86,7 @@ public class ReservationFragment extends Fragment {
                 getDateTime(textEndAt);
             }
         });
+   
 
         textFacility.setOnClickListener(new View.OnClickListener() {
             @Override
