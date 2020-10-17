@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.databinding.FragmentSlideupBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +18,9 @@ import com.example.mobilereservation.R;
  * create an instance of this fragment.
  */
 public class SlideupFragment extends Fragment {
+
+    private FragmentSlideupBinding slideUpFragmentBinding;
+    private Button buttonOK;
 
     public SlideupFragment() {
         // Required empty public constructor
@@ -37,7 +43,22 @@ public class SlideupFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_slideup, container, false);
+        slideUpFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_slideup, container,false);
+        View childRoot = slideUpFragmentBinding.getRoot();
+
+        buttonOK = (Button) childRoot.findViewById(R.id.reservation_ok);
+        buttonOK.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        }));
+
+        slideUpFragmentBinding.reservationSearch.setActivated(false);
+        slideUpFragmentBinding.reservationSearch.setQueryHint("Search");
+        slideUpFragmentBinding.reservationSearch.onActionViewExpanded();
+        slideUpFragmentBinding.reservationSearch.setIconified(false);
+        slideUpFragmentBinding.reservationSearch.clearFocus();
+        return  childRoot;
     }
 }
