@@ -69,7 +69,6 @@ public class SlideupFragment extends Fragment {
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonOK.setText(category);
                 ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Test", "THIS IS DISPLAYING NOTHING |"+category+"|");
                 errorDialogFragment.show(getFragmentManager(), "dialog_equipment");
             }
