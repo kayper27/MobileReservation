@@ -26,25 +26,25 @@ public class FacilityRequest {
                 .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
                     @Override
                     public void onSuccess(List<Facility> facilities) {
-                        if(0 > facilities.size()){
-                            return;
-                        }
-                        setFacility(facilities);
+                        System.out.println("|TEST| ansyc "+facilities);
+                        setFacilities(facilities);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", e.getMessage());
-                        errorDialogFragment.show(fragmentManager, "dialog_equipment");
+                        errorDialogFragment.show(fragmentManager, "dialog_error");
                     }
                 });
     }
 
-    private void setFacility(List<Facility> facilities){
+    private void setFacilities(List<Facility> facilities){
+        System.out.println("|TEST| set "+facilities);
         this.facilities = facilities;
     }
 
-    public List<Facility> getFacility(){
+    public List<Facility> getFacilities(){
+        System.out.println("|TEST| get "+this.facilities);
         return this.facilities;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.mobilereservation.view.facilities;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
 import com.example.mobilereservation.model.Facility;
-import com.example.mobilereservation.network.FacilityRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,22 +24,26 @@ public class FacilityFragment extends Fragment {
 
     private FragmentFacilityBinding facilityBinding;
     private FacilitySearchAdapter adapterSearch;
-    private FacilityRequest facility, processedFacility;
+    private List<Facility> facilities;
     private ArrayList<Facility> facilitySet = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AsyncTaskRunner asyncTask = new AsyncTaskRunner();
-        asyncTask.execute();
-
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         facilityBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_facility, container, false);
 
+        // GET Data from FacilityRequest request = new FacilityRequest()
+        //facilities = request.getFacilities()
 
+//        for (int i = 0; i < facilities.size(); i++) {
+//            facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+//        }
+//        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
+//        facilityBinding.facilityList.setAdapter(adapterSearch);
 
         facilityBinding.facilitySearch.setActivated(true);
         facilityBinding.facilitySearch.setQueryHint("Search Facility");
@@ -67,15 +69,5 @@ public class FacilityFragment extends Fragment {
             }
         });
         return facilityBinding.getRoot();
-    }
-
-    private class AsyncTaskRunner extends AsyncTask< Void, Void, List<Facility>> {
-
-        @Override
-        protected List<Facility> doInBackground(Void... voids) {
-            facility = new FacilityRequest(getActivity().getApplicationContext(), getFragmentManager());
-            return facility.getFacility();
-        }
-
     }
 }
