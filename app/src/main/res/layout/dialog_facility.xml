@@ -17,18 +17,12 @@
         android:text="Facility Title"
         android:textStyle="bold" />
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/facility_title"
+    <TextView
+        android:id="@+id/facility_detail"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:text="Facility Information"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:id="@+id/facility_detail"
-            android:layout_width="300dp"
-            android:layout_height="295dp"
-            android:text="Facility Information" />
-    </ScrollView>
+        android:layout_marginBottom="10dp"/>
 </LinearLayout>
