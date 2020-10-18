@@ -11,8 +11,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
 import com.example.mobilereservation.databinding.FragmentSlideupBinding;
-import com.example.mobilereservation.view.request.RequestDialogFragment;
+import com.example.mobilereservation.model.Facility;
+import com.example.mobilereservation.util.dialog.ErrorDialogFragment;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,19 +26,25 @@ import com.example.mobilereservation.view.request.RequestDialogFragment;
 public class SlideupFragment extends Fragment {
 
     private FragmentSlideupBinding slideUpFragmentBinding;
+    private FacilitySearchAdapter adapterSearch;
     private Button buttonOK;
 
     private static final String CATEGORY = "category";
-    private static String category = "";
+    private static final String START = "start";
+    private static final String END = "end";
+    private static String category = "", start = "", end = "";
 
+    private ArrayList<Facility> facilitySet = new ArrayList<>();
     public SlideupFragment() {
         // Required empty public constructor
     }
 
-    public static SlideupFragment newInstance(String category) {
+    public static SlideupFragment newInstance(String category, String start, String end) {
         SlideupFragment fragment = new SlideupFragment();
         Bundle args = new Bundle();
         args.putString(CATEGORY, category);
+        args.putString(START, start);
+        args.putString(END, end);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,6 +54,8 @@ public class SlideupFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             category = getArguments().getString(CATEGORY);
+            start = getArguments().getString(START);
+            end = getArguments().getString(END);
         }
     }
 
@@ -58,10 +70,13 @@ public class SlideupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 buttonOK.setText(category);
-                RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance("Test", "THIS IS DISPLAYING NOTHING |"+category+"|");
-                equipmentDialogFragment.show(getFragmentManager(), "dialog_equipment");
+                ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Test", "THIS IS DISPLAYING NOTHING |"+category+"|");
+                errorDialogFragment.show(getFragmentManager(), "dialog_equipment");
             }
         }));
+
+        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
+        slideUpFragmentBinding.reservationList.setAdapter(adapterSearch);
 
         slideUpFragmentBinding.reservationSearch.setActivated(false);
         slideUpFragmentBinding.reservationSearch.setQueryHint("Search");
