@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.view.request.RequestDialogFragment;
+import com.example.mobilereservation.util.dialog.RequestDialogFragment;
 import com.example.mobilereservation.model.Request;
 
 import java.util.List;
