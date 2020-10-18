@@ -12,4 +12,7 @@ public interface request {
     // Fetch all User Request
     @GET("booking_service/user/{username}")
     Single<List<Request>> getUserRequest(@Path("username") String username);
+
+    @GET("booking_service/user/{start}/{end}")
+    Single<List<Request>> getReservedchedule(@Path("start") String start, @Path("end") String end);
 }
