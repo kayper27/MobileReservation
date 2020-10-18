@@ -1,4 +1,4 @@
-package com.example.mobilereservation.util.dialog;
+package com.example.mobilereservation.view.dialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +11,17 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.mobilereservation.R;
 
-public class RequestDialogFragment extends DialogFragment {
+public class EquipmentDialogFragment extends DialogFragment {
     private TextView titleView, detailView;
 
-    public static RequestDialogFragment newInstance(String title, String details) {
-        RequestDialogFragment frag = new RequestDialogFragment();
+    public EquipmentDialogFragment() {
+        // Empty constructor is required for DialogFragment
+        // Make sure not to add arguments to the constructor
+        // Use `newInstance` instead as shown below
+    }
+
+    public static EquipmentDialogFragment newInstance(String title, String details) {
+        EquipmentDialogFragment frag = new EquipmentDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putString("details", details);
@@ -25,15 +31,15 @@ public class RequestDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_request, container);
+        return inflater.inflate(R.layout.dialog_equipment, container);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
-        titleView = (TextView) view.findViewById(R.id.request_title);
-        detailView = (TextView) view.findViewById(R.id.request_detail);
+        titleView = (TextView) view.findViewById(R.id.equipment_title);
+        detailView = (TextView) view.findViewById(R.id.equipment_detail);
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title");
         String details = getArguments().getString("details");
@@ -41,4 +47,3 @@ public class RequestDialogFragment extends DialogFragment {
         detailView.setText(details);
     }
 }
-

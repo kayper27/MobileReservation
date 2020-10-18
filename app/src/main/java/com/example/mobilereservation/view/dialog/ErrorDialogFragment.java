@@ -1,4 +1,4 @@
-package com.example.mobilereservation.util.dialog;
+package com.example.mobilereservation.view.dialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,15 +11,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.mobilereservation.R;
 
-public class FacilityDialogFragment extends DialogFragment {
+public class ErrorDialogFragment extends DialogFragment {
 
-    public FacilityDialogFragment() {
+    public ErrorDialogFragment() {
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
         // Use `newInstance` instead as shown below
     }
-    public static FacilityDialogFragment newInstance(String title, String details) {
-        FacilityDialogFragment frag = new FacilityDialogFragment();
+    public static ErrorDialogFragment newInstance(String title, String details) {
+        ErrorDialogFragment frag = new ErrorDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putString("details", details);
@@ -29,15 +29,15 @@ public class FacilityDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_facility, container);
+        return inflater.inflate(R.layout.dialog_error, container);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
-        TextView titleView = (TextView) view.findViewById(R.id.facility_title);
-        TextView detailView = (TextView) view.findViewById(R.id.facility_detail);
+        TextView titleView = (TextView) view.findViewById(R.id.error_title);
+        TextView detailView = (TextView) view.findViewById(R.id.error_detail);
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title");
         String details = getArguments().getString("details");

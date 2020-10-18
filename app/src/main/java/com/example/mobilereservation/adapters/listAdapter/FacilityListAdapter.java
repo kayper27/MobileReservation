@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.util.dialog.FacilityDialogFragment;
+import com.example.mobilereservation.view.dialog.FacilityDialogFragment;
 import com.example.mobilereservation.model.Facility;
 
 import java.util.ArrayList;

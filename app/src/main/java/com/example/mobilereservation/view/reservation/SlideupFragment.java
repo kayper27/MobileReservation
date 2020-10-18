@@ -14,7 +14,7 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
 import com.example.mobilereservation.databinding.FragmentSlideupBinding;
 import com.example.mobilereservation.model.Facility;
-import com.example.mobilereservation.util.dialog.ErrorDialogFragment;
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
 
