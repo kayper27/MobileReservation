@@ -13,6 +13,6 @@ public interface request {
     @GET("booking_service/user/{username}")
     Single<List<Request>> getUserRequest(@Path("username") String username);
 
-    @GET("booking_service/user/{start}/{end}")
+    @GET("booking_service/{start}/{end}")
     Single<List<Request>> getReservedchedule(@Path("start") String start, @Path("end") String end);
 }
