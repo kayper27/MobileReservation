@@ -1,5 +1,7 @@
 package com.example.mobilereservation.view.facilities;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,34 +18,29 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
 import com.example.mobilereservation.databinding.FragmentFacilityBinding;
 import com.example.mobilereservation.model.Facility;
+import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.facility;
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class FacilityFragment extends Fragment {
 
     private FragmentFacilityBinding facilityBinding;
     private FacilitySearchAdapter adapterSearch;
-    private List<Facility> facilities;
     private ArrayList<Facility> facilitySet = new ArrayList<>();
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         facilityBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_facility, container, false);
 
-        // GET Data from FacilityRequest request = new FacilityRequest()
-        //facilities = request.getFacilities()
-
-//        for (int i = 0; i < facilities.size(); i++) {
-//            facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
-//        }
-//        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
-//        facilityBinding.facilityList.setAdapter(adapterSearch);
+        FacilityAsyncTask asyncTask = new FacilityAsyncTask();
+        asyncTask.execute();
 
         facilityBinding.facilitySearch.setActivated(true);
         facilityBinding.facilitySearch.setQueryHint("Search Facility");
@@ -69,5 +66,48 @@ public class FacilityFragment extends Fragment {
             }
         });
         return facilityBinding.getRoot();
+    }
+
+    private class FacilityAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            facility api = ApiClient.getClient(getActivity().getApplicationContext()).create(facility.class);
+            DisposableSingleObserver<List<Facility>> error = api.getFacilities()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
+                        @Override
+                        public void onSuccess(List<Facility> facilities) {
+                            if(0 > facilities.size()){
+                                return;
+                            }
+
+                            for (int i = 0; i < facilities.size(); i++) {
+                                facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                            }
+                            adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
+                            facilityBinding.facilityList.setAdapter(adapterSearch);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", e.getMessage());
+                            errorDialogFragment.show(getFragmentManager(), "dialog_error");
+                        }
+                    });
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching for Facilities");
+        }
     }
 }
