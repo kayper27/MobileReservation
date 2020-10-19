@@ -56,9 +56,9 @@ public class SlideupFragment extends Fragment {
     public static SlideupFragment newInstance(String category, String start, String end) {
         SlideupFragment fragment = new SlideupFragment();
         Bundle args = new Bundle();
-        args.putString(CATEGORY, category);
-        args.putString(START, start);
-        args.putString(END, end);
+//        args.putString(CATEGORY, category);
+//        args.putString(START, start);
+//        args.putString(END, end);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,38 +66,55 @@ public class SlideupFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            category = getArguments().getString(CATEGORY);
-            start = getArguments().getString(START);
-            end = getArguments().getString(END);
-        }
+//        if (getArguments() != null) {
+//            category = getArguments().getString(CATEGORY);
+//            start = getArguments().getString(START);
+//            end = getArguments().getString(END);
+//        }
+//        if(category.equals("facility")){
+//            System.out.println("|TEST| FACILITY");
+//        }
+//        else{
+//            facilitySet = null;
+//        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         slideUpFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_slideup, container,false);
         View childRoot = slideUpFragmentBinding.getRoot();
-        Toast.makeText(getContext().getApplicationContext(), "Test", Toast.LENGTH_SHORT);
-        buttonOK = (Button) childRoot.findViewById(R.id.reservation_ok);
 
+        buttonOK = (Button) childRoot.findViewById(R.id.reservation_ok);
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Test", "THIS IS DISPLAYING NOTHING |"+category+"|");
-                errorDialogFragment.show(getFragmentManager(), "dialog_equipment");
                 ReservationAsyncTask asyncTask = new ReservationAsyncTask(start, end);
                 asyncTask.execute();
             }
         }));
-
-        adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
-        slideUpFragmentBinding.reservationList.setAdapter(adapterSearch);
 
         slideUpFragmentBinding.reservationSearch.setActivated(false);
         slideUpFragmentBinding.reservationSearch.setQueryHint("Search");
         slideUpFragmentBinding.reservationSearch.onActionViewExpanded();
         slideUpFragmentBinding.reservationSearch.setIconified(false);
         slideUpFragmentBinding.reservationSearch.clearFocus();
+        slideUpFragmentBinding.reservationSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(0 <  facilitySet.size()){ // CHANGE TO NOT SET TO facility arraylist
+                    adapterSearch.getFilter().filter(newText);
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Empty", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
         return  childRoot;
     }
     private class ReservationAsyncTask extends AsyncTask<Void, Void, Void> {

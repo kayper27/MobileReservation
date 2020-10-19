@@ -78,16 +78,16 @@ public class ReservationFragment extends Fragment {
         textFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlideupFragment slideupFragment = SlideupFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
-                getFragmentManager().beginTransaction().replace(R.id.slidup_fragment, slideupFragment).commit();
+//                SlideupFragment slideupFragment = SlideupFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
+//                getFragmentManager().beginTransaction().replace(R.id.slidup_fragment, slideupFragment).commit();
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
         buttonAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlideupFragment slideupFragment = SlideupFragment.newInstance("equipment", textStartAt.getText().toString(), textEndAt.getText().toString());
-                getFragmentManager().beginTransaction().replace(R.id.slidup_fragment, slideupFragment).commit();
+//                SlideupFragment slideupFragment = SlideupFragment.newInstance("equipment", textStartAt.getText().toString(), textEndAt.getText().toString());
+//                getFragmentManager().beginTransaction().replace(R.id.slidup_fragment, slideupFragment).commit();
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
