@@ -8,19 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
 import com.example.mobilereservation.databinding.FragmentBottomsSheetBinding;
+import com.example.mobilereservation.model.Facility;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.facility;
 import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -38,7 +43,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private static final String END = "end";
     private static String category = "", start = "", end = "";
 
-    FragmentBottomsSheetBinding fragmentBottomsSheetBinding;
+    private FragmentBottomsSheetBinding fragmentBottomsSheetBinding;
+    private ProgressDialog progressDialog;
+    private FacilitySearchAdapter adapterSearch;
+
+    private List<Request> requestSet = new ArrayList<>();
+    private ArrayList<Facility> facilitySet = new ArrayList<>();
 
     public BottomSheetFragment() {}
 
@@ -57,6 +67,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentBottomsSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottoms_sheet, container, false);
         View root = fragmentBottomsSheetBinding.getRoot();
+
+        FacilityAsyncTask facilityAsyncTask = new FacilityAsyncTask();
+        facilityAsyncTask.execute();
 
         buttonOK = (Button) root.findViewById(R.id.reservation_ok);
         buttonOK.setOnClickListener((new View.OnClickListener() {
@@ -80,6 +93,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(0 <  facilitySet.size()){
+                    adapterSearch.getFilter().filter(newText);
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Search is empty", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });
@@ -89,11 +108,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * .85);//85% of screen height
+        layoutParams.height = height;
+        view.setLayoutParams(layoutParams);
     }
 
     private class ReservationAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        ProgressDialog progressDialog;
 
         private String start, end;
 
@@ -129,6 +150,48 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching for Facilities");
+        }
+    }
+
+
+    private class FacilityAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            facility api = ApiClient.getClient(getActivity().getApplicationContext()).create(facility.class);
+            DisposableSingleObserver<List<Facility>> error = api.getFacilities()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
+                        @Override
+                        public void onSuccess(List<Facility> facilities) {
+                            if(0 > facilities.size()){
+                                return;
+                            }
+
+                            for (int i = 0; i < facilities.size(); i++) {
+                                facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                            }
+                            adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
+                            fragmentBottomsSheetBinding.reservationList.setAdapter(adapterSearch);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", e.getMessage());
+                            errorDialogFragment.show(getFragmentManager(), "dialog_error");
+                        }
+                    });
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching Facilities");
         }
     }
 }
