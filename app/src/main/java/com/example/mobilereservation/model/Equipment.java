@@ -1,6 +1,9 @@
 package com.example.mobilereservation.model;
 
+import androidx.annotation.Nullable;
+
 public class Equipment {
+    private Boolean checked;
     private String equipment_id;
     private String status;
     private String category;
@@ -9,7 +12,7 @@ public class Equipment {
     private String type;
     private String description;
 
-    public Equipment(String equipment_id, String status, String category, String brand, String model_no, String type, String description) {
+    public Equipment(String equipment_id, String status, String category, String brand, String model_no, String type, String description, @Nullable Boolean checked) {
         this.equipment_id = equipment_id;
         this.status = status;
         this.category = category;
@@ -17,6 +20,7 @@ public class Equipment {
         this.model_no = model_no;
         this.type = type;
         this.description = description;
+        this.checked = checked;
     }
 
     public String getEquipment_id(){
@@ -45,5 +49,13 @@ public class Equipment {
 
     public String getDescription(){
         return description;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }

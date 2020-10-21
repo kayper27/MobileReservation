@@ -8,24 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.adapters.serachAdapter.EquipmentSearchAdapter;
 import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
 import com.example.mobilereservation.databinding.FragmentBottomsSheetBinding;
+import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Facility;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.equipment;
 import com.example.mobilereservation.network.apiService.facility;
 import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,10 +45,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private String category = "", start = "", end = "";
 
     private FragmentBottomsSheetBinding fragmentBottomsSheetBinding;
-    private FacilitySearchAdapter adapterSearch;
+    private FacilitySearchAdapter facilityAdapterSearch;
+    private EquipmentSearchAdapter equipmentSearchAdapter;
 
     private List<Request> requestSet = new ArrayList<>();
     private ArrayList<Facility> facilitySet = new ArrayList<>();
+    private ArrayList<Equipment> equipmentSet = new ArrayList<>();
 
     public BottomSheetFragment() {}
 
@@ -73,6 +78,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         if(category.equals("facility")){
             FacilityAsyncTask facilityAsyncTask = new FacilityAsyncTask();
             facilityAsyncTask.execute();
+        }
+        else{
+            EquipmentAsyncTask equipmentAsyncTask = new EquipmentAsyncTask();
+            equipmentAsyncTask.execute();
         }
     }
 
@@ -181,8 +190,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                     facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
                                 }
                             }
-                            adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet, true);
-                            fragmentBottomsSheetBinding.reservationList.setAdapter(adapterSearch);
+                            facilityAdapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet, true);
+                            fragmentBottomsSheetBinding.reservationList.setAdapter(facilityAdapterSearch);
                         }
 
                         @Override
@@ -201,6 +210,56 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching Facilities");
+        }
+    }
+
+    private class EquipmentAsyncTask extends AsyncTask<Void, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            equipment api = ApiClient.getClient(getActivity().getApplicationContext()).create(equipment.class);
+            DisposableSingleObserver<List<Equipment>> error = api.getEquipments()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<List<Equipment>>() {
+                        @Override
+                        public void onSuccess(List<Equipment> equipments) {
+                            final HashMap<String, List<Equipment>> expandalbleList = new HashMap<>();
+                            if(0 > equipments.size()){
+                                return;
+                            }
+                            for (int i = 0; i < equipmentSet.size(); i++) {
+                                equipmentSet.add(new Equipment(
+                                        equipments.get(i).getEquipment_id(),
+                                        equipments.get(i).getStatus(),
+                                        equipments.get(i).getCategory(),
+                                        equipments.get(i).getBrand(),
+                                        equipments.get(i).getModel_no(),
+                                        equipments.get(i).getType(),
+                                        equipments.get(i).getDescription(),
+                                        false)
+                                );
+                            }
+                            equipmentSearchAdapter = new EquipmentSearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), equipmentSet, true);
+                            fragmentBottomsSheetBinding.reservationList.setAdapter(equipmentSearchAdapter);
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", e.getMessage());
+                            errorDialogFragment.show(getFragmentManager(), "dialog_error");
+                        }
+                    });
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching Equipments");
         }
     }
 

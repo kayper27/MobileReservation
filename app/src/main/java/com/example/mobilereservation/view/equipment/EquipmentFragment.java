@@ -107,7 +107,8 @@ public class EquipmentFragment extends Fragment {
                                         equipments.get(i).getBrand(),
                                         equipments.get(i).getModel_no(),
                                         equipments.get(i).getType(),
-                                        equipments.get(i).getDescription())
+                                        equipments.get(i).getDescription(),
+                                        null)
                                 );
                                 if(i == equipments.size()-1){
                                     saveSeparatedEquipment();

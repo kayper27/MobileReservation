@@ -88,6 +88,8 @@ public class ReservationFragment extends Fragment {
             public void onClick(View v) {
                 if(true || isSchduleValid()){ // Change this when done coding
                     changeSchedule.setVisibility(View.VISIBLE);
+                    BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("equipment", textStartAt.getText().toString(), textEndAt.getText().toString());
+                    bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
             }
         });
