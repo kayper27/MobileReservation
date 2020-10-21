@@ -16,6 +16,7 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.listAdapter.FacilityCheckBocListAdapter;
 import com.example.mobilereservation.adapters.listAdapter.FacilityListAdapter;
 import com.example.mobilereservation.databinding.SearchFacilityListBinding;
+import com.example.mobilereservation.databinding.SearchReseravtionListBinding;
 import com.example.mobilereservation.model.Facility;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
     private Context context;
     private Boolean flagCheckbox;
 
+    private SearchReseravtionListBinding searchReseravtionListBinding;
     private SearchFacilityListBinding facilityRowBinding;
     private FacilityListAdapter adapterList;
     private FacilityCheckBocListAdapter adapterCheckBox;
@@ -62,18 +64,21 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
         if (inflater == null) {
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        facilityRowBinding = DataBindingUtil.inflate(inflater, R.layout.search_facility_list, parent, false);
-        ListView listView = facilityRowBinding.getRoot().findViewById(R.id.facility_search_List);
 
         if(flagCheckbox.equals(false)){
+            facilityRowBinding = DataBindingUtil.inflate(inflater, R.layout.search_facility_list, parent, false);
+            ListView listView = facilityRowBinding.getRoot().findViewById(R.id.facility_search_List);
             adapterList = new FacilityListAdapter(fData, position, parent.getContext().getApplicationContext(), fragmentManager);
             listView.setAdapter(adapterList);
+            return facilityRowBinding.getRoot();
         }
         else{
+            searchReseravtionListBinding = DataBindingUtil.inflate(inflater, R.layout.search_reseravtion_list, parent, false);
+            ListView listView = searchReseravtionListBinding.getRoot().findViewById(R.id.reservation_search_List);
             adapterCheckBox = new FacilityCheckBocListAdapter(fData, position, parent.getContext().getApplicationContext(), fragmentManager);
             listView.setAdapter(adapterCheckBox);
+            return searchReseravtionListBinding.getRoot();
         }
-        return facilityRowBinding.getRoot();
     }
 
     @Override
