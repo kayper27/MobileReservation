@@ -170,9 +170,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                             }
 
                             for (int i = 0; i < facilities.size(); i++) {
-                                facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                                facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
                             }
-                            adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
+                            adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet, true);
                             fragmentBottomsSheetBinding.reservationList.setAdapter(adapterSearch);
                         }
 

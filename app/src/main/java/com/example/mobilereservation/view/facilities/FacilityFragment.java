@@ -86,9 +86,9 @@ public class FacilityFragment extends Fragment {
                             }
 
                             for (int i = 0; i < facilities.size(); i++) {
-                                facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription()));
+                                facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), null));
                             }
-                            adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet);
+                            adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet, false);
                             facilityBinding.facilityList.setAdapter(adapterSearch);
                         }
 

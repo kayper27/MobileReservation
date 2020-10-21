@@ -13,8 +13,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.databinding.SearchFacilityListBinding;
+import com.example.mobilereservation.adapters.listAdapter.FacilityCheckBocListAdapter;
 import com.example.mobilereservation.adapters.listAdapter.FacilityListAdapter;
+import com.example.mobilereservation.databinding.SearchFacilityListBinding;
 import com.example.mobilereservation.model.Facility;
 
 import java.util.ArrayList;
@@ -23,17 +24,20 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
 
     private FragmentManager fragmentManager;
     private Context context;
+    private Boolean flagCheckbox;
 
     private SearchFacilityListBinding facilityRowBinding;
-    private FacilityListAdapter adapter;
+    private FacilityListAdapter adapterList;
+    private FacilityCheckBocListAdapter adapterCheckBox;
     private ArrayList<Facility> fStringFilterList;
     private ArrayList<Facility> fData;
     private ValueFilter valueFilter;
     private LayoutInflater inflater;
 
-    public FacilitySearchAdapter(Context context, FragmentManager fragmentManager, ArrayList<Facility> cancel_type) {
+    public FacilitySearchAdapter(Context context, FragmentManager fragmentManager, ArrayList<Facility> cancel_type, Boolean flagCheckbox) {
         this.fragmentManager = fragmentManager;
         this.context = context;
+        this.flagCheckbox = flagCheckbox;
         fData = cancel_type;
         fStringFilterList = cancel_type;
     }
@@ -58,11 +62,17 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
         if (inflater == null) {
             inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-
-        adapter = new FacilityListAdapter(fData, position, parent.getContext().getApplicationContext(), fragmentManager) ;
         facilityRowBinding = DataBindingUtil.inflate(inflater, R.layout.search_facility_list, parent, false);
         ListView listView = facilityRowBinding.getRoot().findViewById(R.id.facility_search_List);
-        listView.setAdapter(adapter);
+
+        if(flagCheckbox.equals(false)){
+            adapterList = new FacilityListAdapter(fData, position, parent.getContext().getApplicationContext(), fragmentManager);
+            listView.setAdapter(adapterList);
+        }
+        else{
+            adapterCheckBox = new FacilityCheckBocListAdapter(fData, position, parent.getContext().getApplicationContext(), fragmentManager);
+            listView.setAdapter(adapterCheckBox);
+        }
         return facilityRowBinding.getRoot();
     }
 
