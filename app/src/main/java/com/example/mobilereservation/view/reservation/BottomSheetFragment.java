@@ -67,6 +67,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             start = getArguments().getString(START);
             end = getArguments().getString(START);
         }
+        ReservationAsyncTask reservationAsyncTask = new ReservationAsyncTask(start, end);
+        reservationAsyncTask.execute();
+
         if(category.equals("facility")){
             FacilityAsyncTask facilityAsyncTask = new FacilityAsyncTask();
             facilityAsyncTask.execute();
@@ -141,7 +144,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {
                         @Override
                         public void onSuccess(List<Request> requests) {
-                            System.out.println("|TEST| "+requests.toString());
+                            requestSet = requests;
                         }
                         @Override
                         public void onError(Throwable e) {
@@ -178,9 +181,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                             if(0 > facilities.size()){
                                 return;
                             }
-
                             for (int i = 0; i < facilities.size(); i++) {
-                                facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
+                                if(!requestSet.get(0).getFacility().equals(facilities.get(i).getFacility_id())){
+                                    facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
+                                }
                             }
                             adapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet, true);
                             fragmentBottomsSheetBinding.reservationList.setAdapter(adapterSearch);
