@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,15 +76,19 @@ public class ReservationFragment extends Fragment {
         textFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeSchedule.setVisibility(View.VISIBLE);
-                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
-                bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
+                if(true || isSchduleValid()){ // Change this when done coding
+                    changeSchedule.setVisibility(View.VISIBLE);
+                    BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
+                    bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
+                }
             }
         });
         buttonAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeSchedule.setVisibility(View.VISIBLE);
+                if(true || isSchduleValid()){ // Change this when done coding
+                    changeSchedule.setVisibility(View.VISIBLE);
+                }
             }
         });
         changeSchedule.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +103,8 @@ public class ReservationFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 textStartAt.setText("");
                                 textEndAt.setText("");
+                                textStartAt.setEnabled(true);
+                                textEndAt.setEnabled(true);
                                 textFacility.setText("");
                                 changeSchedule.setVisibility(View.GONE);
                             }
@@ -131,5 +138,19 @@ public class ReservationFragment extends Fragment {
         datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
         // show the datePicker
         datePicker.show(getFragmentManager(), "datePicker");
+    }
+
+    public boolean isSchduleValid(){
+        boolean flag = false;
+        if(textStartAt.getText().length() != 15 || textEndAt.getText().length() != 15){
+            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select your schedule");
+            errorDialogFragment.show(getFragmentManager(), "dialog_error");
+        }
+        else{
+            textStartAt.setEnabled(false);
+            textEndAt.setEnabled(false);
+            flag = true;
+        }
+        return flag;
     }
 }
