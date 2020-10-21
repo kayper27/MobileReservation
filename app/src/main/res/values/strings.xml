@@ -11,6 +11,8 @@
     <string name="Schedule">Schedule</string>
     <string name="facility">Facility</string>
     <string name="equpment">Equipment</string>
+    <string name="submit">Submit</string>
+    <string name="change_schedule">change schedule</string>
 
     <string name="menu_facilities">Facilities</string>
     <string name="menu_equipments">Equipment</string>
