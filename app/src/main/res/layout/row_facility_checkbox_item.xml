@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -22,8 +21,8 @@
         android:layout_below="@+id/facility_id"
         android:layout_marginTop="5dp"
         android:text="Available"
-        android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 
 
     <ImageView
@@ -44,8 +43,10 @@
         android:layout_alignBottom="@+id/facility_info"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
+        android:layout_marginStart="38dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="27dp"/>
+        android:layout_marginRight="27dp"
+        android:layout_toEndOf="@+id/facility_info" />
 
 </RelativeLayout>
