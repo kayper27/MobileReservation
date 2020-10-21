@@ -72,7 +72,7 @@ public class ReservationFragment extends Fragment {
         textFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
                 bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
             }
         });

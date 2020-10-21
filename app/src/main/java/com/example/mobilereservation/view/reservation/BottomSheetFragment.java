@@ -34,14 +34,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
-    private static final String TAG = "BottomSheet";
-
     private Button buttonOK;
 
     private static final String CATEGORY = "category";
     private static final String START = "start";
     private static final String END = "end";
-    private static String category = "", start = "", end = "";
+    private String category = "", start = "", end = "";
 
     private FragmentBottomsSheetBinding fragmentBottomsSheetBinding;
     private ProgressDialog progressDialog;
@@ -62,21 +60,33 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         return frag;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            category = getArguments().getString(CATEGORY);
+            start = getArguments().getString(START);
+            end = getArguments().getString(START);
+        }
+        if(category.equals("facility")){
+            FacilityAsyncTask facilityAsyncTask = new FacilityAsyncTask();
+            facilityAsyncTask.execute();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentBottomsSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottoms_sheet, container, false);
         View root = fragmentBottomsSheetBinding.getRoot();
 
-        FacilityAsyncTask facilityAsyncTask = new FacilityAsyncTask();
-        facilityAsyncTask.execute();
-
         buttonOK = (Button) root.findViewById(R.id.reservation_ok);
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ReservationAsyncTask asyncTask = new ReservationAsyncTask(start, end);
-//                asyncTask.execute();
+                if(validateFacility() && category.equals("facility")){
+                    System.out.println("|TEST| valid "+getSelectFacility());
+                }
             }
         }));
 
@@ -193,5 +203,32 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching Facilities");
         }
+    }
+
+    public boolean validateFacility(){
+        boolean flag = false;
+        for(int i = 0, ctr = 0; i < facilitySet.size(); i ++){
+            if (facilitySet.get(i).getChecked().equals(true)) {
+                ctr++;
+                flag = true;
+                if(ctr > 1){
+                    flag = false;
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 1 facility only "+category);
+                    errorDialogFragment.show(getFragmentManager(), "dialog_error");
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public String getSelectFacility(){
+        String facilityID = "";
+        for(int i = 0, ctr = 0; i < facilitySet.size(); i ++){
+            if (facilitySet.get(i).getChecked().equals(true)) {
+                facilityID = facilitySet.get(i).getFacility_id();
+            }
+        }
+        return facilityID;
     }
 }
