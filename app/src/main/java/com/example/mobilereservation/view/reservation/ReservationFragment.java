@@ -1,5 +1,7 @@
 package com.example.mobilereservation.view.reservation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,7 @@ import com.example.mobilereservation.util.TimePickerFragment;
 public class ReservationFragment extends Fragment {
 
     private EditText textStartAt, textEndAt, textFacility;
-    private Button buttonAddEquipment;
+    private Button changeSchedule, buttonAddEquipment;
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
@@ -52,6 +54,7 @@ public class ReservationFragment extends Fragment {
         textStartAt = (EditText) root.findViewById(R.id.editTextStratAt);
         textEndAt = (EditText) root.findViewById(R.id.editTextEndAt);
         textFacility = (EditText) root.findViewById(R.id.editTextFacility);
+        changeSchedule = (Button) root.findViewById(R.id.reservation_change_schedule);
         buttonAddEquipment = (Button) root.findViewById(R.id.reservation_add_equipment);
 
         textStartAt.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +75,7 @@ public class ReservationFragment extends Fragment {
         textFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeSchedule.setVisibility(View.VISIBLE);
                 BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
                 bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
             }
@@ -79,10 +83,38 @@ public class ReservationFragment extends Fragment {
         buttonAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                changeSchedule.setVisibility(View.VISIBLE);
             }
         });
+        changeSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Changing your schedule now will erase everything.");
+                builder.setCancelable(true);
+                builder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                textStartAt.setText("");
+                                textEndAt.setText("");
+                                textFacility.setText("");
+                                changeSchedule.setVisibility(View.GONE);
+                            }
+                        });
 
+                builder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         return root;
     }
