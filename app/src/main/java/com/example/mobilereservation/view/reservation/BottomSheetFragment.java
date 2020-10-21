@@ -42,7 +42,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private String category = "", start = "", end = "";
 
     private FragmentBottomsSheetBinding fragmentBottomsSheetBinding;
-    private ProgressDialog progressDialog;
     private FacilitySearchAdapter adapterSearch;
 
     private List<Request> requestSet = new ArrayList<>();
@@ -125,7 +124,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     private class ReservationAsyncTask extends AsyncTask<Void, Void, Void> {
-
+        ProgressDialog progressDialog;
         private String start, end;
 
         ReservationAsyncTask(String start, String end){
@@ -159,12 +158,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching for Facilities");
+            progressDialog = ProgressDialog.show(getContext(), "Processing", "Validating Request");
         }
     }
 
 
     private class FacilityAsyncTask extends AsyncTask<Void, Void, Void> {
+        ProgressDialog progressDialog;
 
         @Override
         protected Void doInBackground(Void... voids) {
