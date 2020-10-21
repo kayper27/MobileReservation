@@ -105,12 +105,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(0 <  facilitySet.size()){
-                    adapterSearch.getFilter().filter(newText);
-                }
-                else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Search is empty", Toast.LENGTH_SHORT).show();
-                }
+
                 return false;
             }
         });
