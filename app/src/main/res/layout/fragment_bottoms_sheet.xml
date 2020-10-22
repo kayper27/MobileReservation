@@ -23,7 +23,7 @@
         <ListView
             android:id="@+id/reservation_list"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="600dp"
             android:layout_below="@+id/reservation_search"
             android:layout_alignParentStart="true">
 
