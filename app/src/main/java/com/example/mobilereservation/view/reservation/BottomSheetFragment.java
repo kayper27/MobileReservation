@@ -29,7 +29,6 @@ import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -51,7 +50,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     private List<Request> requestSet = new ArrayList<>();
     private ArrayList<Facility> filteredFacilities = new ArrayList<>();
-    private ArrayList<Equipment> equipmentSet = new ArrayList<>();
+    private ArrayList<Equipment> filteredEquipments = new ArrayList<>();
 
     public BottomSheetFragment() {}
 
@@ -121,7 +120,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 if(category.equals("facility") && filteredFacilities.size() > 0){
                     facilityAdapterSearch.getFilter().filter(newText);
                 }
-                else if(category.equals("equipment") && equipmentSet.size() > 0){
+                else if(category.equals("equipment") && filteredEquipments.size() > 0){
                     equipmentSearchAdapter.getFilter().filter(newText);
                 }
                 else{
@@ -246,12 +245,34 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     .subscribeWith(new DisposableSingleObserver<List<Equipment>>() {
                         @Override
                         public void onSuccess(List<Equipment> equipments) {
-                            final HashMap<String, List<Equipment>> expandalbleList = new HashMap<>();
                             if(0 > equipments.size()){
                                 return;
                             }
+                            ArrayList<Equipment> equipmentTemp = new ArrayList<>();
+
+                            for(int i = 0; i < requestSet.size(); i++){ // Get size of request
+                                for(int y = 0; y < requestSet.get(i).getEquipment().getEquipment_id().size(); y++){ // Get size of Equipment array of request
+                                    for(int x = 0; x < equipments.size(); x++){  // Filter equipment
+                                        if(!requestSet.get(i).getEquipment().getEquipment_id().get(y).equals(equipments.get(x).getEquipment_id())){
+                                            equipmentTemp.add(new Equipment(
+                                                    equipments.get(x).getEquipment_id(),
+                                                    equipments.get(x).getStatus(),
+                                                    equipments.get(x).getCategory(),
+                                                    equipments.get(x).getBrand(),
+                                                    equipments.get(x).getModel_no(),
+                                                    equipments.get(x).getType(),
+                                                    equipments.get(x).getDescription(),
+                                                    false)
+                                            );
+                                        }
+                                    }
+                                }
+                                equipments = equipmentTemp;
+                                equipmentTemp = new ArrayList<>();
+                            }
+
                             for (int i = 0; i < equipments.size(); i++) {
-                                equipmentSet.add(new Equipment(
+                                filteredEquipments.add(new Equipment(
                                         equipments.get(i).getEquipment_id(),
                                         equipments.get(i).getStatus(),
                                         equipments.get(i).getCategory(),
@@ -262,7 +283,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                         false)
                                 );
                             }
-                            equipmentSearchAdapter = new EquipmentSearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), equipmentSet, true);
+                            equipmentSearchAdapter = new EquipmentSearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), filteredEquipments, true);
                             fragmentBottomsSheetBinding.reservationList.setAdapter(equipmentSearchAdapter);
                         }
                         @Override
@@ -313,8 +334,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public boolean validateEquiopment(){
         boolean flag = false;
-        for(int i = 0, ctr = 0; i < equipmentSet.size(); i ++){
-            if (equipmentSet.get(i).getChecked().equals(true)) {
+        for(int i = 0, ctr = 0; i < filteredEquipments.size(); i ++){
+            if (filteredEquipments.get(i).getChecked().equals(true)) {
                 ctr++;
                 flag = true;
                 if(ctr > 5){
@@ -330,9 +351,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public List<Equipment> getSelectedEquipments(){
         List<Equipment> selectedEquipment = new ArrayList<>();
-        for(int i = 0, ctr = 0; i < equipmentSet.size(); i ++){
-            if (equipmentSet.get(i).getChecked().equals(true)) {
-                selectedEquipment.add(equipmentSet.get(i));
+        for(int i = 0, ctr = 0; i < filteredEquipments.size(); i ++){
+            if (filteredEquipments.get(i).getChecked().equals(true)) {
+                selectedEquipment.add(filteredEquipments.get(i));
             }
         }
         return selectedEquipment;
