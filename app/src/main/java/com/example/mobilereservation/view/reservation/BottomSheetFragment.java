@@ -219,7 +219,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         @Override
         protected Void doInBackground(Void... voids) {
             equipment api = ApiClient.getClient(getActivity().getApplicationContext()).create(equipment.class);
-            DisposableSingleObserver<List<Equipment>> error = api.getEquipments()
+            DisposableSingleObserver<List<Equipment>> error = api.getAvailableEquipments()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<List<Equipment>>() {

@@ -12,4 +12,6 @@ public interface equipment {
     @GET("equipment_management")
     Single<List<Equipment>> getEquipments();
 
+    @GET("equipment_management/status/available")
+    Single<List<Equipment>> getAvailableEquipments();
 }
