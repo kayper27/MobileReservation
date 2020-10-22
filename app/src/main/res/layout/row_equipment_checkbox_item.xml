@@ -5,11 +5,11 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/equipment_id"
+        android:id="@+id/equipment_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Equp001"
+        android:text="Projector"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/black" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/equipment_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/equipment_id"
+        android:layout_below="@+id/equipment_type"
         android:layout_marginTop="5dp"
         android:text="Available"
         android:textColor="@android:color/black"

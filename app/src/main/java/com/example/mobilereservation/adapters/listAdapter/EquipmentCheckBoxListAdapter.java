@@ -23,7 +23,7 @@ public class EquipmentCheckBoxListAdapter extends ArrayAdapter<Equipment> implem
     private int ctr;
 
     private static class ViewHolder {
-        TextView equipment_id;
+        TextView equipment_type;
         TextView equipment_status;
         ImageView equipment_info;
         CheckBox equipment_checkBox;
@@ -73,7 +73,7 @@ public class EquipmentCheckBoxListAdapter extends ArrayAdapter<Equipment> implem
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_equipment_checkbox_item, parent, false);
-            viewHolder.equipment_id = (TextView) convertView.findViewById(R.id.equipment_id);
+            viewHolder.equipment_type = (TextView) convertView.findViewById(R.id.equipment_type);
             viewHolder.equipment_status = (TextView) convertView.findViewById(R.id.equipment_status);
             viewHolder.equipment_info = (ImageView) convertView.findViewById(R.id.equipment_info);
             viewHolder.equipment_checkBox = (CheckBox) convertView.findViewById(R.id.equipment_checkBox);
@@ -85,7 +85,7 @@ public class EquipmentCheckBoxListAdapter extends ArrayAdapter<Equipment> implem
             result=convertView;
         }
 
-        viewHolder.equipment_id.setText(equipmentDataSet.getEquipment_id());
+        viewHolder.equipment_type.setText(equipmentDataSet.getType());
         viewHolder.equipment_status.setText(equipmentDataSet.getStatus());
         viewHolder.equipment_info.setOnClickListener(this);
         viewHolder.equipment_info.setTag(ctr);
