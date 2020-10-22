@@ -24,8 +24,10 @@ import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
  */
 public class ReservationFragment extends Fragment {
 
+    private static final String EQUIPMENT = "equipment";
+
     private EditText textStartAt, textEndAt, textFacility;
-    private Button changeSchedule, buttonAddEquipment;
+    private Button changeSchedule, buttonAddEquipment, submitButton;
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
@@ -57,6 +59,7 @@ public class ReservationFragment extends Fragment {
         textFacility = (EditText) root.findViewById(R.id.editTextFacility);
         changeSchedule = (Button) root.findViewById(R.id.reservation_change_schedule);
         buttonAddEquipment = (Button) root.findViewById(R.id.reservation_add_equipment);
+        submitButton = (Button) root.findViewById(R.id.reservation_submit_button);
 
         textStartAt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +125,12 @@ public class ReservationFragment extends Fragment {
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+            }
+        });
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
             }
         });
 
