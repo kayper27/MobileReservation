@@ -280,8 +280,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 flag = true;
                 if(ctr > 1){
                     flag = false;
-                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 1 facility only "+category);
-                    errorDialogFragment.show(getFragmentManager(), "dialog_error");
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 1 facility only ");
+                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                     break;
                 }
             }
