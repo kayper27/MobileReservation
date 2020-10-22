@@ -229,7 +229,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                             if(0 > equipments.size()){
                                 return;
                             }
-                            for (int i = 0; i < equipmentSet.size(); i++) {
+                            for (int i = 0; i < equipments.size(); i++) {
                                 equipmentSet.add(new Equipment(
                                         equipments.get(i).getEquipment_id(),
                                         equipments.get(i).getStatus(),
