@@ -198,7 +198,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                 return;
                             }
                             for (int i = 0; i < facilities.size(); i++) {
-                                if(!requestSet.get(0).getFacility().equals(facilities.get(i).getFacility_id())){
+                                if(!requestSet.get(i).getFacility().equals(facilities.get(i).getFacility_id())){
                                     facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
                                 }
                             }
