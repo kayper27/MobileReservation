@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -114,7 +115,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                if(category.equals("facility") && facilitySet.size() > 0){
+                    facilityAdapterSearch.getFilter().filter(newText);
+                }
+                else if(category.equals("equipment") && equipmentSet.size() > 0){
+                    equipmentSearchAdapter.getFilter().filter(newText);
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Search is empty", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });
