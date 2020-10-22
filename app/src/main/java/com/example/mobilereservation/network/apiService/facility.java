@@ -11,4 +11,7 @@ public interface facility {
     // Fetch all Facility
     @GET("facility_management")
     Single<List<Facility>> getFacilities();
+
+    @GET("facility_management/status/available")
+    Single<List<Facility>> getAvailableFacilities();
 }
