@@ -50,7 +50,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private EquipmentSearchAdapter equipmentSearchAdapter;
 
     private List<Request> requestSet = new ArrayList<>();
-    private ArrayList<Facility> facilitySet = new ArrayList<>();
+    private ArrayList<Facility> filteredFacilities = new ArrayList<>();
     private ArrayList<Equipment> equipmentSet = new ArrayList<>();
 
     public BottomSheetFragment() {}
@@ -118,7 +118,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(category.equals("facility") && facilitySet.size() > 0){
+                if(category.equals("facility") && filteredFacilities.size() > 0){
                     facilityAdapterSearch.getFilter().filter(newText);
                 }
                 else if(category.equals("equipment") && equipmentSet.size() > 0){
@@ -197,12 +197,21 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                             if(0 > facilities.size()){
                                 return;
                             }
-                            for (int i = 0; i < facilities.size(); i++) {
-                                if(!requestSet.get(i).getFacility().equals(facilities.get(i).getFacility_id())){
-                                    facilitySet.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
+                            List<Facility> facilityTemp = new ArrayList<>();
+                            for(int i = 0; i < requestSet.size(); i++){
+                                for (int x = 0; x < facilities.size(); x++) {
+                                    if(!requestSet.get(i).getFacility().equals(facilities.get(x).getFacility_id())){
+                                        facilityTemp.add(new Facility(facilities.get(x).getFacility_id(), facilities.get(x).getCategory(), facilities.get(x).getStatus(), facilities.get(x).getDescription(), false));
+                                    }
                                 }
+                                facilities = facilityTemp;
+                                facilityTemp = new ArrayList<>();
                             }
-                            facilityAdapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), facilitySet, true);
+                            for (int i = 0; i < facilities.size(); i++) {
+                                filteredFacilities.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
+                            }
+
+                            facilityAdapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), filteredFacilities, true);
                             fragmentBottomsSheetBinding.reservationList.setAdapter(facilityAdapterSearch);
                         }
 
@@ -277,8 +286,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public boolean validateFacility(){
         boolean flag = false;
-        for(int i = 0, ctr = 0; i < facilitySet.size(); i ++){
-            if (facilitySet.get(i).getChecked().equals(true)) {
+        for(int i = 0, ctr = 0; i < filteredFacilities.size(); i ++){
+            if (filteredFacilities.get(i).getChecked().equals(true)) {
                 ctr++;
                 flag = true;
                 if(ctr > 1){
@@ -294,9 +303,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public String getSelectFacility(){
         String facilityID = "";
-        for(int i = 0, ctr = 0; i < facilitySet.size(); i ++){
-            if (facilitySet.get(i).getChecked().equals(true)) {
-                facilityID = facilitySet.get(i).getFacility_id();
+        for(int i = 0, ctr = 0; i < filteredFacilities.size(); i ++){
+            if (filteredFacilities.get(i).getChecked().equals(true)) {
+                facilityID = filteredFacilities.get(i).getFacility_id();
             }
         }
         return facilityID;
