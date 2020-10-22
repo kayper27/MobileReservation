@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:gravity="center|top"/>
+            android:layout_height="20dp"
+            android:background="#100A0A"
+            android:gravity="center|top"
+            app:srcCompat="@android:drawable/editbox_background" />
 
         <SearchView
             android:id="@+id/reservation_search"
