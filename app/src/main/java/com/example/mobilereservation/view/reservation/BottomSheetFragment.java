@@ -99,6 +99,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 if(validateFacility() && category.equals("facility")){
                     System.out.println("|TEST| valid "+getSelectFacility());
                 }
+                if(validateEquiopment() && category.equals("equipment")){
+                    System.out.println("|TEST| valid "+getSelectedEquipments());
+                }
             }
         }));
 
@@ -297,5 +300,32 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }
         }
         return facilityID;
+    }
+
+    public boolean validateEquiopment(){
+        boolean flag = false;
+        for(int i = 0, ctr = 0; i < equipmentSet.size(); i ++){
+            if (equipmentSet.get(i).getChecked().equals(true)) {
+                ctr++;
+                flag = true;
+                if(ctr > 5){
+                    flag = false;
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 5 equipments only ");
+                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public List<Equipment> getSelectedEquipments(){
+        List<Equipment> selectedEquipment = new ArrayList<>();
+        for(int i = 0, ctr = 0; i < equipmentSet.size(); i ++){
+            if (equipmentSet.get(i).getChecked().equals(true)) {
+                selectedEquipment.add(equipmentSet.get(i));
+            }
+        }
+        return selectedEquipment;
     }
 }
