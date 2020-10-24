@@ -32,6 +32,10 @@
                 android:id="@+id/nav_toReturn"
                 android:icon="@drawable/ic_menu_slideshow"
                 android:title="@string/menu_toReturn"/>
+            <item
+                android:id="@+id/nav_pending"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/menu_pending"/>
         </menu>
     </item>
 </menu>
