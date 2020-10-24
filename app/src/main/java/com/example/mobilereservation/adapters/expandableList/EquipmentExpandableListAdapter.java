@@ -36,26 +36,8 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition));
-    }
-
-    @Override
-    public long getChildId(int listPosition, int expandedListPosition) {
-        return expandedListPosition;
-    }
-
-    @Override
-    public View getChildView(int listPosition, final int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_item, null);
-        }
-        adapter = new EquipmentListAdapter( this.expandableListDetail.get(this.expandableListTitle.get(listPosition)) , expandedListPosition, context, fragmentManager);
-        ListView expandedListTextView = (ListView) convertView.findViewById(R.id.expandedListItem);
-        expandedListTextView.setAdapter(adapter);
-        return convertView;
+    public int getGroupCount() {
+        return this.expandableListTitle.size();
     }
 
     @Override
@@ -69,13 +51,23 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public int getGroupCount() {
-        return this.expandableListTitle.size();
+    public Object getChild(int listPosition, int expandedListPosition) {
+        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition));
     }
 
     @Override
     public long getGroupId(int listPosition) {
         return listPosition;
+    }
+
+    @Override
+    public long getChildId(int listPosition, int expandedListPosition) {
+        return expandedListPosition;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
     }
 
     @Override
@@ -92,9 +84,19 @@ public class EquipmentExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public boolean hasStableIds() {
-        return false;
+    public View getChildView(int listPosition, final int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.list_item, null);
+        }
+        adapter = new EquipmentListAdapter( this.expandableListDetail.get(this.expandableListTitle.get(listPosition)) , expandedListPosition, context, fragmentManager);
+        ListView expandedListTextView = (ListView) convertView.findViewById(R.id.expandedListItem);
+        expandedListTextView.setAdapter(adapter);
+        return convertView;
     }
+
+
 
     @Override
     public boolean isChildSelectable(int listPosition, int expandedListPosition) {
