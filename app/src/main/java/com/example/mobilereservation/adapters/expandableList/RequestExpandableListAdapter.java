@@ -50,7 +50,7 @@ public class RequestExpandableListAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_item_equipment, null);
+            convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
         adapter = new RequestListAdapter( this.expandableListDetail.get(this.expandableListTitle.get(listPosition)) , expandedListPosition, context, fragmentManager);
         ListView expandedListTextView = (ListView) convertView.findViewById(R.id.expandedListItem);
@@ -83,7 +83,7 @@ public class RequestExpandableListAdapter extends BaseExpandableListAdapter {
         String listTitle = (String) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_group_equipment, null);
+            convertView = layoutInflater.inflate(R.layout.list_group, null);
         }
         TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
