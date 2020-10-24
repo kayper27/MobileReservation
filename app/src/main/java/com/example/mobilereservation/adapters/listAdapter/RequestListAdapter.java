@@ -27,6 +27,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         TextView request_id;
         TextView request_startAt;
         TextView request_endAt;
+        TextView request_facility;
+        TextView request_equipment;
         ImageView request_info;
     }
 
@@ -75,6 +77,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
             viewHolder.request_status = (TextView) convertView.findViewById(R.id.request_status);
             viewHolder.request_startAt = (TextView) convertView.findViewById(R.id.request_startAt);
             viewHolder.request_endAt = (TextView) convertView.findViewById(R.id.request_endAt);
+            viewHolder.request_facility = (TextView) convertView.findViewById(R.id.request_facility);
+            viewHolder.request_equipment = (TextView) convertView.findViewById(R.id.request_equipment);
             viewHolder.request_info = (ImageView) convertView.findViewById(R.id.request_info);
 
             result=convertView;
@@ -89,6 +93,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         viewHolder.request_status.setText(requestDataSet.getStatus());
         viewHolder.request_startAt.setText("Start: "+requestDataSet.getStartAt());
         viewHolder.request_endAt.setText("End: "+requestDataSet.getEndAt());
+        viewHolder.request_facility.setText("Facility: "+requestDataSet.getFacility());
+        viewHolder.request_equipment.setText("Equipment: "+requestDataSet.getEquipment_id());
         viewHolder.request_info.setOnClickListener(this);
         viewHolder.request_info.setTag(ctr);
         // Return the completed view to render on screen
