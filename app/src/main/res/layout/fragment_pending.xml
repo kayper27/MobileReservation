@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-tools:context=".view.pending.PendingFragment">
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.pending.PendingFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,14 +12,15 @@ tools:context=".view.pending.PendingFragment">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true" />
+
         <ExpandableListView
             android:id="@+id/pendingExpandableListView"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/pending_search"
-            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
             android:divider="@android:color/darker_gray"
-            android:dividerHeight="0.5dp" />
+            android:dividerHeight="0.5dp"
+            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
     </RelativeLayout>
 
 </layout>
