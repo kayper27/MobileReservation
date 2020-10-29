@@ -112,10 +112,6 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
                         @Override
                         public void onSuccess(List<Request> requests) {
 
-                            if(0 > requests.size()){
-                                return;
-                            }
-
                             for(int i = 0; i < requests.size(); i++){
                                 reqst.add(new Request(
                                         requests.get(i).getRequest_id(),

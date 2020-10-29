@@ -193,9 +193,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     .subscribeWith(new DisposableSingleObserver<List<Facility>>() {
                         @Override
                         public void onSuccess(List<Facility> facilities) {
-                            if(0 > facilities.size()){
-                                return;
-                            }
+
                             List<Facility> facilityTemp = new ArrayList<>();
                             for(int i = 0; i < requestSet.size(); i++){
                                 for (int x = 0; x < facilities.size(); x++) {
@@ -245,9 +243,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     .subscribeWith(new DisposableSingleObserver<List<Equipment>>() {
                         @Override
                         public void onSuccess(List<Equipment> equipments) {
-                            if(0 > equipments.size()){
-                                return;
-                            }
                             ArrayList<Equipment> equipmentTemp = new ArrayList<>();
 
                             for(int i = 0; i < requestSet.size(); i++){ // Get size of request

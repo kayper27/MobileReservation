@@ -100,9 +100,6 @@ public class ReqeuestFragment extends Fragment {
                         public void onSuccess(List<Request> requests) {
                             final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
                             convertUtcToLocal dateTime = new convertUtcToLocal();
-                            if(0 > requests.size()){
-                                return;
-                            }
 
                             for(int i = 0; i < requests.size(); i++){
                                 reqst.add(new Request(
