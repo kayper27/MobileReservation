@@ -136,7 +136,7 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
                         @Override
                         public void onError(Throwable e) {
                             ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", e.getMessage());
-                            errorDialogFragment.show(getFragmentManager(), "dialog_error");
+                            errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                         }
                     });
             return null;
