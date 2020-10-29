@@ -45,13 +45,14 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
     private FragmentToReturnBinding fragmentToReturnBinding;
 
     private convertUtcToLocal dateTime = new convertUtcToLocal();
-    private MangmentExpandableListAdapter mangmentExpandableListAdapter;
-    private ExpandableListView expandableListView;
-    private ExpandableListAdapter expandableListAdapter;
 
-    private List<String> expandableListTitle;
-    private HashMap<String, List<Request>> expandableListDetail;
+    //// EXPANDABLE VARIABLES
+    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
+    private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
+    private List<String> expandableListTitle; // THE TITLE OF THE GROUP
+    private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
 
+    // VARIABLE THAT HOLDS THE DATA
     private ArrayList<List<Request>> originalRequest = new ArrayList<>(); // does not change all ways same value
     private ArrayList<List<Request>> filteredRequest = new ArrayList<>(); // has filtered value
     private List<Request> reqst = new ArrayList<>(); // a temp variable to allocate sorted value
@@ -132,7 +133,6 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
                                     saveSeparatedRequest();
                                 }
                             }
-
                             setValueExpandableList(originalRequest);
                         }
                         @Override
