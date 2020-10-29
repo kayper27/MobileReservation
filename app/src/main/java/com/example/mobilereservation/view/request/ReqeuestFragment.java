@@ -2,7 +2,6 @@ package com.example.mobilereservation.view.request;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
@@ -103,7 +101,6 @@ public class ReqeuestFragment extends Fragment {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onSuccess(List<Request> requests) {
                             final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
