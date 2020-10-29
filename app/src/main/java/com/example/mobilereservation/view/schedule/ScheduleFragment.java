@@ -9,14 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.adapters.expandableList.RequestExpandableListAdapter;
+import com.example.mobilereservation.adapters.expandableList.MangmentExpandableListAdapter;
+import com.example.mobilereservation.databinding.FragmentScheduleBinding;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
@@ -37,15 +40,22 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnClickListener{
 
-    private ExpandableListView expandableListView;
-    private ExpandableListAdapter expandableListAdapter;
-    private List<String> expandableListTitle;
-    private HashMap<String, List<Request>> expandableListDetail;
+    private FragmentScheduleBinding fragmentScheduleBinding;
 
-    private ArrayList<List<Request>> requestSeparated = new ArrayList<>();
-    private List<Request> reqst = new ArrayList<>();
+    private convertUtcToLocal dateTime = new convertUtcToLocal();
+
+    //// EXPANDABLE VARIABLES
+    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
+    private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
+    private List<String> expandableListTitle; // THE TITLE OF THE GROUP
+    private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
+
+    // VARIABLE THAT HOLDS THE DATA
+    private ArrayList<List<Request>> originalRequest = new ArrayList<>(); // does not change all ways same value
+    private ArrayList<List<Request>> filteredRequest = new ArrayList<>(); // has filtered value
+    private List<Request> reqst = new ArrayList<>(); // a temp variable to allocate sorted value
 
     public static ScheduleFragment newInstance() {
         return new ScheduleFragment();
@@ -53,14 +63,38 @@ public class ScheduleFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_schedule, container, false);
+        fragmentScheduleBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_schedule, container, false);
+        View root = fragmentScheduleBinding.getRoot();
 
         RequestAsyncTask asyncTask = new RequestAsyncTask();
         asyncTask.execute();
 
         expandableListView = root.findViewById(R.id.scheduleExpandableListView);
+        fragmentScheduleBinding.scheduleSearch.setActivated(true);
+        fragmentScheduleBinding.scheduleSearch.setQueryHint("Search");
+        fragmentScheduleBinding.scheduleSearch.onActionViewExpanded();
+        fragmentScheduleBinding.scheduleSearch.setIconified(false);
+        fragmentScheduleBinding.scheduleSearch.clearFocus();
+        fragmentScheduleBinding.scheduleSearch.setOnQueryTextListener(this);
+        fragmentScheduleBinding.scheduleSearch.setOnClickListener(this);
+        return  root;
+    }
 
-        return root;
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        filterRequest(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        filterRequest(newText);
+        return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
 
@@ -78,11 +112,6 @@ public class ScheduleFragment extends Fragment {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onSuccess(List<Request> requests) {
-                            final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
-                            convertUtcToLocal dateTime = new convertUtcToLocal();
-                            if(0 > requests.size()){
-                                return;
-                            }
 
                             for(int i = 0; i < requests.size(); i++){
                                 reqst.add(new Request(
@@ -101,23 +130,7 @@ public class ScheduleFragment extends Fragment {
                                     saveSeparatedRequest();
                                 }
                             }
-                            for(int i = 0; i < requestSeparated.size(); i++){
-                                expandalbleList.put(requestSeparated.get(i).get(0).getStartAt().substring(0,10).toUpperCase(), requestSeparated.get(i));
-                            }
-
-                            HashMap arrangedRequest = new LinkedHashMap();
-                            TreeMap<String, List<Request>> map = new TreeMap<>(expandalbleList);
-                            Set set2 = map.entrySet();
-                            Iterator iterator2 = set2.iterator();
-                            while(iterator2.hasNext()) {
-                                Map.Entry me2 = (Map.Entry)iterator2.next();
-                                arrangedRequest.put(me2.getKey().toString(), (List<Equipment>)me2.getValue());
-                            }
-
-                            expandableListDetail = arrangedRequest;
-                            expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-                            expandableListAdapter = new RequestExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
-                            expandableListView.setAdapter(expandableListAdapter);
+                            setValueExpandableList(originalRequest);
                         }
                         @Override
                         public void onError(Throwable e) {
@@ -138,7 +151,53 @@ public class ScheduleFragment extends Fragment {
         }
     }
     private void saveSeparatedRequest(){
-        requestSeparated.add(reqst);
+        originalRequest.add(reqst);
         reqst = new ArrayList<>();
+    }
+
+    private void filterRequest(String query){
+        filteredRequest = new ArrayList<>();
+        for(int i = 0; i < originalRequest.size(); i++){
+            reqst = new ArrayList<>();
+            for(int x = 0; x < originalRequest.get(i).size();x++){
+                if(originalRequest.get(i).get(x).getRequest_id().contains(query) || originalRequest.get(i).get(x).getUsername().contains(query) || originalRequest.get(i).get(x).getStartAt().contains(query) || originalRequest.get(i).get(x).getEndAt().contains(query)){
+                    reqst.add(new Request(
+                            originalRequest.get(i).get(x).getRequest_id(),
+                            originalRequest.get(i).get(x).getStatus(),
+                            originalRequest.get(i).get(x).getUsername(),
+                            dateTime.formatDateTime(originalRequest.get(i).get(x).getStartAt()),
+                            dateTime.formatDateTime(originalRequest.get(i).get(x).getEndAt()),
+                            originalRequest.get(i).get(x).getFacility(),
+                            originalRequest.get(i).get(x).getEquipment()));
+                    filteredRequest.add(reqst);
+                }
+            }
+        }
+        if(query.length() > 2){
+            setValueExpandableList(filteredRequest);
+        }
+        else{
+            setValueExpandableList(originalRequest);
+        }
+    }
+
+    private void setValueExpandableList(ArrayList<List<Request>> expandableRequestData){ //
+        final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
+        for(int i = 0; i < expandableRequestData.size(); i++){
+            expandalbleList.put(expandableRequestData.get(i).get(0).getStartAt().substring(0,10).toUpperCase(), expandableRequestData.get(i));
+        }
+
+        HashMap arrangedRequest = new LinkedHashMap(); //Sort Alphabetically and numerically
+        TreeMap<String, List<Request>> map = new TreeMap<>(expandalbleList);
+        Set set2 = map.entrySet();
+        Iterator iterator2 = set2.iterator();
+        while(iterator2.hasNext()) {
+            Map.Entry me2 = (Map.Entry)iterator2.next();
+            arrangedRequest.put(me2.getKey().toString(), (List<Equipment>)me2.getValue());
+        }
+        expandableListDetail = arrangedRequest;
+        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
     }
 }
