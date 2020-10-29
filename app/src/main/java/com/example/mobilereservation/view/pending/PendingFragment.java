@@ -1,108 +1,95 @@
 package com.example.mobilereservation.view.pending;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.adapters.MyListAdapter;
-import com.example.mobilereservation.model.Continent;
-import com.example.mobilereservation.model.Country;
+import com.example.mobilereservation.adapters.expandableList.MangmentExpandableListAdapter;
+import com.example.mobilereservation.databinding.FragmentPendingBinding;
+import com.example.mobilereservation.model.Equipment;
+import com.example.mobilereservation.model.Request;
+import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.request;
+import com.example.mobilereservation.util.convertUtcToLocal;
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PendingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class PendingFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnClickListener{
 
-    private SearchView search;
-    private MyListAdapter listAdapter;
-    private ExpandableListView myList;
-    private ArrayList<Continent> continentList = new ArrayList<>();
+    private FragmentPendingBinding fragmentPendingBinding; // CALLS LAYOUT
+
+    private convertUtcToLocal dateTime = new convertUtcToLocal(); // FOR FORMATTING DATE
+
+    //// EXPANDABLE VARIABLES
+    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
+    private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
+    private List<String> expandableListTitle; // THE TITLE OF THE GROUP
+    private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
+
+    // VARIABLE THAT HOLDS THE DATA
+    private ArrayList<List<Request>> originalRequest = new ArrayList<>(); // HOLDS DATA DATA FULL DATA
+    private ArrayList<List<Request>> filteredRequest = new ArrayList<>(); // HOLDS DATA DATA FILTERED DATA
+    private List<Request> reqst = new ArrayList<>(); // A TEMP VARIABLE TO ALLOCATE SORTED VALUES
 
     public PendingFragment() {
         // Required empty public constructor
     }
 
     public static PendingFragment newInstance() {
-        PendingFragment fragment = new PendingFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+        return new PendingFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_pending, container, false);;
+        fragmentPendingBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_pending, container, false);
+        View root = fragmentPendingBinding.getRoot();
 
-        SearchManager searchManager= (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        search =  (SearchView) root.findViewById(R.id.pending_search);
-        search.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        search.setIconified(false);
-        search.setOnQueryTextListener(this);
-        search.setOnClickListener(this);
+        RequestAsyncTask asyncTask = new RequestAsyncTask();
+        asyncTask.execute();
 
-        displayList(root);
-        expandAll();
-        // Inflate the layout for this fragment
+        expandableListView = root.findViewById(R.id.pendingExpandableListView);
+        fragmentPendingBinding.pendingSearch.setActivated(true);
+        fragmentPendingBinding.pendingSearch.setQueryHint("Search");
+        fragmentPendingBinding.pendingSearch.onActionViewExpanded();
+        fragmentPendingBinding.pendingSearch.setIconified(false);
+        fragmentPendingBinding.pendingSearch.clearFocus();
+        fragmentPendingBinding.pendingSearch.setOnQueryTextListener(this);
+        fragmentPendingBinding.pendingSearch.setOnClickListener(this);
         return root;
     }
 
-    private void expandAll(){
-        int count = listAdapter.getGroupCount();
-        for(int i = 0; i < count; i++){
-            myList.expandGroup(i);
-        }
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        filterRequest(query);
+        return false;
     }
 
-
-    private void displayList(View v){
-        loadSomeData();
-        myList = (ExpandableListView) v.findViewById(R.id.pendingExpandableListView);
-        listAdapter = new MyListAdapter(getActivity().getApplicationContext(), continentList);
-        myList.setAdapter(listAdapter);
-    }
-
-    private void loadSomeData(){
-        ArrayList<Country> countryList = new ArrayList<>();
-        Country country = new Country("BMU", "Bermuda", 100000000);
-        countryList.add(country);
-        country = new Country("CAN", "Canada", 200000000);
-        countryList.add(country);
-        country = new Country("USA", "United States", 500000000);
-        countryList.add(country);
-
-        Continent continent = new Continent("North America", countryList);
-        continentList.add(continent);
-
-        countryList = new ArrayList<>();
-        country = new Country("CHN", "China", 100000100);
-        countryList.add(country);
-        country = new Country("JPN", "Japan", 200002000);
-        countryList.add(country);
-        country = new Country("THA", "Thailand", 500000000);
-        countryList.add(country);
-
-        continent = new Continent("Asia", countryList);
-        continentList.add(continent);
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        filterRequest(newText);
+        return false;
     }
 
     @Override
@@ -110,17 +97,105 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
 
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        listAdapter.filterData(query);
-        expandAll();
-        return false;
+    private class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
+            DisposableSingleObserver<List<Request>> error = api.getSpecificStatus("Pending")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<List<Request>>() {
+                        @Override
+                        public void onSuccess(List<Request> requests) {
+
+                            for(int i = 0; i < requests.size(); i++){
+                                reqst.add(new Request(
+                                        requests.get(i).getRequest_id(),
+                                        requests.get(i).getStatus(),
+                                        requests.get(i).getUsername(),
+                                        dateTime.formatDateTime(requests.get(i).getStartAt()),
+                                        dateTime.formatDateTime(requests.get(i).getEndAt()),
+                                        requests.get(i).getFacility(),
+                                        requests.get(i).getEquipment()));
+
+                                if(i == requests.size()-1){
+                                    saveSeparatedRequest();
+                                }
+                                else if(!requests.get(i).getStartAt().substring(0,10).equals(requests.get(i+1).getStartAt().substring(0,10))) { // Check if date is same as the next one the substring selects date only
+                                    saveSeparatedRequest();
+                                }
+                            }
+                            setValueExpandableList(originalRequest);
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", e.getMessage());
+                            errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                        }
+                    });
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching Schedules");
+        }
+    }
+    private void saveSeparatedRequest(){
+        originalRequest.add(reqst);
+        reqst = new ArrayList<>();
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        listAdapter.filterData(newText);
-        expandAll();
-        return false;
+    private void filterRequest(String query){
+        filteredRequest = new ArrayList<>();
+        for(int i = 0; i < originalRequest.size(); i++){
+            reqst = new ArrayList<>();
+            for(int x = 0; x < originalRequest.get(i).size();x++){
+                if(originalRequest.get(i).get(x).getRequest_id().contains(query) || originalRequest.get(i).get(x).getUsername().contains(query) || originalRequest.get(i).get(x).getStartAt().contains(query) || originalRequest.get(i).get(x).getEndAt().contains(query)){
+                    reqst.add(new Request(
+                            originalRequest.get(i).get(x).getRequest_id(),
+                            originalRequest.get(i).get(x).getStatus(),
+                            originalRequest.get(i).get(x).getUsername(),
+                            dateTime.formatDateTime(originalRequest.get(i).get(x).getStartAt()),
+                            dateTime.formatDateTime(originalRequest.get(i).get(x).getEndAt()),
+                            originalRequest.get(i).get(x).getFacility(),
+                            originalRequest.get(i).get(x).getEquipment()));
+                    filteredRequest.add(reqst);
+                }
+            }
+        }
+        if(query.length() > 2){
+            setValueExpandableList(filteredRequest);
+        }
+        else{
+            setValueExpandableList(originalRequest);
+        }
+    }
+
+    private void setValueExpandableList(ArrayList<List<Request>> expandableRequestData){ //
+        final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
+        for(int i = 0; i < expandableRequestData.size(); i++){
+            expandalbleList.put(expandableRequestData.get(i).get(0).getStartAt().substring(0,10).toUpperCase(), expandableRequestData.get(i));
+        }
+
+        HashMap arrangedRequest = new LinkedHashMap(); //Sort Alphabetically and numerically
+        TreeMap<String, List<Request>> map = new TreeMap<>(expandalbleList);
+        Set set2 = map.entrySet();
+        Iterator iterator2 = set2.iterator();
+        while(iterator2.hasNext()) {
+            Map.Entry me2 = (Map.Entry)iterator2.next();
+            arrangedRequest.put(me2.getKey().toString(), (List<Equipment>)me2.getValue());
+        }
+        expandableListDetail = arrangedRequest;
+        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
     }
 }
