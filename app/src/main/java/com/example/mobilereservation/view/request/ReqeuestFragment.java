@@ -39,6 +39,7 @@ public class ReqeuestFragment extends Fragment {
 
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
+    private RequestExpandableListAdapter requestExpandableListAdapter;
     private List<String> expandableListTitle;
     private HashMap<String, List<Request>> expandableListDetail;
 
@@ -137,10 +138,8 @@ public class ReqeuestFragment extends Fragment {
                             expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
                             expandableListAdapter = new RequestExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
                             expandableListView.setAdapter(expandableListAdapter);
-                            for(int i = 0; i < requestSeparated.size(); i++){
-                                if(requestSeparated.get(i).size() != 0){
-                                    expandableListView.expandGroup(i);
-                                }
+                            for(int i = 0; i < requestExpandableListAdapter.getGroupCount(); i++){
+                                expandableListView.expandGroup(i);
                             }
                         }
                         @Override
