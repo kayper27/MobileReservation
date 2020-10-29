@@ -35,13 +35,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public class EquipmentFragment extends Fragment {
 
-    private ExpandableListView expandableListView;
-    private ExpandableListAdapter expandableListAdapter;
-    private List<String> expandableListTitle;
-    private HashMap<String, List<Equipment>> expandableListDetail;
+    //// EXPANDABLE VARIABLES
+    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
+    private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
+    private List<String> expandableListTitle; // THE TITLE OF THE GROUP
+    private HashMap<String, List<Equipment>> expandableListDetail; // DATA LIST OF THE GROUP
 
-    private ArrayList<List<Equipment>> equipmentSeparated = new ArrayList<>();
-    private List<Equipment> equips = new ArrayList<>();
+    private ArrayList<List<Equipment>> equipmentSeparated = new ArrayList<>();// HOLDS DATA DATA
+    private List<Equipment> equips = new ArrayList<>();// A TEMP VARIABLE TO ALLOCATE SORTED VALUES
 
     public EquipmentFragment() {}
 

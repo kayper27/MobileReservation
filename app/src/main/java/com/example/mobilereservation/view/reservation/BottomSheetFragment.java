@@ -39,18 +39,18 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     private Button buttonOK;
 
-    private static final String CATEGORY = "category";
-    private static final String START = "start";
+    private static final String CATEGORY = "category"; // WHAT KEY TO KNOW WHAT CATEGORY TO WORK
+    private static final String START = "start"; // TO GET DATA BETWEEN DATES
     private static final String END = "end";
     private String category = "", start = "", end = "";
 
-    private FragmentBottomsSheetBinding fragmentBottomsSheetBinding;
-    private FacilitySearchAdapter facilityAdapterSearch;
-    private EquipmentSearchAdapter equipmentSearchAdapter;
+    private FragmentBottomsSheetBinding fragmentBottomsSheetBinding; // CALL LAYOUT
+    private FacilitySearchAdapter facilityAdapterSearch; // ADAPTER FOR SEARCH FACILITY IN LIST
+    private EquipmentSearchAdapter equipmentSearchAdapter; // ADAPTER FOR SEARCH EQUIPMENT IN LIST
 
     private List<Request> requestSet = new ArrayList<>();
-    private ArrayList<Facility> filteredFacilities = new ArrayList<>();
-    private ArrayList<Equipment> filteredEquipments = new ArrayList<>();
+    private ArrayList<Facility> filteredFacilities = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
+    private ArrayList<Equipment> filteredEquipments = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
 
     public BottomSheetFragment() {}
 

@@ -31,9 +31,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FacilityFragment extends Fragment {
 
-    private FragmentFacilityBinding facilityBinding;
-    private FacilitySearchAdapter adapterSearch;
-    private ArrayList<Facility> facilitySet = new ArrayList<>();
+    private FragmentFacilityBinding facilityBinding; // CALLS LAYOUT
+    private FacilitySearchAdapter adapterSearch; // ADAPTER FOR SEARCH DATA FOR LIST
+    private ArrayList<Facility> facilitySet = new ArrayList<>(); // HOLDS DATA FOR LIST
 
     public FacilityFragment() {}
 

@@ -42,9 +42,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ToReturnFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnClickListener{
 
-    private FragmentToReturnBinding fragmentToReturnBinding;
+    private FragmentToReturnBinding fragmentToReturnBinding; // CALLS LAYOUT
 
-    private convertUtcToLocal dateTime = new convertUtcToLocal();
+    private convertUtcToLocal dateTime = new convertUtcToLocal();// FOR FORMATTING DATE
 
     //// EXPANDABLE VARIABLES
     private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE

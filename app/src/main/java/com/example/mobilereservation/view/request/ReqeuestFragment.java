@@ -37,14 +37,16 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ReqeuestFragment extends Fragment {
 
-    private ExpandableListView expandableListView;
-    private ExpandableListAdapter expandableListAdapter;
-    private RequestExpandableListAdapter requestExpandableListAdapter;
-    private List<String> expandableListTitle;
-    private HashMap<String, List<Request>> expandableListDetail;
+    //// EXPANDABLE VARIABLES
+    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
+    private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
+    private List<String> expandableListTitle; // THE TITLE OF THE GROUP
+    private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
 
-    private ArrayList<List<Request>> requestSeparated = new ArrayList<>();
-    private List<Request> reqst = new ArrayList<>();
+    private RequestExpandableListAdapter requestExpandableListAdapter; // CALLS VARIABLE TO GET GROUP SIZE ONLY
+
+    private ArrayList<List<Request>> requestSeparated = new ArrayList<>();// HOLDS DATA DATA
+    private List<Request> reqst = new ArrayList<>(); // A TEMP VARIABLE TO ALLOCATE SORTED VALUES
 
     public ReqeuestFragment() {}
 
