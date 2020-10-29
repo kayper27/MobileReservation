@@ -17,7 +17,7 @@ import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
-import com.example.mobilereservation.util.convertUtcToLocal;
+import com.example.mobilereservation.util.FormatDateTime;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
@@ -104,7 +104,7 @@ public class ReqeuestFragment extends Fragment {
                         @Override
                         public void onSuccess(List<Request> requests) {
                             final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
-                            convertUtcToLocal dateTime = new convertUtcToLocal();
+                            FormatDateTime dateTime = new FormatDateTime();
 
                             for(int i = 0; i < requests.size(); i++){
                                 reqst.add(new Request(
@@ -140,9 +140,6 @@ public class ReqeuestFragment extends Fragment {
                             expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
                             expandableListAdapter = new RequestExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
                             expandableListView.setAdapter(expandableListAdapter);
-                            for(int i = 0; i < requestExpandableListAdapter.getGroupCount(); i++){
-                                expandableListView.expandGroup(i);
-                            }
                         }
                         @Override
                         public void onError(Throwable e) {

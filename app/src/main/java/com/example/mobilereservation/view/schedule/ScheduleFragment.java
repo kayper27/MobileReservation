@@ -22,7 +22,7 @@ import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
-import com.example.mobilereservation.util.convertUtcToLocal;
+import com.example.mobilereservation.util.FormatDateTime;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
 
     private FragmentScheduleBinding fragmentScheduleBinding; // CALLS LAYOUT
 
-    private convertUtcToLocal dateTime = new convertUtcToLocal();// FOR FORMATTING DATE
+    private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
 
     //// EXPANDABLE VARIABLES
     private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
