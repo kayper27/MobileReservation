@@ -35,6 +35,12 @@ public class FacilityFragment extends Fragment {
     private FacilitySearchAdapter adapterSearch;
     private ArrayList<Facility> facilitySet = new ArrayList<>();
 
+    public FacilityFragment() {}
+
+    public static FacilityFragment newInstance() {
+        return new FacilityFragment();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         facilityBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_facility, container, false);

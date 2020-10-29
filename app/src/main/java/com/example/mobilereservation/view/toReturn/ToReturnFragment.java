@@ -57,6 +57,8 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
     private ArrayList<List<Request>> filteredRequest = new ArrayList<>(); // has filtered value
     private List<Request> reqst = new ArrayList<>(); // a temp variable to allocate sorted value
 
+    public ToReturnFragment() {}
+
     public static ToReturnFragment newInstance() {
         return new ToReturnFragment();
     }

@@ -46,6 +46,12 @@ public class ReqeuestFragment extends Fragment {
     private ArrayList<List<Request>> requestSeparated = new ArrayList<>();
     private List<Request> reqst = new ArrayList<>();
 
+    public ReqeuestFragment() {}
+
+    public static ReqeuestFragment newInstance() {
+        return new ReqeuestFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_reqeuest, container, false);

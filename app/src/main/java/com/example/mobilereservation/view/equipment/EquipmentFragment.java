@@ -43,6 +43,12 @@ public class EquipmentFragment extends Fragment {
     private ArrayList<List<Equipment>> equipmentSeparated = new ArrayList<>();
     private List<Equipment> equips = new ArrayList<>();
 
+    public EquipmentFragment() {}
+
+    public static EquipmentFragment newInstance() {
+        return new EquipmentFragment();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_equipment, container, false);
