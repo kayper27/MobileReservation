@@ -8,18 +8,25 @@ import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
-public class DatePickerFragment  extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
     private static final String TAG = "DatePickerFragment";
+
     final Calendar c = Calendar.getInstance();
+
     private DatePickerDialog datePickerDialog;
     private EditText dateTime;
+    private String startData;
 
-    public DatePickerFragment(EditText dateTime){
+    public DatePickerFragment(EditText dateTime, String startData) {
         this.dateTime = dateTime;
+        this.startData = startData;
     }
 
     @Override
@@ -29,10 +36,18 @@ public class DatePickerFragment  extends DialogFragment implements DatePickerDia
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
+
         c.add(Calendar.DAY_OF_MONTH, 30); // adds 30 days advance reservation
         datePickerDialog = new DatePickerDialog(getActivity(), DatePickerFragment.this, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);// sets only day for today only
-        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());// sets 30 days advance reservation
+
+        if (!startData.isEmpty()) {
+            datePickerDialog.getDatePicker().setMinDate(convertStartAt(startData).getTime() - 1000);// sets min date to startAt
+            datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis() - 1000);// sets selection to 30 days advance reservation
+        } else {
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());// sets only day for today only
+            datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());// sets selection to 30 days advance reservation
+        }
+
         // Return a new instance of DatePickerDialog
         return datePickerDialog;
     }
@@ -46,5 +61,20 @@ public class DatePickerFragment  extends DialogFragment implements DatePickerDia
         String selectedDate = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(c.getTime());
         dateTime.setText(selectedDate);
     }
+
+
+    public Date convertStartAt(String dateString) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+        Date date = new Date();
+        try {
+            //formatting the dateString to convert it into a Date
+            date = simpleDateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+
 }
 
