@@ -8,13 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.expandableList.EquipmentExpandableListAdapter;
+import com.example.mobilereservation.databinding.FragmentEquipmentBinding;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.equipment;
@@ -33,7 +36,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EquipmentFragment extends Fragment {
+public class EquipmentFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnClickListener{
+
+    private FragmentEquipmentBinding fragmentEquipmentBinding;
 
     //// EXPANDABLE VARIABLES
     private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
@@ -41,7 +46,8 @@ public class EquipmentFragment extends Fragment {
     private List<String> expandableListTitle; // THE TITLE OF THE GROUP
     private HashMap<String, List<Equipment>> expandableListDetail; // DATA LIST OF THE GROUP
 
-    private ArrayList<List<Equipment>> equipmentSeparated = new ArrayList<>();// HOLDS DATA DATA
+    private ArrayList<List<Equipment>> originalEquipment = new ArrayList<>();// does not change all ways same value
+    private ArrayList<List<Equipment>> filteredEquipment = new ArrayList<>();// has filtered value
     private List<Equipment> equips = new ArrayList<>();// A TEMP VARIABLE TO ALLOCATE SORTED VALUES
 
     public EquipmentFragment() {}
@@ -52,41 +58,40 @@ public class EquipmentFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_equipment, container, false);
+        fragmentEquipmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_equipment, container, false);
+        View root = fragmentEquipmentBinding.getRoot();
 
         EquipmentAsyncTask asyncTask = new EquipmentAsyncTask();
         asyncTask.execute();
-
         expandableListView = root.findViewById(R.id.equipmentExpandableListView);
-
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-//                Toast.makeText(getActivity().getApplicationContext(), expandableListTitle.get(groupPosition) + " List Expanded.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-//                Toast.makeText(getActivity().getApplicationContext(), expandableListTitle.get(groupPosition) + " List Collapsed.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                return false;
-            }
-        });
+        fragmentEquipmentBinding.equipmentSearch.setActivated(true);
+        fragmentEquipmentBinding.equipmentSearch.setQueryHint("Search");
+        fragmentEquipmentBinding.equipmentSearch.onActionViewExpanded();
+        fragmentEquipmentBinding.equipmentSearch.setIconified(false);
+        fragmentEquipmentBinding.equipmentSearch.clearFocus();
+        fragmentEquipmentBinding.equipmentSearch.setOnQueryTextListener(this);
+        fragmentEquipmentBinding.equipmentSearch.setOnClickListener(this);
 
         return root;
     }
 
-    private void saveSeparatedEquipment(){
-        equipmentSeparated.add(equips);
-        equips = new ArrayList<>();
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        filterRequest(query);
+        return false;
     }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        filterRequest(newText);
+        return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
 
     private class EquipmentAsyncTask extends AsyncTask<Void, Void, Void> {
 
@@ -101,10 +106,6 @@ public class EquipmentFragment extends Fragment {
                     .subscribeWith(new DisposableSingleObserver<List<Equipment>>() {
                         @Override
                         public void onSuccess(List<Equipment> equipments) {
-                            final HashMap<String, List<Equipment>> expandalbleList = new HashMap<>();
-                            if(0 > equipments.size()){
-                                return;
-                            }
 
                             for(int i = 0; i < equipments.size(); i++){
                                 equips.add(new Equipment(
@@ -124,23 +125,7 @@ public class EquipmentFragment extends Fragment {
                                     saveSeparatedEquipment();
                                 }
                             }
-                            for(int i = 0; i < equipmentSeparated.size(); i++){
-                                expandalbleList.put(equipmentSeparated.get(i).get(0).getType().toUpperCase(), equipmentSeparated.get(i));
-                            }
-
-                            HashMap arrangedEquipment = new LinkedHashMap();
-                            TreeMap<String, List<Equipment>> map = new TreeMap<>(expandalbleList);
-                            Set set2 = map.entrySet();
-                            Iterator iterator2 = set2.iterator();
-                            while(iterator2.hasNext()) {
-                                Map.Entry me2 = (Map.Entry)iterator2.next();
-                                arrangedEquipment.put(me2.getKey().toString(), (List<Equipment>)me2.getValue());
-                            }
-
-                            expandableListDetail = arrangedEquipment;
-                            expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-                            expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
-                            expandableListView.setAdapter(expandableListAdapter);
+                            setValueExpandableList(originalEquipment);
                         }
                         @Override
                         public void onError(Throwable e) {
@@ -160,5 +145,59 @@ public class EquipmentFragment extends Fragment {
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching for Equipments");
         }
+    }
+
+    private void saveSeparatedEquipment(){
+        originalEquipment.add(equips);
+        equips = new ArrayList<>();
+    }
+
+    private void filterRequest(String query){
+        filteredEquipment = new ArrayList<>();
+        for(int i = 0; i < originalEquipment.size(); i++){
+            equips = new ArrayList<>();
+            for(int x = 0; x < originalEquipment.get(i).size(); x++){
+                if(originalEquipment.get(i).get(x).getType().toLowerCase().contains(query.toLowerCase()) || // originalEquipment get specific item in list then toLowerCase then check if contains
+                   originalEquipment.get(i).get(x).getEquipment_id().toLowerCase().contains(query.toLowerCase())){
+                    equips.add(new Equipment(
+                            originalEquipment.get(i).get(x).getEquipment_id(),
+                            originalEquipment.get(i).get(x).getStatus(),
+                            originalEquipment.get(i).get(x).getCategory(),
+                            originalEquipment.get(i).get(x).getBrand(),
+                            originalEquipment.get(i).get(x).getModel_no(),
+                            originalEquipment.get(i).get(x).getType(),
+                            originalEquipment.get(i).get(x).getDescription(),
+                            null));
+                    filteredEquipment.add(equips);
+                }
+            }
+        }
+        if(query.length() > 2){
+            setValueExpandableList(filteredEquipment);
+        }
+        else{
+            setValueExpandableList(originalEquipment);
+        }
+    }
+
+    private void setValueExpandableList(ArrayList<List<Equipment>> expandableRequestData) {
+        final HashMap<String, List<Equipment>> expandalbleList = new HashMap<>();
+        for(int i = 0; i < expandableRequestData.size(); i++){
+            expandalbleList.put(expandableRequestData.get(i).get(0).getType().toUpperCase(), expandableRequestData.get(i));
+        }
+
+        HashMap arrangedEquipment = new LinkedHashMap();
+        TreeMap<String, List<Equipment>> map = new TreeMap<>(expandalbleList);
+        Set set2 = map.entrySet();
+        Iterator iterator2 = set2.iterator();
+        while(iterator2.hasNext()) {
+            Map.Entry me2 = (Map.Entry)iterator2.next();
+            arrangedEquipment.put(me2.getKey().toString(), (List<Equipment>)me2.getValue());
+        }
+
+        expandableListDetail = arrangedEquipment;
+        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
     }
 }
