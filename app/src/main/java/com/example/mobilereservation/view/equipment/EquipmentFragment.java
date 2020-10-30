@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +40,6 @@ public class EquipmentFragment extends Fragment implements SearchView.OnQueryTex
     private FragmentEquipmentBinding fragmentEquipmentBinding;
 
     //// EXPANDABLE VARIABLES
-    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
     private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
     private List<String> expandableListTitle; // THE TITLE OF THE GROUP
     private HashMap<String, List<Equipment>> expandableListDetail; // DATA LIST OF THE GROUP
@@ -63,7 +61,7 @@ public class EquipmentFragment extends Fragment implements SearchView.OnQueryTex
 
         EquipmentAsyncTask asyncTask = new EquipmentAsyncTask();
         asyncTask.execute();
-        expandableListView = root.findViewById(R.id.equipmentExpandableListView);
+
         fragmentEquipmentBinding.equipmentSearch.setActivated(true);
         fragmentEquipmentBinding.equipmentSearch.setQueryHint("Search");
         fragmentEquipmentBinding.equipmentSearch.onActionViewExpanded();
@@ -198,6 +196,6 @@ public class EquipmentFragment extends Fragment implements SearchView.OnQueryTex
         expandableListDetail = arrangedEquipment;
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new EquipmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
+        fragmentEquipmentBinding.equipmentExpandableListView.setAdapter(expandableListAdapter);
     }
 }

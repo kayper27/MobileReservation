@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -45,7 +44,6 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
     private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
 
     //// EXPANDABLE VARIABLES
-    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
     private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
     private List<String> expandableListTitle; // THE TITLE OF THE GROUP
     private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
@@ -69,7 +67,6 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
         RequestAsyncTask asyncTask = new RequestAsyncTask();
         asyncTask.execute();
 
-        expandableListView = root.findViewById(R.id.scheduleExpandableListView);
         fragmentScheduleBinding.scheduleSearch.setActivated(true);
         fragmentScheduleBinding.scheduleSearch.setQueryHint("Search");
         fragmentScheduleBinding.scheduleSearch.onActionViewExpanded();
@@ -201,6 +198,6 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
         expandableListDetail = arrangedRequest;
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
+        fragmentScheduleBinding.scheduleExpandableListView.setAdapter(expandableListAdapter);
     }
 }

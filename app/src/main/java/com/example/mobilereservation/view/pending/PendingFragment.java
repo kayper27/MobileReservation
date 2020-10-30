@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import androidx.databinding.DataBindingUtil;
@@ -43,7 +42,6 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
     private FormatDateTime dateTime = new FormatDateTime(); // FOR FORMATTING DATE
 
     //// EXPANDABLE VARIABLES
-    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
     private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
     private List<String> expandableListTitle; // THE TITLE OF THE GROUP
     private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
@@ -69,7 +67,6 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
         RequestAsyncTask asyncTask = new RequestAsyncTask();
         asyncTask.execute();
 
-        expandableListView = root.findViewById(R.id.pendingExpandableListView);
         fragmentPendingBinding.pendingSearch.setActivated(true);
         fragmentPendingBinding.pendingSearch.setQueryHint("Search");
         fragmentPendingBinding.pendingSearch.onActionViewExpanded();
@@ -200,6 +197,6 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
         expandableListDetail = arrangedRequest;
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
+        fragmentPendingBinding.pendingExpandableListView.setAdapter(expandableListAdapter);
     }
 }

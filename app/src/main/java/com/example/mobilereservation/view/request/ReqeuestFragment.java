@@ -41,8 +41,6 @@ public class ReqeuestFragment extends Fragment {
     private List<String> expandableListTitle; // THE TITLE OF THE GROUP
     private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
 
-    private RequestExpandableListAdapter requestExpandableListAdapter; // CALLS VARIABLE TO GET GROUP SIZE ONLY
-
     private ArrayList<List<Request>> requestSeparated = new ArrayList<>();// HOLDS DATA DATA
     private List<Request> reqst = new ArrayList<>(); // A TEMP VARIABLE TO ALLOCATE SORTED VALUES
 
@@ -60,27 +58,6 @@ public class ReqeuestFragment extends Fragment {
         asyncTask.execute();
 
         expandableListView = root.findViewById(R.id.requestExpandableListView);
-
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-//                Toast.makeText(getActivity().getApplicationContext(), expandableListTitle.get(groupPosition) + " List Expanded.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-//                Toast.makeText(getActivity().getApplicationContext(), expandableListTitle.get(groupPosition) + " List Collapsed.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                return false;
-            }
-        });
 
         return root;
     }

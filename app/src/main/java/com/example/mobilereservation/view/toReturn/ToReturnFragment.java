@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -40,12 +39,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ToReturnFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnClickListener{
 
+    private static final String TAG = "ToReturnFragment";
+
     private FragmentToReturnBinding fragmentToReturnBinding; // CALLS LAYOUT
 
     private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
 
     //// EXPANDABLE VARIABLES
-    private ExpandableListView expandableListView;  // THE EXPANDABLE UI VARIABLE
     private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
     private List<String> expandableListTitle; // THE TITLE OF THE GROUP
     private HashMap<String, List<Request>> expandableListDetail; // DATA LIST OF THE GROUP
@@ -67,7 +67,6 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
         View root = fragmentToReturnBinding.getRoot();
         RequestAsyncTask asyncTask = new RequestAsyncTask();
         asyncTask.execute();
-        expandableListView = root.findViewById(R.id.toReturnExpandableListView);
 
         fragmentToReturnBinding.toReturnSearch.setActivated(true);
         fragmentToReturnBinding.toReturnSearch.setQueryHint("Request ID. | Username");
@@ -197,7 +196,7 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
         expandableListDetail = arrangedRequest;
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
+        fragmentToReturnBinding.toReturnExpandableListView.setAdapter(expandableListAdapter);
     }
 
 }
