@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -65,14 +66,22 @@ public class ReservationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 textStartAt.setText("");
-                getDateTime(textStartAt);
+                getDateTime(textStartAt, "");
             }
         });
+
         textEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textEndAt.setText("");
-                getDateTime(textEndAt);
+                if(textStartAt.getText().length() == 16){
+                    textEndAt.setText("");
+                    getDateTime(textEndAt, textStartAt.getText().toString());
+                }
+                else{
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select when your schedule starts");
+                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                }
+
             }
         });
 
@@ -137,23 +146,23 @@ public class ReservationFragment extends Fragment {
         return root;
     }
 
-    private void getDateTime(EditText dateTime){
-        DialogFragment timePicker  = new TimePickerFragment(dateTime);
+    private void getDateTime(EditText dateTime,@Nullable String startData){
+        DialogFragment timePicker  = new TimePickerFragment(dateTime, startData);
         // set the targetFragment to receive the results, specifying the request code
         timePicker.setTargetFragment(ReservationFragment.this,  REQUEST_CODE);
         // show the timePicker
-        timePicker.show(getActivity().getSupportFragmentManager(), "timePicker");
+        timePicker.show(getFragmentManager(), "timePicker");
         // create the datePickerFragment
-        DialogFragment datePicker = new DatePickerFragment(dateTime);
+        DialogFragment datePicker = new DatePickerFragment(dateTime, startData);
         // set the targetFragment to receive the results, specifying the request code
         datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
         // show the datePicker
-        datePicker.show(getActivity().getSupportFragmentManager(), "datePicker");
+        datePicker.show(getFragmentManager(), "datePicker");
     }
 
     public boolean isSchduleValid(){
         boolean flag = false;
-        if(textStartAt.getText().length() != 15 || textEndAt.getText().length() != 15){
+        if(textStartAt.getText().length() != 16 || textEndAt.getText().length() != 16){
             ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select your schedule");
             errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
         }
