@@ -153,7 +153,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         @Override
         protected Void doInBackground(Void... voids) {
             request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
-            DisposableSingleObserver<List<Request>> error = api.getReservedchedule("2020-10-08T11:00:00.000Z", "2020-11-04T18:30:00.000Z") /// NOT CHANGED YET CHANGE
+            DisposableSingleObserver<List<Request>> error = api.getReservedchedule("2020-11-04T00:00:00.000Z", "2020-11-08T00:00:00.000Z") /// NOT CHANGED YET CHANGE
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {
@@ -261,9 +261,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                             );
                                         }
                                     }
+                                    equipments = equipmentTemp;
+                                    equipmentTemp = new ArrayList<>();
                                 }
-                                equipments = equipmentTemp;
-                                equipmentTemp = new ArrayList<>();
                             }
 
                             for (int i = 0; i < equipments.size(); i++) {
