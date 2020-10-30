@@ -48,7 +48,6 @@ public class EquipmentCheckBoxListAdapter extends ArrayAdapter<Equipment> implem
                         "\nType: " + equipment.getType()+
                         "\nBrand: "+ equipment.getBrand() +
                         "\nModel No: "+ equipment.getModel_no() +
-                        "\nChecked? " +equipment.getChecked() +
                         "\nDecription: \n" +equipment.getDescription();
                 EquipmentDialogFragment equipmentDialogFragment = EquipmentDialogFragment.newInstance(equipment.getEquipment_id().toUpperCase(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");

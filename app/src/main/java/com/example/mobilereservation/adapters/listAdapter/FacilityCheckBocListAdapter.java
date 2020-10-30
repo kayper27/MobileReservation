@@ -55,7 +55,6 @@ public class FacilityCheckBocListAdapter  extends ArrayAdapter<Facility> impleme
         {
             case R.id.facility_info:
                 String details = "Status: " + facility.getStatus() +
-                        "\nChecked? " + facility.getChecked()+
                         "\nDecription: \n" +facility.getDescription();
                 FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facility.getFacility_id().toUpperCase(), details);
                 facilityDialogFragment.show(fragmentManager, "dialog_facility");
