@@ -10,17 +10,24 @@ import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    private static final String TAG = "TimePickerDialog";
-    final Calendar c = Calendar.getInstance();
-    private final EditText dateTime;
 
-    public TimePickerFragment(EditText dateTime){
+    private static final String TAG = "TimePickerDialog";
+
+    final Calendar c = Calendar.getInstance();
+
+    private EditText dateTime;
+    private String startData;
+
+    public TimePickerFragment(EditText dateTime, String startData){
         this.dateTime = dateTime;
+        this.startData = startData;
     }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -39,9 +46,19 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         Calendar validateTime = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hour);
         c.set(Calendar.MINUTE, minute);
-        String selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
-        System.out.println("|TEST| Validet time" + selectedTime);
-        Log.d(TAG, "onDateSet: " + selectedTime);
-        dateTime.setText(dateTime.getText()+" "+selectedTime);
+
+        if( 7 <= append(hour, minute) && append(hour, minute) <= 20.30){
+            String selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
+            Log.d(TAG, "onDateSet: " + selectedTime);
+            dateTime.setText(dateTime.getText()+" "+selectedTime);
+        }
+        else{
+            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is only from 7:00 AM - 8:30 PM");
+            errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+        }
+    }
+
+    public double append(int hour, int minute) {
+        return Double.parseDouble(new StringBuilder().append(hour+".").append(minute).toString());
     }
 }
