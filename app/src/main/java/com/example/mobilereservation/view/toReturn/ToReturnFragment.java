@@ -159,7 +159,7 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
         for(int i = 0; i < originalRequest.size(); i++){
             reqst = new ArrayList<>();
             for(int x = 0; x < originalRequest.get(i).size();x++){
-                if(originalRequest.get(i).get(x).getRequest_id().contains(query) || originalRequest.get(i).get(x).getUsername().contains(query)){
+                if(originalRequest.get(i).get(x).getRequest_id().toLowerCase().contains(query.toLowerCase()) || originalRequest.get(i).get(x).getUsername().toLowerCase().contains(query.toLowerCase())){
                     reqst.add(new Request(
                             originalRequest.get(i).get(x).getRequest_id(),
                             originalRequest.get(i).get(x).getStatus(),
