@@ -41,13 +41,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         datePickerDialog = new DatePickerDialog(getActivity(), DatePickerFragment.this, year, month, day);
 
         if (!startData.isEmpty()) {
-            datePickerDialog.getDatePicker().setMinDate(convertStartAt(startData).getTime() - 1000);// sets min date to startAt
-            datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis() - 1000);// sets selection to 30 days advance reservation
+            datePickerDialog.getDatePicker().setMinDate(convertStartAt(startData).getTime() - 10000);// sets min date to startAt
         } else {
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());// sets only day for today only
-            datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());// sets selection to 30 days advance reservation
         }
-
+        
+        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());// sets selection to 30 days advance reservation
         // Return a new instance of DatePickerDialog
         return datePickerDialog;
     }
