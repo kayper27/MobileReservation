@@ -123,7 +123,7 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(true || isSchduleValid()){ // Change this when done coding
+                if(isSchduleValid()){ // Validate if schedule has data
                     fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
                     BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
                     bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
@@ -134,7 +134,7 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(true || isSchduleValid()){ // Change this when done coding
+                if(isSchduleValid()){// Validate if schedule has data
                     fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
                     BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("equipment", textStartAt.getText().toString(), textEndAt.getText().toString());
                     bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
