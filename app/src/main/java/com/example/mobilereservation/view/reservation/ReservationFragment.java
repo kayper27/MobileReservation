@@ -65,8 +65,8 @@ public class ReservationFragment extends Fragment {
         textStartAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textStartAt.setText("");
-                textEndAt.setText("");
+                textStartAt.setText(""); // CLEAR START TIME
+                textEndAt.setText("");// CLEAR END TIME
                 getDateTime(textStartAt, "");
             }
         });
@@ -74,15 +74,14 @@ public class ReservationFragment extends Fragment {
         textEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textStartAt.getText().length() == 16){
+                if(textStartAt.getText().length() == 16){// CHECK IF START HAS VALUE
                     textEndAt.setText("");
-                    getDateTime(textEndAt, textStartAt.getText().toString());
+                    getDateTime(textEndAt, textStartAt.getText().toString()); // CALL DATE AND TIME DIALOG
                 }
                 else{
                     ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select when your schedule starts");
                     errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                 }
-
             }
         });
 
@@ -148,13 +147,13 @@ public class ReservationFragment extends Fragment {
     }
 
     private void getDateTime(EditText dateTime,@Nullable String startData){
-        DialogFragment timePicker  = new TimePickerFragment(dateTime, startData);
+        DialogFragment timePicker  = new TimePickerFragment(dateTime, startData);// PASS ITS OWN EDITTEXT AND START DATETIME TO END
         // set the targetFragment to receive the results, specifying the request code
         timePicker.setTargetFragment(ReservationFragment.this,  REQUEST_CODE);
         // show the timePicker
         timePicker.show(getFragmentManager(), "timePicker");
         // create the datePickerFragment
-        DialogFragment datePicker = new DatePickerFragment(dateTime, startData);
+        DialogFragment datePicker = new DatePickerFragment(dateTime, startData); // PASS ITS OWN EDITTEXT AND START DATETIME TO END
         // set the targetFragment to receive the results, specifying the request code
         datePicker.setTargetFragment( ReservationFragment.this,  REQUEST_CODE);
         // show the datePicker
