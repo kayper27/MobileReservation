@@ -57,13 +57,13 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
 //        boolean isSunday = c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY; // for disabling for sundays
-        String selectedDate = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(c.getTime());
+        String selectedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(c.getTime());
         dateTime.setText(selectedDate);
     }
 
 
     public Date convertStartAt(String dateString) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         Date date = new Date();
         try {
             //formatting the dateString to convert it into a Date

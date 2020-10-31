@@ -51,7 +51,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         Log.d(TAG, "onDateSet: " + selectedTime);
 
         if(startData.length() != 16){ // START TIME SELECTION
-            if(7 >= append(hour, minute) || append(hour, minute) >= 20.30) { // IF SELECTED VALUE IS GREATER THAN EQUAL 7:00 AM OR SELECTED VALUE GREATER THAN EQUAL 8:30 PM
+            if(7 > append(hour, minute) || append(hour, minute) >= 20.30) { // IF SELECTED VALUE IS GREATER THAN EQUAL 7:00 AM OR SELECTED VALUE GREATER THAN EQUAL 8:30 PM
                 flag = false;
                 ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is only between 7:00 AM - 8:30 PM");
                 errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
