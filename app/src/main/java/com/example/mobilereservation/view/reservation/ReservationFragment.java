@@ -66,6 +66,7 @@ public class ReservationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 textStartAt.setText("");
+                textEndAt.setText("");
                 getDateTime(textStartAt, "");
             }
         });
