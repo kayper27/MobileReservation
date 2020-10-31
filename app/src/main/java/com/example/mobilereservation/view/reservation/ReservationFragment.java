@@ -11,15 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.databinding.FragmentReservationBinding;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
@@ -34,26 +35,29 @@ import java.util.ArrayList;
  */
 public class ReservationFragment extends Fragment {
 
-    private EditText textStartAt, textEndAt, textFacility;
-    private Button changeSchedule, buttonAddEquipment, submitButton;
+    private FragmentReservationBinding fragmentReservationBinding;
+
+    private EditText textStartAt, textEndAt;
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
+
+    ArrayList<Equipment> equipmentData = new ArrayList<>();// HOLDS EQUIPMENT DATA
+    String facilityData;// HOLDS FACILITY DATA
 
     private BroadcastReceiver facilityReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
         @Override
         public void onReceive(Context context, Intent intent) {
-            String facilityData = intent.getStringExtra("facility");
+            facilityData = intent.getStringExtra("facility");
             Log.d("receiver", "Got message: " + facilityData);
-            textFacility.setText(facilityData);
+            fragmentReservationBinding.reservationFacility.setText(facilityData);
         }
     };
 
     private BroadcastReceiver equipmentReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
         @Override
         public void onReceive(Context context, Intent intent) {
-            ArrayList<Equipment> equipmentData = (ArrayList<Equipment>) intent.getSerializableExtra("equipment");
+            equipmentData = (ArrayList<Equipment>) intent.getSerializableExtra("equipment");
             Log.d("receiver", "Got message: " + equipmentData);
-            System.out.println("|TEST| "+equipmentData);
         }
     };
 
@@ -78,19 +82,17 @@ public class ReservationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_reservation, container, false);
+        fragmentReservationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation, container, false);
 
-        textStartAt = (EditText) root.findViewById(R.id.editTextStratAt);
-        textEndAt = (EditText) root.findViewById(R.id.editTextEndAt);
-        textFacility = (EditText) root.findViewById(R.id.editTextFacility);
-        changeSchedule = (Button) root.findViewById(R.id.reservation_change_schedule);
-        buttonAddEquipment = (Button) root.findViewById(R.id.reservation_add_equipment);
-        submitButton = (Button) root.findViewById(R.id.reservation_submit_button);
+        View root = fragmentReservationBinding.getRoot();
+
+        textStartAt = (EditText) root.findViewById(R.id.reservation_StartAt);
+        textEndAt = (EditText) root.findViewById(R.id.reservation_EndAt);
 
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(facilityReceiver, new IntentFilter("send-facility-data"));// Initiate variables wait form the action key to send data
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(equipmentReceiver, new IntentFilter("send-equipment-data"));
 
-        textStartAt.setOnClickListener(new View.OnClickListener() {
+        fragmentReservationBinding.reservationStartAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textStartAt.setText(""); // CLEAR START TIME
@@ -99,7 +101,7 @@ public class ReservationFragment extends Fragment {
             }
         });
 
-        textEndAt.setOnClickListener(new View.OnClickListener() {
+        fragmentReservationBinding.reservationEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(textStartAt.getText().length() == 16){// CHECK IF START HAS VALUE
@@ -113,29 +115,29 @@ public class ReservationFragment extends Fragment {
             }
         });
 
-        textFacility.setOnClickListener(new View.OnClickListener() {
+        fragmentReservationBinding.reservationFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(true || isSchduleValid()){ // Change this when done coding
-                    changeSchedule.setVisibility(View.VISIBLE);
+                    fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
                     BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
                     bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
             }
         });
 
-        buttonAddEquipment.setOnClickListener(new View.OnClickListener() {
+        fragmentReservationBinding.reservationAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(true || isSchduleValid()){ // Change this when done coding
-                    changeSchedule.setVisibility(View.VISIBLE);
+                    fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
                     BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("equipment", textStartAt.getText().toString(), textEndAt.getText().toString());
                     bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
             }
         });
 
-        changeSchedule.setOnClickListener(new View.OnClickListener() {
+        fragmentReservationBinding.reservationChangeSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
@@ -149,8 +151,9 @@ public class ReservationFragment extends Fragment {
                                 textEndAt.setText("");
                                 textStartAt.setEnabled(true);
                                 textEndAt.setEnabled(true);
-                                textFacility.setText("");
-                                changeSchedule.setVisibility(View.GONE);
+                                fragmentReservationBinding.reservationFacility.setText("");
+                                equipmentData.clear();
+                                fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.GONE);
                             }
                         });
 
@@ -167,7 +170,7 @@ public class ReservationFragment extends Fragment {
             }
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        fragmentReservationBinding.reservationSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 
