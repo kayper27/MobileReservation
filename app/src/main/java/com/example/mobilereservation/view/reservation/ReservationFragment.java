@@ -20,9 +20,12 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,18 +41,21 @@ public class ReservationFragment extends Fragment {
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver facilityReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
+            String facilityData = intent.getStringExtra("facility");
+            Log.d("receiver", "Got message: " + facilityData);
+            textFacility.setText(facilityData);
+        }
+    };
 
-            String message = intent.getStringExtra("facility");
-            if(!message.isEmpty()){
-                Log.d("receiver", "Got message: " + message);
-                textFacility.setText(message);
-            }
-
-
+    private BroadcastReceiver equipmentReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ArrayList<Equipment> equipmentData = (ArrayList<Equipment>) intent.getSerializableExtra("equipment");
+            Log.d("receiver", "Got message: " + equipmentData);
+            System.out.println("|TEST| "+equipmentData);
         }
     };
 
@@ -83,7 +89,8 @@ public class ReservationFragment extends Fragment {
         buttonAddEquipment = (Button) root.findViewById(R.id.reservation_add_equipment);
         submitButton = (Button) root.findViewById(R.id.reservation_submit_button);
 
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mMessageReceiver, new IntentFilter("send-facility-data"));
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(facilityReceiver, new IntentFilter("send-facility-data"));// Initiate variables wait form the action key to send data
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(equipmentReceiver, new IntentFilter("send-equipment-data"));
 
         textStartAt.setOnClickListener(new View.OnClickListener() {
             @Override

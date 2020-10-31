@@ -31,6 +31,7 @@ import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,15 +99,17 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("sender", "Broadcasting message");
                 if(validateFacility() && category.equals("facility")){
-                    Log.d("sender", "Broadcasting message");
+
                     Intent intent = new Intent("send-facility-data");
                     intent.putExtra("facility", getSelectFacility());
                     LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
                 }
                 if(validateEquiopment() && category.equals("equipment")){
-                    System.out.println("|TEST| valid "+getSelectedEquipments());
+                    Intent intent = new Intent("send-equipment-data");
+                    intent.putExtra("equipment", (Serializable) getSelectedEquipments());
+                    LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
                 }
             }
         }));
