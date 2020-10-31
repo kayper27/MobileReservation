@@ -34,8 +34,6 @@ import java.util.ArrayList;
  */
 public class ReservationFragment extends Fragment {
 
-    private static final String EQUIPMENT = "equipment";
-
     private EditText textStartAt, textEndAt, textFacility;
     private Button changeSchedule, buttonAddEquipment, submitButton;
 
@@ -125,6 +123,7 @@ public class ReservationFragment extends Fragment {
                 }
             }
         });
+
         buttonAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +134,7 @@ public class ReservationFragment extends Fragment {
                 }
             }
         });
+
         changeSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +166,7 @@ public class ReservationFragment extends Fragment {
                 alertDialog.show();
             }
         });
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
