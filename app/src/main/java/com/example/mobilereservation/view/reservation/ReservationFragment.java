@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.adapters.listAdapter.ReservationEquipmentListAdapter;
 import com.example.mobilereservation.databinding.FragmentReservationBinding;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.util.DatePickerFragment;
@@ -41,6 +42,8 @@ public class ReservationFragment extends Fragment {
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
+    private ReservationEquipmentListAdapter reservationEquipmentListAdapter; // ADAPTER FOR EQUIPMENT IN LIST
+
     ArrayList<Equipment> equipmentData = new ArrayList<>();// HOLDS EQUIPMENT DATA
     String facilityData;// HOLDS FACILITY DATA
 
@@ -58,6 +61,8 @@ public class ReservationFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             equipmentData = (ArrayList<Equipment>) intent.getSerializableExtra("equipment");
             Log.d("receiver", "Got message: " + equipmentData);
+            reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
+            fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
         }
     };
 
