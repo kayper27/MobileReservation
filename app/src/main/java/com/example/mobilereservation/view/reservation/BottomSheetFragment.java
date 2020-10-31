@@ -163,7 +163,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         @Override
         protected Void doInBackground(Void... voids) {
             request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
-            DisposableSingleObserver<List<Request>> error = api.getReservedchedule("2020-11-04T00:00:00.000Z", "2020-11-08T00:00:00.000Z") /// NOT CHANGED YET CHANGE
+            // "yyyy-MM-ddT00:00:00.000Z" must look like this format MONGODB does not follow any format but this
+            DisposableSingleObserver<List<Request>> error = api.getReservedchedule(start, end)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {
