@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Single List Item Design -->
-<TextView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/reservation_equipment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dip"
-    android:textSize="16dip"
-    android:textStyle="bold" >
-</TextView>
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/reservation_equipment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:text="Type"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
