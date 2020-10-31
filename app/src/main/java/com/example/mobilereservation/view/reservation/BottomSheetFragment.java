@@ -98,9 +98,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage();
+
                 if(validateFacility() && category.equals("facility")){
-                    System.out.println("|TEST| valid "+getSelectFacility());
+                    Log.d("sender", "Broadcasting message");
+                    Intent intent = new Intent("send-facility-data");
+                    intent.putExtra("facility", getSelectFacility());
+                    LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
                 }
                 if(validateEquiopment() && category.equals("equipment")){
                     System.out.println("|TEST| valid "+getSelectedEquipments());
@@ -356,13 +359,5 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }
         }
         return selectedEquipment;
-    }
-
-    private void sendMessage() {
-        Log.d("sender", "Broadcasting message");
-        Intent intent = new Intent("custom-event-name");
-        // You can also include some extra data.
-        intent.putExtra("message", "This is my message!");
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
     }
 }

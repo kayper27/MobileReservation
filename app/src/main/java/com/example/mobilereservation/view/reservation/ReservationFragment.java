@@ -38,6 +38,21 @@ public class ReservationFragment extends Fragment {
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+
+            String message = intent.getStringExtra("facility");
+            if(!message.isEmpty()){
+                Log.d("receiver", "Got message: " + message);
+                textFacility.setText(message);
+            }
+
+
+        }
+    };
+
     public ReservationFragment() {
         // Required empty public constructor
     }
@@ -68,6 +83,8 @@ public class ReservationFragment extends Fragment {
         buttonAddEquipment = (Button) root.findViewById(R.id.reservation_add_equipment);
         submitButton = (Button) root.findViewById(R.id.reservation_submit_button);
 
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mMessageReceiver, new IntentFilter("send-facility-data"));
+
         textStartAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,8 +93,7 @@ public class ReservationFragment extends Fragment {
                 getDateTime(textStartAt, "");
             }
         });
-        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mMessageReceiver,
-                new IntentFilter("custom-event-name"));
+
         textEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,14 +196,4 @@ public class ReservationFragment extends Fragment {
         }
         return flag;
     }
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra("message");
-            textFacility.setText(message);
-            Log.d("receiver", "Got message: " + message);
-        }
-    };
-
 }
