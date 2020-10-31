@@ -1,8 +1,13 @@
 package com.example.mobilereservation.view.reservation;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +17,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.util.DatePickerFragment;
@@ -70,7 +76,8 @@ public class ReservationFragment extends Fragment {
                 getDateTime(textStartAt, "");
             }
         });
-
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter("custom-event-name"));
         textEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,4 +180,14 @@ public class ReservationFragment extends Fragment {
         }
         return flag;
     }
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            textFacility.setText(message);
+            Log.d("receiver", "Got message: " + message);
+        }
+    };
+
 }

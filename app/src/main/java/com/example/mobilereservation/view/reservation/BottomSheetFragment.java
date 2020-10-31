@@ -1,8 +1,10 @@
 package com.example.mobilereservation.view.reservation;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.serachAdapter.EquipmentSearchAdapter;
@@ -95,6 +98,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendMessage();
                 if(validateFacility() && category.equals("facility")){
                     System.out.println("|TEST| valid "+getSelectFacility());
                 }
@@ -352,5 +356,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }
         }
         return selectedEquipment;
+    }
+
+    private void sendMessage() {
+        Log.d("sender", "Broadcasting message");
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", "This is my message!");
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
     }
 }
