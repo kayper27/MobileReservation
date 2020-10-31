@@ -328,14 +328,9 @@
                         android:id="@+id/reservation_equipment_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/reservation_add_equipment"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="20dp">
-
-                    </ListView>
+                        android:layout_marginBottom="20dp"/>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
