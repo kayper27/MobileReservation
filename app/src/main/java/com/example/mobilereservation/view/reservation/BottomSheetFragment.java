@@ -60,7 +60,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public BottomSheetFragment() {}
 
-    public static BottomSheetFragment newInstance(String category, String start, String end) {
+    public static BottomSheetFragment newInstance(String category, String[] selected, String start, String end) {
         BottomSheetFragment frag = new BottomSheetFragment();
         Bundle args = new Bundle();
         args.putString(CATEGORY, category);
