@@ -182,6 +182,45 @@ public class ReservationFragment extends Fragment {
             }
         });
 
+        fragmentReservationBinding.reservationScheduleInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Select your schedule before adding facility and equipment.\nFormat: yyyy-MM-dd HH:mm");
+                builder.setCancelable(true);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { public void onClick(DialogInterface dialog, int id) {} });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        fragmentReservationBinding.reservationFacilityInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Add your facility by pressing the field bellow.\nQ&A\nQ: Why I cannot find the room that I need?\nA: The room is already booked in that time slot");
+                builder.setCancelable(true);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { public void onClick(DialogInterface dialog, int id) {} });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        fragmentReservationBinding.reservationEquipmentInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Add your equipment by pressing the button bellow."+
+                                    "\nQ&A\n+" +
+                                    "Q: Why I cannot find the equipment that I need?\nA: The equipment is already booked in that time slot"+
+                                    "Q: How to remove equipment in list?\nA: Swipe right then press remove");
+                builder.setCancelable(true);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { public void onClick(DialogInterface dialog, int id) {} });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
         return root;
     }
 
