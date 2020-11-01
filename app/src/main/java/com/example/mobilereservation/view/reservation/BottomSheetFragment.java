@@ -77,7 +77,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         if (getArguments() != null) {
             category = getArguments().getString(CATEGORY);
             start = getArguments().getString(START);
-            end = getArguments().getString(START);
+            end = getArguments().getString(END);
             selected = getArguments().getStringArray(SELECTED);
         }
         ReservationAsyncTask reservationAsyncTask = new ReservationAsyncTask(start, end);
@@ -166,6 +166,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            start = start.replace(" ","T").concat(":00.000Z");// Format start for mongodb
+            end = end.replace(" ","T").concat(":00.000Z");;// Format end for mongodb
             request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
             // "yyyy-MM-ddT00:00:00.000Z" must look like this format MONGODB does not follow any format but this
             DisposableSingleObserver<List<Request>> error = api.getReservedchedule(start, end)
