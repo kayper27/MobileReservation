@@ -321,16 +321,19 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public boolean validateFacility(){
         boolean flag = false;
-        for(int i = 0, ctr = 0; i < filteredFacilities.size(); i ++){
-            if (filteredFacilities.get(i).getChecked().equals(true)) {
+        for(int i = 0, ctr = 0; i < filteredFacilities.size(); i ++){// ALLOWS NO SELECTED FACILITY
+            if(ctr == 0){
+                flag = true;
+            }
+            if (filteredFacilities.get(i).getChecked().equals(true)) {// ALLOWS ONE SELECTED FACILITY
                 ctr++;
                 flag = true;
-                if(ctr > 1){
-                    flag = false;
-                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 1 facility only ");
-                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
-                    break;
-                }
+            }
+            if(ctr > 1){// FLAGS MORE THAN ONE SELECTED FACILITY
+                flag = false;
+                ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 1 facility only ");
+                errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                break;
             }
         }
         return flag;
