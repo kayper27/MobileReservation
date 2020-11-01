@@ -46,7 +46,7 @@ public class ReservationFragment extends Fragment {
 
     ArrayList<Equipment> equipmentData = new ArrayList<>();// HOLDS EQUIPMENT DATA
     String facilityData;// HOLDS FACILITY DATA
-
+    String[] selected;
     private BroadcastReceiver facilityReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -125,7 +125,10 @@ public class ReservationFragment extends Fragment {
             public void onClick(View v) {
                 if(facilityData != null){
                     fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
-                    BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", textStartAt.getText().toString(), textEndAt.getText().toString());
+                    selected = new String [] {fragmentReservationBinding.reservationFacility.getText().toString()};
+                }
+                if(isSchduleValid()){ // Validate if schedule has data
+                    BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
                     bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
             }

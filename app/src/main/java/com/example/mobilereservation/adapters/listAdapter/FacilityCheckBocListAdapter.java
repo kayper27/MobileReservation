@@ -104,6 +104,7 @@ public class FacilityCheckBocListAdapter  extends ArrayAdapter<Facility> impleme
         viewHolder.facility_status.setText(facility.getStatus());
         viewHolder.facility_info.setOnClickListener(this);
         viewHolder.facility_info.setTag(ctr);
+        viewHolder.facility_checkBox.setChecked(facility.getChecked());
         viewHolder.facility_checkBox.setOnClickListener(this);
         viewHolder.facility_checkBox.setTag(ctr);
         // Return the facility_checkBox view to render on screen

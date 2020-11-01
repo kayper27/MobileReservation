@@ -46,7 +46,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private static final String CATEGORY = "category"; // WHAT KEY TO KNOW WHAT CATEGORY TO WORK
     private static final String START = "start"; // TO GET DATA BETWEEN DATES
     private static final String END = "end";
+    private static final String SELECTED = "selected";
     private String category = "", start = "", end = "";
+    private String[] selected;
 
     private FragmentBottomsSheetBinding fragmentBottomsSheetBinding; // CALL LAYOUT
     private FacilitySearchAdapter facilityAdapterSearch; // ADAPTER FOR SEARCH FACILITY IN LIST
@@ -64,6 +66,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         args.putString(CATEGORY, category);
         args.putString(START, start);
         args.putString(END, end);
+        args.putStringArray(SELECTED, selected);
         frag.setArguments(args);
         return frag;
     }
@@ -75,6 +78,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             category = getArguments().getString(CATEGORY);
             start = getArguments().getString(START);
             end = getArguments().getString(START);
+            selected = getArguments().getStringArray(SELECTED);
         }
         ReservationAsyncTask reservationAsyncTask = new ReservationAsyncTask(start, end);
         reservationAsyncTask.execute();
@@ -216,7 +220,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                 facilityTemp = new ArrayList<>();
                             }
                             for (int i = 0; i < facilities.size(); i++) {
-                                filteredFacilities.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), false));
+                                boolean checked = false;
+                                if(facilities.get(i).getFacility_id().equals(selected[0])){
+                                    checked = true;
+                                }
+                                filteredFacilities.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), checked));
                             }
 
                             facilityAdapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), filteredFacilities, true);
