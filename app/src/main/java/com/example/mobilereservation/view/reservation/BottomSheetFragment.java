@@ -109,7 +109,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     intent.putExtra("facility", getSelectFacility());
                     LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
                 }
-                if(validateEquiopment() && category.equals("equipment")){
+                if(validateEquipment() && category.equals("equipment")){
                     Intent intent = new Intent("send-equipment-data");
                     intent.putExtra("equipment", (Serializable) getSelectedEquipments());
                     LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
@@ -360,18 +360,21 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         return facilityID;
     }
 
-    public boolean validateEquiopment(){
+    public boolean validateEquipment(){
         boolean flag = false;
         for(int i = 0, ctr = 0; i < filteredEquipments.size(); i ++){
+            if(ctr == 0){
+                flag = true;
+            }
             if (filteredEquipments.get(i).getChecked().equals(true)) {
                 ctr++;
                 flag = true;
-                if(ctr > 5){
-                    flag = false;
-                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 5 equipments only ");
-                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
-                    break;
-                }
+            }
+            if(ctr > 5){
+                flag = false;
+                ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select 5 equipments only ");
+                errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                break;
             }
         }
         return flag;
