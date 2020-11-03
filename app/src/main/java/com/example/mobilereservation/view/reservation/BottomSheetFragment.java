@@ -287,6 +287,16 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                             }
 
                             for (int i = 0; i < equipments.size(); i++) {
+                                boolean checked = false;
+                                if(selected != null){
+                                    for(int x = 0; x < selected.length; x++){
+                                        checked = false;
+                                        if(equipments.get(i).getEquipment_id().equals(selected[x])){
+                                            checked = true;
+                                            break;
+                                        }
+                                    }
+                                }
                                 filteredEquipments.add(new Equipment(
                                         equipments.get(i).getEquipment_id(),
                                         equipments.get(i).getStatus(),
@@ -295,7 +305,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                         equipments.get(i).getModel_no(),
                                         equipments.get(i).getType(),
                                         equipments.get(i).getDescription(),
-                                        false)
+                                        checked)
                                 );
                             }
                             equipmentSearchAdapter = new EquipmentSearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), filteredEquipments, true);

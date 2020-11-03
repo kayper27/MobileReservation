@@ -89,6 +89,7 @@ public class EquipmentCheckBoxListAdapter extends ArrayAdapter<Equipment> implem
         viewHolder.equipment_info.setOnClickListener(this);
         viewHolder.equipment_info.setTag(ctr);
         viewHolder.equipment_checkBox.setOnClickListener(this);
+        viewHolder.equipment_checkBox.setChecked(equipmentDataSet.getChecked());
         viewHolder.equipment_checkBox.setTag(ctr);
         // Return the completed view to render on screen
         return convertView;
