@@ -112,7 +112,7 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(textStartAt != null){// CHECK IF START HAS VALUE
+                if(!textStartAt.getText().toString().isEmpty()){// CHECK IF START HAS VALUE
                     textEndAt.setText("");
                     getDateTime(textEndAt, textStartAt.getText().toString()); // CALL DATE AND TIME DIALOG
                 }
