@@ -61,6 +61,9 @@ public class ReservationFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             equipmentData = (ArrayList<Equipment>) intent.getSerializableExtra("equipment");
             Log.d("receiver", "Got message: " + equipmentData);
+            if(equipmentData.size() == 0){
+                selected = null;
+            }
             reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
             fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
         }
