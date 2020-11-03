@@ -168,6 +168,8 @@ public class ReservationFragment extends Fragment {
                                 textEndAt.setEnabled(true);
                                 fragmentReservationBinding.reservationFacility.setText("");
                                 equipmentData.clear();
+                                reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
+                                fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
                                 fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.GONE);
                             }
                         });
