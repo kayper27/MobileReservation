@@ -115,7 +115,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     bottomSheet = dialog.findViewById(R.id.design_bottom_sheet);
                     if (bottomSheet != null) {
                         behavior = BottomSheetBehavior.from(bottomSheet);
-                        behavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         behavior.setSkipCollapsed(true);
                         behavior.setHideable(false);
                     }
