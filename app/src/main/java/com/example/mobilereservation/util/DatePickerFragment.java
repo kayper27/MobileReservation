@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,9 +58,24 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
+
 //        boolean isSunday = c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY; // for disabling for sundays
         String selectedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(c.getTime());
-        dateTime.setText(selectedDate);
+        boolean flag = true;
+
+        if (!startData.isEmpty()) {
+            int monthStartData = Integer.parseInt(startData.substring(5,7)) -1;
+            int dayStartData = Integer.parseInt(startData.substring(8,10));
+            if((month == monthStartData) && (day < dayStartData)){
+                flag = false;
+                ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Date selected is not allowed");
+                errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+            }
+        }
+
+        if(flag){
+            dateTime.setText(selectedDate);
+        }
     }
 
 
