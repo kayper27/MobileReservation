@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -29,6 +31,8 @@ import com.example.mobilereservation.network.apiService.equipment;
 import com.example.mobilereservation.network.apiService.facility;
 import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.io.Serializable;
@@ -53,6 +57,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private FragmentBottomsSheetBinding fragmentBottomsSheetBinding; // CALL LAYOUT
     private FacilitySearchAdapter facilityAdapterSearch; // ADAPTER FOR SEARCH FACILITY IN LIST
     private EquipmentSearchAdapter equipmentSearchAdapter; // ADAPTER FOR SEARCH EQUIPMENT IN LIST
+
+    private FrameLayout bottomSheet;
+    private BottomSheetDialog dialog;
+    private BottomSheetBehavior behavior;
 
     private List<Request> requestSet = new ArrayList<>();
     private ArrayList<Facility> filteredFacilities = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
@@ -99,6 +107,22 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         fragmentBottomsSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottoms_sheet, container, false);
         View root = fragmentBottomsSheetBinding.getRoot();
 
+        root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                dialog = (BottomSheetDialog) BottomSheetFragment.this.getDialog();
+                if (dialog != null) {
+                    bottomSheet = dialog.findViewById(R.id.design_bottom_sheet);
+                    if (bottomSheet != null) {
+                        behavior = BottomSheetBehavior.from(bottomSheet);
+                        behavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        behavior.setSkipCollapsed(true);
+                        behavior.setHideable(false);
+                    }
+                }
+            }
+        });
+
         buttonOK = (Button) root.findViewById(R.id.reservation_ok);
         buttonOK.setOnClickListener((new View.OnClickListener() {
             @Override
@@ -108,11 +132,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     Intent intent = new Intent("send-facility-data");
                     intent.putExtra("facility", getSelectFacility());
                     LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
+                    dialog.dismiss();
                 }
                 if(validateEquipment() && category.equals("equipment")){
                     Intent intent = new Intent("send-equipment-data");
                     intent.putExtra("equipment", (Serializable) getSelectedEquipments());
                     LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
+                    dialog.dismiss();
                 }
             }
         }));
