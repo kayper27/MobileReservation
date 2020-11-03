@@ -127,7 +127,6 @@ public class ReservationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(facilityData != null){
-                    fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
                     selected = new String [] {fragmentReservationBinding.reservationFacility.getText().toString()};
                 }
                 if(isSchduleValid()){ // Validate if schedule has data
@@ -146,9 +145,7 @@ public class ReservationFragment extends Fragment {
                         selected[i] = equipmentData.get(i).getEquipment_id();
                     }
                 }
-
                 if(isSchduleValid()){// Validate if schedule has data
-                    fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
                     BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("equipment", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
                     bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
@@ -262,6 +259,7 @@ public class ReservationFragment extends Fragment {
         else{
             textStartAt.setEnabled(false);
             textEndAt.setEnabled(false);
+            fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.VISIBLE);
             flag = true;
         }
         return flag;
