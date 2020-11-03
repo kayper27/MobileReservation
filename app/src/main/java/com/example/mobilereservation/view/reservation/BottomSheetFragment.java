@@ -105,7 +105,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 Log.d("sender", "Broadcasting message");
                 if(validateFacility() && category.equals("facility")){
-
                     Intent intent = new Intent("send-facility-data");
                     intent.putExtra("facility", getSelectFacility());
                     LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
@@ -223,7 +222,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                             }
                             for (int i = 0; i < facilities.size(); i++) {
                                 boolean checked = false;
-                                if(facilities.get(i).getFacility_id().equals(selected[0])){
+                                if(selected != null && facilities.get(i).getFacility_id().equals(selected[0])){
                                     checked = true;
                                 }
                                 filteredFacilities.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), checked));
