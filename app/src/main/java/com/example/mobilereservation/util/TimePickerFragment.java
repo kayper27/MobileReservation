@@ -58,13 +58,17 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             }
         }
         else { // END TIME SELECTION
-            int convertHour = 0, convertMinute = 0;
-            startData = startData.substring(11, 16);
-            convertHour = Integer.parseInt(startData.substring(0, 2));
-            convertMinute = Integer.parseInt(startData.substring(3, 5));
-            if(append(convertHour, convertMinute) >= append(hour, minute)) {  // IF STARTDATA IS GREATER THAN EQUAL TO SELECTED DATA
+            int hourStartData = Integer.parseInt(startData.substring(11, 13));
+            int minuteStartData = Integer.parseInt(startData.substring(14, 16));
+            int monthStartData = Integer.parseInt(startData.substring(5,7));
+            int dayStartData = Integer.parseInt(startData.substring(8,10));
+            int monthEndData = Integer.parseInt(dateTime.getText().toString().substring(5,7));
+            int dayEndData = Integer.parseInt(dateTime.getText().toString().substring(8,10));
+
+            // IF the date is the same then you cannot select time beyond time selected after start
+            if(append(hourStartData, minuteStartData) >= append(hour, minute) && (monthEndData == monthStartData) && (dayEndData == dayStartData) || append(hour, minute) > 20.30){
                 flag = false;
-                ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is only between "+startData+" - 8:30 PM");
+                ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is only between "+startData+"- 8:30 PM");
                 errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
             }
         }
