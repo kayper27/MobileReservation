@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="40dp">
 
+    <!-- Bottom View Start-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -19,7 +20,9 @@
             android:paddingRight="25dp"
             android:src="@drawable/trash" />
     </LinearLayout>
+    <!-- Bottom View End-->
 
+    <!-- Surface View Start -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,5 +39,5 @@
             android:textSize="20sp" />
 
     </LinearLayout>
-
+    <!-- Surface View End -->
 </com.daimajia.swipe.SwipeLayout>
