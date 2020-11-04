@@ -11,15 +11,20 @@ import android.widget.TextView;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.model.Equipment;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> implements View.OnClickListener {
 
-    private List<Equipment> equipmentDataSet;
+    private ArrayList<Equipment> equipmentDataSet;
 
     private static class ViewHolder {
         TextView reservation_equipment;
         ImageView reservation_trash;
+    }
+
+    public ReservationEquipmentListAdapter(ArrayList<Equipment> data, Context context) {
+        super(context, R.layout.row_reservation_equipment, data);
+        this.equipmentDataSet = data;
     }
 
     @Override
@@ -30,16 +35,11 @@ public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> imp
         {
             case R.id.reservation_trash:
                 equipmentDataSet.remove(object);
-                System.out.println("|TEST| "+equipmentDataSet);
                 notifyDataSetChanged();
                 break;
         }
     }
 
-    public ReservationEquipmentListAdapter(List<Equipment> data, Context context) {
-        super(context, R.layout.row_reservation_equipment, data);
-        this.equipmentDataSet = data;
-    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

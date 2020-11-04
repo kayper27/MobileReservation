@@ -51,6 +51,7 @@ public class ReservationFragment extends Fragment {
     ArrayList<Equipment> equipmentData = new ArrayList<>();// HOLDS EQUIPMENT DATA
     String facilityData;// HOLDS FACILITY DATA
     String[] selected;
+
     private BroadcastReceiver facilityReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -162,8 +163,8 @@ public class ReservationFragment extends Fragment {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
+                selected = new String [equipmentData.size()];
                 if(equipmentData.size() > 0){
-                    selected = new String [equipmentData.size()];
                     for(int i = 0; i < equipmentData.size(); i++){
                         selected[i] = equipmentData.get(i).getEquipment_id();
                     }
