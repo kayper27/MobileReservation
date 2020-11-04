@@ -82,7 +82,7 @@ public class EquipmentSearchAdapter extends BaseAdapter implements Filterable {
             if (constraint != null && constraint.length() > 0) {
                 ArrayList<Equipment> filterList = new ArrayList<>();
                 for (int i = 0; i < eStringFilterList.size(); i++) {
-                    if ((eStringFilterList.get(i).getType().toUpperCase()).contains(constraint.toString().toUpperCase())) {
+                    if ((eStringFilterList.get(i).getType().toUpperCase()).contains(constraint.toString().toUpperCase()) || eStringFilterList.get(i).getChecked()) {
                         filterList.add(eStringFilterList.get(i));
                     }
                 }
