@@ -11,8 +11,9 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 import com.example.mobilereservation.model.Request;
+import com.example.mobilereservation.util.FormatDateTime;
+import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
     private FragmentManager fragmentManager;
     private List<Request> requestDataSet;
     private int ctr;
+
+    private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
 
     private static class ViewHolder {
         TextView request_status;
@@ -41,6 +44,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
     @Override
     public void onClick(View v) {
+
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         Request requestDataModel = (Request)object;
@@ -49,8 +53,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
             case R.id.request_info:
                 String details = "Status: " +requestDataModel.getStatus() +
                                 "\nUsername: " +requestDataModel.getUsername() +
-                                "\nStart:\n" +requestDataModel.getStartAt() +
-                                "\nEnd:\n" +requestDataModel.getEndAt() +
+                                "\nStart:\n" +dateTime.formatDateTime(requestDataModel.getStartAt())+
+                                "\nEnd:\n" +dateTime.formatDateTime(requestDataModel.getEndAt()) +
                                 "\nFacility: " +requestDataModel.getFacility() +
                                 "\nEquipments: \n" +requestDataModel.getEquipment_id();
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
@@ -91,8 +95,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
         viewHolder.request_id.setText("ID: "+requestDataSet.getRequest_id());
         viewHolder.request_status.setText(requestDataSet.getStatus());
-        viewHolder.request_startAt.setText("Start: "+requestDataSet.getStartAt());
-        viewHolder.request_endAt.setText("End: "+requestDataSet.getEndAt());
+        viewHolder.request_startAt.setText("Start: "+dateTime.formatDateTime(requestDataSet.getStartAt()));
+        viewHolder.request_endAt.setText("End: "+dateTime.formatDateTime(requestDataSet.getEndAt()));
         viewHolder.request_facility.setText("Facility: "+requestDataSet.getFacility());
         viewHolder.request_equipment.setText("Equipment: "+requestDataSet.getEquipment_id());
         viewHolder.request_info.setOnClickListener(this);

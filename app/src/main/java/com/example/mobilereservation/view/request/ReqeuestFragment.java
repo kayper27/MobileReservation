@@ -17,7 +17,6 @@ import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
-import com.example.mobilereservation.util.FormatDateTime;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
@@ -81,15 +80,14 @@ public class ReqeuestFragment extends Fragment {
                         @Override
                         public void onSuccess(List<Request> requests) {
                             final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
-                            FormatDateTime dateTime = new FormatDateTime();
 
                             for(int i = 0; i < requests.size(); i++){
                                 reqst.add(new Request(
                                         requests.get(i).getRequest_id(),
                                         requests.get(i).getStatus(),
                                         requests.get(i).getUsername(),
-                                        dateTime.formatDateTime(requests.get(i).getStartAt()),
-                                        dateTime.formatDateTime(requests.get(i).getEndAt()),
+                                        requests.get(i).getStartAt(),
+                                        requests.get(i).getEndAt(),
                                         requests.get(i).getFacility(),
                                         requests.get(i).getEquipment()));
 
