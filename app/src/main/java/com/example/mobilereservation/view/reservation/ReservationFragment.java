@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,9 @@ public class ReservationFragment extends Fragment {
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
     private ReservationEquipmentListAdapter reservationEquipmentListAdapter; // ADAPTER FOR EQUIPMENT IN LIST
+
+    private long mLastClickTime = 0;
+    private long THRESHOLD = 2000; // threshold of 2000 ms
 
     ArrayList<Equipment> equipmentData = new ArrayList<>();// HOLDS EQUIPMENT DATA
     String facilityData;// HOLDS FACILITY DATA
@@ -103,6 +107,11 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationStartAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 textStartAt.setText(""); // CLEAR START TIME
                 textEndAt.setText("");// CLEAR END TIME
                 getDateTime(textStartAt, "");
@@ -112,6 +121,10 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationEndAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 if(textStartAt.getText().toString().length() == 16 && !textStartAt.getText().toString().isEmpty()){// CHECK IF START HAS VALUE
                     textEndAt.setText("");
                     getDateTime(textEndAt, textStartAt.getText().toString()); // CALL DATE AND TIME DIALOG
@@ -126,6 +139,11 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationFacility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 if(facilityData != null){
                     selected = new String [] {fragmentReservationBinding.reservationFacility.getText().toString()};
                 }
@@ -139,6 +157,11 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationAddEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 if(equipmentData.size() > 0){
                     selected = new String [equipmentData.size()];
                     for(int i = 0; i < equipmentData.size(); i++){
@@ -155,6 +178,11 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationChangeSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setMessage("Changing your schedule now will erase everything.");
                 builder.setCancelable(true);
@@ -190,6 +218,11 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 
             }
         });
@@ -197,6 +230,11 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationScheduleInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setMessage("Select your schedule before adding facility and equipment.\nFormat: yyyy-MM-dd HH:mm");
                 builder.setCancelable(true);
@@ -209,6 +247,11 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationFacilityInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setMessage("Add your facility by pressing the field bellow.\nQ&A\nQ: Why I cannot find the room that I need?\nA: The room is already booked in that time slot");
                 builder.setCancelable(true);
@@ -221,6 +264,12 @@ public class ReservationFragment extends Fragment {
         fragmentReservationBinding.reservationEquipmentInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setMessage("Add your equipment by pressing the button bellow."+
                                     "\nQ&A\n" +
