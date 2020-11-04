@@ -41,6 +41,8 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
 
     private FragmentScheduleBinding fragmentScheduleBinding; // CALLS LAYOUT
 
+    private boolean flag = false;
+
     private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
 
     //// EXPANDABLE VARIABLES
@@ -153,13 +155,24 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
 
     private void filterRequest(String query){
         filteredRequest = new ArrayList<>();
-        for(int i = 0; i < originalRequest.size(); i++){
+        for(int i = 0; i < originalRequest.size(); i++){//FOR LOOP FOR GROUP
             reqst = new ArrayList<>();
-            for(int x = 0; x < originalRequest.get(i).size();x++){
-                if(originalRequest.get(i).get(x).getRequest_id().toLowerCase().contains(query.toLowerCase()) ||
-                   originalRequest.get(i).get(x).getUsername().toLowerCase().contains(query.toLowerCase()) ||
-                   originalRequest.get(i).get(x).getStartAt().toLowerCase().contains(query.toLowerCase()) ||
-                   originalRequest.get(i).get(x).getEndAt().toLowerCase().contains(query.toLowerCase())) {
+            for(int x = 0; x < originalRequest.get(i).size();x++){//FOR LOOP FOR LIST
+                for(int z = 0; z < originalRequest.get(i).get(x).getEquipment().getEquipment_id().size(); z++){//FOR LOOP FOR EQUIPMENT ARRAY
+                    flag = false;
+                    if(originalRequest.get(i).get(x).getEquipment().getEquipment_id().get(z).toLowerCase().contains(query.toLowerCase())){
+                        flag = true;
+                        break;
+                    }
+                }
+                if(originalRequest.get(i).get(x).getRequest_id().toLowerCase().contains(query.toLowerCase()) ||// REQUEST ID DATA
+                   originalRequest.get(i).get(x).getUsername().toLowerCase().contains(query.toLowerCase()) ||// USERNAME DATA
+                   originalRequest.get(i).get(x).getStartAt().toLowerCase().contains(query.toLowerCase()) ||// START DATA
+                   originalRequest.get(i).get(x).getEndAt().toLowerCase().contains(query.toLowerCase()) ||  // END DATA
+                   originalRequest.get(i).get(x).getFacility().toLowerCase().contains(query.toLowerCase()) || // FACILITY
+                   flag // EQUIPMENT
+                    )
+                 {
 
                     reqst.add(new Request(
                             originalRequest.get(i).get(x).getRequest_id(),
