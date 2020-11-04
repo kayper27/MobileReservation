@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mobilereservation.R;
@@ -12,12 +13,27 @@ import com.example.mobilereservation.model.Equipment;
 
 import java.util.List;
 
-public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> {
+public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> implements View.OnClickListener {
 
     private List<Equipment> equipmentDataSet;
 
     private static class ViewHolder {
         TextView reservation_equipment;
+        ImageView reservation_trash;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (Integer) v.getTag();
+        Object object = getItem(position);
+        switch (v.getId())
+        {
+            case R.id.reservation_trash:
+                equipmentDataSet.remove(object);
+                System.out.println("|TEST| "+equipmentDataSet);
+                notifyDataSetChanged();
+                break;
+        }
     }
 
     public ReservationEquipmentListAdapter(List<Equipment> data, Context context) {
@@ -38,6 +54,7 @@ public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_reservation_equipment, parent, false);
             viewHolder.reservation_equipment = (TextView) convertView.findViewById(R.id.reservation_equipment);
+            viewHolder.reservation_trash = (ImageView) convertView.findViewById(R.id.reservation_trash);
 
             convertView.setTag(viewHolder);
         }
@@ -46,7 +63,8 @@ public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> {
         }
 
         viewHolder.reservation_equipment.setText(equipmentData.getType());
-
+        viewHolder.reservation_trash.setOnClickListener(this);
+        viewHolder.reservation_trash.setTag(position);
         return convertView;
     }
 }
