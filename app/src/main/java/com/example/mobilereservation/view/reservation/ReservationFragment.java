@@ -37,6 +37,8 @@ import java.util.ArrayList;
  */
 public class ReservationFragment extends Fragment {
 
+    private static final String TAG = "ReservationFragment";
+
     private FragmentReservationBinding fragmentReservationBinding;
 
     private EditText textStartAt, textEndAt;
@@ -66,11 +68,16 @@ public class ReservationFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             equipmentData = (ArrayList<Equipment>) intent.getSerializableExtra("equipment");
             Log.d("receiver", "Got message: " + equipmentData);
-            if(equipmentData.size() == 0){
-                selected = null;
+            try {
+                if(equipmentData.size() > 0 || equipmentData != null){
+                    reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
+                    fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
+                }
             }
-            reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
-            fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
+            catch (Exception e){
+                Log.d(TAG, "ERROR IN onReceive "+e.getMessage().toUpperCase());
+                System.out.println("|TEST| "+e.getMessage());
+            }
         }
     };
 
