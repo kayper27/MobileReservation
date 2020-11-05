@@ -51,6 +51,7 @@ public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements Vie
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 String details = "Status: " + equipmentDataModel.getStatus() +
                                 "\nType: " + equipmentDataModel.getType()+
                                 "\nBrand: "+ equipmentDataModel.getBrand() +

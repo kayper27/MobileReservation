@@ -59,6 +59,7 @@ public class FacilityListAdapter extends ArrayAdapter<Facility> implements View.
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 String details = "Status: " + facilityDataModel.getStatus() +
                                 "\nDecription: \n" +facilityDataModel.getDescription();
                 FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facilityDataModel.getFacility_id().toUpperCase(), details);

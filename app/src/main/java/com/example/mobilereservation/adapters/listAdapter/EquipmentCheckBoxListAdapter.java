@@ -52,6 +52,7 @@ public class EquipmentCheckBoxListAdapter extends ArrayAdapter<Equipment> implem
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 String details = "Status: " + equipment.getStatus() +
                         "\nType: " + equipment.getType()+
                         "\nBrand: "+ equipment.getBrand() +

@@ -42,6 +42,7 @@ public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> imp
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 equipmentDataSet.remove(object);
                 notifyDataSetChanged();
                 break;

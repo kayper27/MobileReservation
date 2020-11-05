@@ -77,6 +77,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 String details = "Status: " +requestDataModel.getStatus() +
                                 "\nUsername: " +requestDataModel.getUsername() +
                                 "\nStart:\n" +dateTime.formatDateTime(requestDataModel.getStartAt())+
@@ -94,6 +95,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "APPROVED BY YOU SHIT");
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
+                mLastClickTime = SystemClock.elapsedRealtime();
                 break;
 
             case R.id.request_trash:
@@ -101,6 +103,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "TRASH YOU SHIT");
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
@@ -110,6 +113,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "CANCEL YOU SHIT");
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;

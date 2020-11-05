@@ -62,6 +62,7 @@ public class FacilityCheckBocListAdapter  extends ArrayAdapter<Facility> impleme
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 String details = "Status: " + facility.getStatus() +
                         "\nDecription: \n" +facility.getDescription();
                 FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facility.getFacility_id().toUpperCase(), details);
