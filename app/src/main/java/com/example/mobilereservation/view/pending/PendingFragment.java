@@ -196,7 +196,7 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
         }
         expandableListDetail = arrangedRequest;
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
+        expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail, true, true, false);
         fragmentPendingBinding.pendingExpandableListView.setAdapter(expandableListAdapter);
     }
 }

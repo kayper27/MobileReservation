@@ -192,7 +192,7 @@ public class ToReturnFragment extends Fragment implements SearchView.OnQueryText
         }
         expandableListDetail = arrangedRequest;
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
+        expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail, true, false, false);
         fragmentToReturnBinding.toReturnExpandableListView.setAdapter(expandableListAdapter);
     }
 

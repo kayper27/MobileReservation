@@ -1,6 +1,7 @@
 package com.example.mobilereservation.adapters.listAdapter;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,24 @@ import java.util.List;
 
 public class RequestListAdapter extends ArrayAdapter<Request> implements View.OnClickListener{
 
-    private long mLastClickTime = 0;
-    private long THRESHOLD = 1000; // ms threshold
-    private FragmentManager fragmentManager;
-    private List<Request> requestDataSet;
-    private int ctr;
+    private static final String TAG = "RequestListAdapter";
+    private final boolean cancelable;
+    private final boolean delete;
+    private final boolean acceptable;
+
+    private RequestDialogFragment equipmentDialogFragment;
 
     private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
+
+    private boolean swipe;
+
+    private long mLastClickTime = 0;
+    private long THRESHOLD = 1000; // ms threshold
+
+    private FragmentManager fragmentManager;
+    private Context context;
+    private List<Request> requestDataSet;
+    private int ctr;
 
     private static class ViewHolder {
         TextView request_status;
@@ -35,13 +47,21 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         TextView request_facility;
         TextView request_equipment;
         ImageView request_info;
+        ImageView request_approve;
+        ImageView request_trash;
+        ImageView request_cancel;
+
     }
 
-    public RequestListAdapter(List<Request> data, int ctr, Context context, FragmentManager fragmentManager) {
-        super(context, R.layout.row_request_item, data);
+    public RequestListAdapter(List<Request> data, int ctr, Context context, FragmentManager fragmentManager, boolean acceptable, boolean cancelable, boolean delete) {
+        super(context, R.layout.row_request_swipe_item, data);
+        this.context = context;
         this.ctr = ctr;
         this.requestDataSet = data;
         this.fragmentManager = fragmentManager;
+        this.cancelable = cancelable;
+        this.delete = delete;
+        this.acceptable = acceptable;
     }
 
     @Override
@@ -66,23 +86,32 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
+
             case R.id.request_approve:
                 // mis-clicking prevention, using threshold
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "APPROVED BY YOU SHIT");
+                equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
+
             case R.id.request_trash:
                 // mis-clicking prevention, using threshold
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "TRASH YOU SHIT");
+                equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
+
             case R.id.request_cancel:
                 // mis-clicking prevention, using threshold
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
+                equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "CANCEL YOU SHIT");
+                equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
         }
     }
@@ -100,7 +129,9 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.row_request_item, parent, false);
+
+            convertView = inflater.inflate(R.layout.row_request_swipe_item, parent, false);
+
             viewHolder.request_id = (TextView) convertView.findViewById(R.id.request_id);
             viewHolder.request_status = (TextView) convertView.findViewById(R.id.request_status);
             viewHolder.request_startAt = (TextView) convertView.findViewById(R.id.request_startAt);
@@ -108,7 +139,9 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
             viewHolder.request_facility = (TextView) convertView.findViewById(R.id.request_facility);
             viewHolder.request_equipment = (TextView) convertView.findViewById(R.id.request_equipment);
             viewHolder.request_info = (ImageView) convertView.findViewById(R.id.request_info);
-
+            viewHolder.request_approve = (ImageView) convertView.findViewById(R.id.request_approve);
+            viewHolder.request_trash = (ImageView) convertView.findViewById(R.id.request_trash);
+            viewHolder.request_cancel = (ImageView) convertView.findViewById(R.id.request_cancel);
             result=convertView;
 
             convertView.setTag(viewHolder);
@@ -125,6 +158,37 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         viewHolder.request_equipment.setText("Equipment: "+requestDataSet.getEquipment_id());
         viewHolder.request_info.setOnClickListener(this);
         viewHolder.request_info.setTag(ctr);
+
+        if(acceptable){
+            viewHolder.request_approve.setEnabled(true);
+            viewHolder.request_approve.setOnClickListener(this);
+            viewHolder.request_approve.setTag(ctr);
+        }
+        else {
+            viewHolder.request_approve.setVisibility(View.GONE);
+            viewHolder.request_approve.setEnabled(false);
+        }
+
+        if(delete){
+            viewHolder.request_trash.setEnabled(true);
+            viewHolder.request_trash.setOnClickListener(this);
+            viewHolder.request_trash.setTag(ctr);
+        }
+        else {
+            viewHolder.request_trash.setVisibility(View.GONE);
+            viewHolder.request_trash.setEnabled(false);
+        }
+
+        if(cancelable){
+            viewHolder.request_cancel.setEnabled(true);
+            viewHolder.request_cancel.setOnClickListener(this);
+            viewHolder.request_cancel.setTag(ctr);
+        }
+        else{
+            viewHolder.request_cancel.setVisibility(View.GONE);
+            viewHolder.request_cancel.setEnabled(false);
+        }
+
         // Return the completed view to render on screen
         return convertView;
     }
