@@ -48,7 +48,7 @@ public class ReservationFragment extends Fragment {
     private ReservationEquipmentListAdapter reservationEquipmentListAdapter; // ADAPTER FOR EQUIPMENT IN LIST
 
     private long mLastClickTime = 0;
-    private long THRESHOLD = 2000; // threshold of 2000 ms
+    private long THRESHOLD = 1000; // ms threshold
 
     ArrayList<Equipment> equipmentData = new ArrayList<>();// HOLDS EQUIPMENT DATA
     String facilityData;// HOLDS FACILITY DATA

@@ -1,6 +1,7 @@
 package com.example.mobilereservation.adapters.listAdapter;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements Vie
     private FragmentManager fragmentManager;
     private List<Equipment> equipmentDataSet;
     private int ctr;
+
+    private long mLastClickTime = 0;
+    private long THRESHOLD = 1000; // ms threshold
 
     private static class ViewHolder {
         TextView equipment_id;
@@ -43,6 +47,10 @@ public class EquipmentListAdapter extends ArrayAdapter<Equipment> implements Vie
         switch (v.getId())
         {
             case R.id.equipment_info:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
                 String details = "Status: " + equipmentDataModel.getStatus() +
                                 "\nType: " + equipmentDataModel.getType()+
                                 "\nBrand: "+ equipmentDataModel.getBrand() +

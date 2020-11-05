@@ -1,6 +1,7 @@
 package com.example.mobilereservation.adapters.listAdapter;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,9 @@ public class FacilityCheckBocListAdapter  extends ArrayAdapter<Facility> impleme
     private int ctr;
     private int lastPosition = -1;
 
+    private long mLastClickTime = 0;
+    private long THRESHOLD = 1000; // ms threshold
+
     private static class ViewHolder {
         TextView facility_id;
         TextView facility_status;
@@ -54,6 +58,10 @@ public class FacilityCheckBocListAdapter  extends ArrayAdapter<Facility> impleme
         switch (v.getId())
         {
             case R.id.facility_info:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
                 String details = "Status: " + facility.getStatus() +
                         "\nDecription: \n" +facility.getDescription();
                 FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facility.getFacility_id().toUpperCase(), details);

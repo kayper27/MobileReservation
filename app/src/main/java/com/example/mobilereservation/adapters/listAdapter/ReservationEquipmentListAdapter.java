@@ -1,6 +1,7 @@
 package com.example.mobilereservation.adapters.listAdapter;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import java.util.ArrayList;
 public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> implements View.OnClickListener {
 
     private ArrayList<Equipment> equipmentDataSet;
+
+    private long mLastClickTime = 0;
+    private long THRESHOLD = 1000; // ms threshold
 
     private static class ViewHolder {
         TextView reservation_equipment;
@@ -34,6 +38,10 @@ public class ReservationEquipmentListAdapter extends ArrayAdapter<Equipment> imp
         switch (v.getId())
         {
             case R.id.reservation_trash:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
                 equipmentDataSet.remove(object);
                 notifyDataSetChanged();
                 break;

@@ -1,6 +1,7 @@
 package com.example.mobilereservation.adapters.listAdapter;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,9 @@ public class FacilityListAdapter extends ArrayAdapter<Facility> implements View.
     private int ctr;
     private int lastPosition = -1;
 
+    private long mLastClickTime = 0;
+    private long THRESHOLD = 1000; // ms threshold
+
     // View lookup cache
     private static class ViewHolder {
         TextView facility_id;
@@ -51,6 +55,10 @@ public class FacilityListAdapter extends ArrayAdapter<Facility> implements View.
         switch (v.getId())
         {
             case R.id.facility_info:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
                 String details = "Status: " + facilityDataModel.getStatus() +
                                 "\nDecription: \n" +facilityDataModel.getDescription();
                 FacilityDialogFragment facilityDialogFragment = FacilityDialogFragment.newInstance(facilityDataModel.getFacility_id().toUpperCase(), details);

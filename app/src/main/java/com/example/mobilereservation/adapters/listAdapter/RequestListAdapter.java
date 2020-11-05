@@ -19,6 +19,8 @@ import java.util.List;
 
 public class RequestListAdapter extends ArrayAdapter<Request> implements View.OnClickListener{
 
+    private long mLastClickTime = 0;
+    private long THRESHOLD = 1000; // ms threshold
     private FragmentManager fragmentManager;
     private List<Request> requestDataSet;
     private int ctr;
@@ -51,6 +53,10 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         switch (v.getId())
         {
             case R.id.request_info:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
                 String details = "Status: " +requestDataModel.getStatus() +
                                 "\nUsername: " +requestDataModel.getUsername() +
                                 "\nStart:\n" +dateTime.formatDateTime(requestDataModel.getStartAt())+
@@ -59,6 +65,24 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                                 "\nEquipments: \n" +requestDataModel.getEquipment_id();
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
+                break;
+            case R.id.request_approve:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                break;
+            case R.id.request_trash:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                break;
+            case R.id.request_cancel:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
                 break;
         }
     }
