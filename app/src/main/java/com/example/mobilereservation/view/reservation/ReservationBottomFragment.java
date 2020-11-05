@@ -22,7 +22,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.serachAdapter.EquipmentSearchAdapter;
 import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
-import com.example.mobilereservation.databinding.FragmentBottomsSheetBinding;
+
+import com.example.mobilereservation.databinding.FragmentReservationBottomBinding;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Facility;
 import com.example.mobilereservation.model.Request;
@@ -43,7 +44,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class BottomSheetFragment extends BottomSheetDialogFragment {
+public class ReservationBottomFragment extends BottomSheetDialogFragment {
 
     private Button buttonOK;
 
@@ -54,7 +55,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private String category = "", start = "", end = "";
     private String[] selected;
 
-    private FragmentBottomsSheetBinding fragmentBottomsSheetBinding; // CALL LAYOUT
+    private FragmentReservationBottomBinding fragmentReservationBottomBinding; // CALL LAYOUT
     private FacilitySearchAdapter facilityAdapterSearch; // ADAPTER FOR SEARCH FACILITY IN LIST
     private EquipmentSearchAdapter equipmentSearchAdapter; // ADAPTER FOR SEARCH EQUIPMENT IN LIST
 
@@ -66,10 +67,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private ArrayList<Facility> filteredFacilities = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
     private ArrayList<Equipment> filteredEquipments = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
 
-    public BottomSheetFragment() {}
+    public ReservationBottomFragment() {}
 
-    public static BottomSheetFragment newInstance(String category, String[] selected, String start, String end) {
-        BottomSheetFragment frag = new BottomSheetFragment();
+    public static ReservationBottomFragment newInstance(String category, String[] selected, String start, String end) {
+        ReservationBottomFragment frag = new ReservationBottomFragment();
         Bundle args = new Bundle();
         args.putString(CATEGORY, category);
         args.putString(START, start);
@@ -104,13 +105,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentBottomsSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottoms_sheet, container, false);
-        View root = fragmentBottomsSheetBinding.getRoot();
+        fragmentReservationBottomBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_bottom, container, false);
+        View root = fragmentReservationBottomBinding.getRoot();
 
         root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                dialog = (BottomSheetDialog) BottomSheetFragment.this.getDialog();
+                dialog = (BottomSheetDialog) ReservationBottomFragment.this.getDialog();
                 if (dialog != null) {
                     bottomSheet = dialog.findViewById(R.id.design_bottom_sheet);
                     if (bottomSheet != null) {
@@ -143,12 +144,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }
         }));
 
-        fragmentBottomsSheetBinding.reservationSearch.setActivated(false);
-        fragmentBottomsSheetBinding.reservationSearch.setQueryHint("Search");
-        fragmentBottomsSheetBinding.reservationSearch.onActionViewExpanded();
-        fragmentBottomsSheetBinding.reservationSearch.setIconified(false);
-        fragmentBottomsSheetBinding.reservationSearch.clearFocus();
-        fragmentBottomsSheetBinding.reservationSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        fragmentReservationBottomBinding.reservationSearch.setActivated(false);
+        fragmentReservationBottomBinding.reservationSearch.setQueryHint("Search");
+        fragmentReservationBottomBinding.reservationSearch.onActionViewExpanded();
+        fragmentReservationBottomBinding.reservationSearch.setIconified(false);
+        fragmentReservationBottomBinding.reservationSearch.clearFocus();
+        fragmentReservationBottomBinding.reservationSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -255,7 +256,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                             }
 
                             facilityAdapterSearch = new FacilitySearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), filteredFacilities, true);
-                            fragmentBottomsSheetBinding.reservationList.setAdapter(facilityAdapterSearch);
+                            fragmentReservationBottomBinding.reservationList.setAdapter(facilityAdapterSearch);
                         }
 
                         @Override
@@ -335,7 +336,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                 );
                             }
                             equipmentSearchAdapter = new EquipmentSearchAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), filteredEquipments, true);
-                            fragmentBottomsSheetBinding.reservationList.setAdapter(equipmentSearchAdapter);
+                            fragmentReservationBottomBinding.reservationList.setAdapter(equipmentSearchAdapter);
                         }
                         @Override
                         public void onError(Throwable e) {

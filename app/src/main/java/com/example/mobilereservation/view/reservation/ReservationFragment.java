@@ -156,8 +156,8 @@ public class ReservationFragment extends Fragment {
                     selected = new String [] {fragmentReservationBinding.reservationFacility.getText().toString()};
                 }
                 if(isSchduleValid()){ // Validate if schedule has data
-                    BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("facility", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
-                    bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
+                    ReservationBottomFragment reservationBottomFragment = ReservationBottomFragment.newInstance("facility", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
+                    reservationBottomFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
             }
         });
@@ -177,8 +177,8 @@ public class ReservationFragment extends Fragment {
                     }
                 }
                 if(isSchduleValid()){// Validate if schedule has data
-                    BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("equipment", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
-                    bottomSheetFragment.show(getActivity().getSupportFragmentManager(),"TAG");
+                    ReservationBottomFragment reservationBottomFragment = ReservationBottomFragment.newInstance("equipment", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
+                    reservationBottomFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
             }
         });
