@@ -18,7 +18,7 @@
             android:background="@drawable/red"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:src="@drawable/trash" />
+            android:src="@drawable/cancel" />
     </LinearLayout>
     <!-- Bottom View End-->
 
