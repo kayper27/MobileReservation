@@ -12,7 +12,7 @@ import android.widget.ExpandableListView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mobilereservation.R;
-import com.example.mobilereservation.adapters.expandableList.RequestExpandableListAdapter;
+import com.example.mobilereservation.adapters.expandableList.MangmentExpandableListAdapter;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
@@ -113,7 +113,7 @@ public class ReqeuestFragment extends Fragment {
 
                             expandableListDetail = arrangedRequest;
                             expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-                            expandableListAdapter = new RequestExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
+                            expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail);
                             expandableListView.setAdapter(expandableListAdapter);
                             for(int i = 0; i < requestSeparated.size(); i++) {
                                 if (requestSeparated.get(i).size() != 0) {
