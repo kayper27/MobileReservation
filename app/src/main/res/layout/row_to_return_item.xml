@@ -17,6 +17,7 @@
         android:textColor="@android:color/black"/>
 
     <RadioGroup
+        android:id="@+id/toReturn_equipment_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

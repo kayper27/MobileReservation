@@ -96,7 +96,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
                 if(requestDataModel.getStatus().equals("Accepted")){
-                    ToReturnBottomFragment toReturnBottomFragment = ToReturnBottomFragment.newInstance();
+                    ToReturnBottomFragment toReturnBottomFragment = ToReturnBottomFragment.newInstance(requestDataModel);
                     toReturnBottomFragment.show(fragmentManager,"TAG");
                 }
                 break;
