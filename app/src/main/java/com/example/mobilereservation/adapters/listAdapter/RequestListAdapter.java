@@ -179,7 +179,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
             viewHolder.request_trash.setEnabled(false);
         }
 
-        if(cancelable){
+        if(cancelable && requestDataSet.getStatus().equals("Pending")){
             viewHolder.request_cancel.setEnabled(true);
             viewHolder.request_cancel.setOnClickListener(this);
             viewHolder.request_cancel.setTag(ctr);
