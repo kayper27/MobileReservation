@@ -15,6 +15,7 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.util.FormatDateTime;
 import com.example.mobilereservation.view.dialog.RequestDialogFragment;
+import com.example.mobilereservation.view.toReturn.ToReturnBottomFragment;
 
 import java.util.List;
 
@@ -93,9 +94,11 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
                 }
-                equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "APPROVED BY YOU SHIT");
-                equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 mLastClickTime = SystemClock.elapsedRealtime();
+                if(requestDataModel.getStatus().equals("Accepted")){
+                    ToReturnBottomFragment toReturnBottomFragment = ToReturnBottomFragment.newInstance();
+                    toReturnBottomFragment.show(fragmentManager,"TAG");
+                }
                 break;
 
             case R.id.request_trash:
