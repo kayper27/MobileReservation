@@ -78,32 +78,8 @@ public class Request implements Serializable {
         this.status = status;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setStartAt(String startAt) {
-        this.startAt = startAt;
-    }
-
-    public void setEndAt(String endAt) {
-        this.endAt = endAt;
-    }
-
-    public void setFacility_id(String facility_id) {
-        this.facility_id = facility_id;
-    }
-
     public void setEquipment(Equips equipment) {
         this.equipment = equipment;
-    }
-
-    public void setEquipment_id(List<String> equipment_id) {
-        this.equipment_id = equipment_id;
-    }
-
-    public void setEquipment_status(List<String> equipment_status) {
-        this.equipment_status = equipment_status;
     }
 
 }
