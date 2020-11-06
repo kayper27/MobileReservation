@@ -1,6 +1,5 @@
 package com.example.mobilereservation.adapters.listAdapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +10,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
-
 import com.example.mobilereservation.R;
 
 import java.util.ArrayList;
 
 public class ToReturnEquipmentListAdapter extends ArrayAdapter<String> implements RadioGroup.OnCheckedChangeListener {
 
-
-    private final FragmentManager fragmentManager;
     private final Context context;
 
     private static class ViewHolder {
@@ -28,18 +23,17 @@ public class ToReturnEquipmentListAdapter extends ArrayAdapter<String> implement
         RadioGroup toReturn_equipment_status;
     }
 
-    public ToReturnEquipmentListAdapter(ArrayList<String> data, Context context, FragmentManager fragmentManager) {
+    public ToReturnEquipmentListAdapter(ArrayList<String> data, Context context) {
         super(context, R.layout.row_to_return_item, data);
         this.context = context;
-        this.fragmentManager = fragmentManager;
     }
 
-    @SuppressLint("ResourceType")
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        RadioButton rb = (RadioButton) group.findViewById(checkedId);
-        if (null != rb && checkedId > -1) {
-            Toast.makeText(context, "this", Toast.LENGTH_SHORT).show();
+        int radioGroup = group.getCheckedRadioButtonId();
+        if (radioGroup != -1) {
+            RadioButton answer = group.findViewById(checkedId);
+            Toast.makeText(context, answer.getText(), Toast.LENGTH_SHORT).show();
         }
     }
 
