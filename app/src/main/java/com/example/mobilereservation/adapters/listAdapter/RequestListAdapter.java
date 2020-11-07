@@ -30,8 +30,6 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
     private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
 
-    private boolean swipe;
-
     private long mLastClickTime = 0;
     private long THRESHOLD = 1000; // ms threshold
 
