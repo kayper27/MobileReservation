@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.model.Equips;
@@ -61,11 +60,12 @@ public class ToReturnEquipmentListAdapter extends BaseAdapter  {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int radioGroup = group.getCheckedRadioButtonId();
-
                 if (radioGroup != -1) {
                     RadioButton answer = group.findViewById(checkedId);
-                    Toast.makeText(context,equipsSet.getEquipment_Status().get(position)+" "+answer.getText(), Toast.LENGTH_SHORT).show();
-
+                    equipsSet.getEquipment_Status().set(position, answer.getText().toString());
+                }
+                else{
+                    equipsSet.getEquipment_Status().set(position, "Pending");
                 }
             }
         });
@@ -87,4 +87,6 @@ public class ToReturnEquipmentListAdapter extends BaseAdapter  {
     public long getItemId(int position) {
         return position;
     }
+
+
 }

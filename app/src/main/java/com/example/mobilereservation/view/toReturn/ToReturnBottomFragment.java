@@ -13,9 +13,12 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.listAdapter.ToReturnEquipmentListAdapter;
 import com.example.mobilereservation.databinding.FragmentToReturnBottomBinding;
 import com.example.mobilereservation.model.Request;
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.gson.Gson;
+
 
 public class ToReturnBottomFragment extends BottomSheetDialogFragment {
 
@@ -74,7 +77,38 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
 
         ToReturnEquipmentListAdapter toReturnEquipmentListAdapter = new ToReturnEquipmentListAdapter( request.getEquipment(), getActivity().getApplicationContext());
         fragmentToReturnBottomBinding.toReturnList.setAdapter(toReturnEquipmentListAdapter);
+
+        fragmentToReturnBottomBinding.toReturnApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String json = gson.toJson(request);
+                boolean flag = true;
+                for(int i = 0; i < request.getEquipment().getEquipment_Status().size(); i++){
+                    if(request.getEquipment().getEquipment_Status().equals("Pending")){
+                        flag = false;
+                        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid", "Please select status for equipment");
+                        errorDialogFragment.show(getActivity().getSupportFragmentManager(), "error_dialog");
+                        break;
+                    }
+                }
+                if(flag){
+
+                }
+            }
+        });
         // Inflate the layout for this fragment
         return root;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(request != null){
+            for(int i = 0; i < request.getEquipment().getEquipment_Status().size(); i++){
+                request.getEquipment().getEquipment_Status().set(i, "Pending");
+            }
+        }
+    }
+
 }
