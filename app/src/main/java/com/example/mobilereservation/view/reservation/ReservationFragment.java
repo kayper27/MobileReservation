@@ -158,7 +158,7 @@ public class ReservationFragment extends Fragment {
                 if(facilityData != null){
                     selected = new String [] {fragmentReservationBinding.reservationFacility.getText().toString()};
                 }
-                if(isSchduleValid()){ // Validate if schedule has data
+                if(isScheduleValid()){ // Validate if schedule has data
                     ReservationBottomFragment reservationBottomFragment = ReservationBottomFragment.newInstance("facility", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
                     reservationBottomFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
@@ -179,7 +179,7 @@ public class ReservationFragment extends Fragment {
                         selected[i] = equipmentData.get(i).getEquipment_id();
                     }
                 }
-                if(isSchduleValid()){// Validate if schedule has data
+                if(isScheduleValid()){// Validate if schedule has data
                     ReservationBottomFragment reservationBottomFragment = ReservationBottomFragment.newInstance("equipment", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
                     reservationBottomFragment.show(getActivity().getSupportFragmentManager(),"TAG");
                 }
@@ -310,7 +310,7 @@ public class ReservationFragment extends Fragment {
         datePicker.show(getFragmentManager(), "datePicker");
     }
 
-    private boolean isSchduleValid(){
+    private boolean isScheduleValid(){
         boolean flag = false;
         if(textStartAt.getText().length() != 16 || textEndAt.getText().length() != 16){
             ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select your schedule");
