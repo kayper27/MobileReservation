@@ -4,44 +4,40 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.RadioButton;
+import android.widget.BaseAdapter;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.model.Equips;
 
-import java.util.ArrayList;
-
-public class ToReturnEquipmentListAdapter extends ArrayAdapter<String> implements RadioGroup.OnCheckedChangeListener {
+public class ToReturnEquipmentListAdapter extends BaseAdapter implements RadioGroup.OnCheckedChangeListener {
 
     private final Context context;
+
+    private Equips equipsSet;
 
     private static class ViewHolder {
         TextView toReturn_equipment_id;
         RadioGroup toReturn_equipment_status;
     }
 
-    public ToReturnEquipmentListAdapter(ArrayList<String> data, Context context) {
-        super(context, R.layout.row_to_return_item, data);
+    public ToReturnEquipmentListAdapter(Equips data, Context context) {
+        this.equipsSet = data;
         this.context = context;
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        int radioGroup = group.getCheckedRadioButtonId();
-        if (radioGroup != -1) {
-            RadioButton answer = group.findViewById(checkedId);
-            Toast.makeText(context, answer.getText(), Toast.LENGTH_SHORT).show();
-        }
-    }
 
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         // Get the data item for this position
-        String equipmentData = getItem(position);
+        String equipmentData = equipsSet.getEquipment_id().get(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
@@ -50,14 +46,15 @@ public class ToReturnEquipmentListAdapter extends ArrayAdapter<String> implement
         if (convertView == null) {
 
             viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
+            LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.row_to_return_item, parent, false);
             viewHolder.toReturn_equipment_id = (TextView) convertView.findViewById(R.id.toReturn_equipment_id);
             viewHolder.toReturn_equipment_status = (RadioGroup) convertView.findViewById(R.id.toReturn_equipment_status);
             result=convertView;
 
             convertView.setTag(viewHolder);
-        } else {
+        }
+        else {
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
@@ -66,5 +63,20 @@ public class ToReturnEquipmentListAdapter extends ArrayAdapter<String> implement
         viewHolder.toReturn_equipment_status.setOnCheckedChangeListener(this);
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    @Override
+    public int getCount() {
+        return equipsSet.getEquipment_id().size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return equipsSet.getEquipment_id().get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

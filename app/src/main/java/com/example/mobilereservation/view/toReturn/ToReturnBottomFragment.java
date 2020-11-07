@@ -17,8 +17,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
-
 public class ToReturnBottomFragment extends BottomSheetDialogFragment {
 
     private static final String REQUEST = "request";
@@ -74,7 +72,7 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
 
         fragmentToReturnBottomBinding.toReturnRequestId.setText(request.getRequest_id());
 
-        ToReturnEquipmentListAdapter toReturnEquipmentListAdapter = new ToReturnEquipmentListAdapter((ArrayList<String>) request.getEquipment_id(), getActivity().getApplicationContext());
+        ToReturnEquipmentListAdapter toReturnEquipmentListAdapter = new ToReturnEquipmentListAdapter( request.getEquipment(), getActivity().getApplicationContext());
         fragmentToReturnBottomBinding.toReturnList.setAdapter(toReturnEquipmentListAdapter);
         // Inflate the layout for this fragment
         return root;
