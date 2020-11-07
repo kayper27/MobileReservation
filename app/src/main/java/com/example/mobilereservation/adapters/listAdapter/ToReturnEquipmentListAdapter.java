@@ -33,7 +33,7 @@ public class ToReturnEquipmentListAdapter extends BaseAdapter  {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        String equipmentData = equipsSet.getEquipment_Status().get(position);
+        String equipmentData = equipsSet.getEquipment_id().get(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag

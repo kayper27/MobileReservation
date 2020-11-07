@@ -82,7 +82,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                                 "\nStart:\n" +dateTime.formatDateTime(requestDataModel.getStartAt())+
                                 "\nEnd:\n" +dateTime.formatDateTime(requestDataModel.getEndAt()) +
                                 "\nFacility: " +requestDataModel.getFacility() +
-                                "\nEquipments: \n" +requestDataModel.getEquipment_id();
+                                "\nEquipments: \n" +requestDataModel.getEquipment().getEquipment_id();
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
@@ -160,7 +160,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         viewHolder.request_startAt.setText("Start: "+dateTime.formatDateTime(requestDataSet.getStartAt()));
         viewHolder.request_endAt.setText("End: "+dateTime.formatDateTime(requestDataSet.getEndAt()));
         viewHolder.request_facility.setText("Facility: "+requestDataSet.getFacility());
-        viewHolder.request_equipment.setText("Equipment: "+requestDataSet.getEquipment_id());
+        viewHolder.request_equipment.setText("Equipment: "+requestDataSet.getEquipment().getEquipment_id());
         viewHolder.request_info.setOnClickListener(this);
         viewHolder.request_info.setTag(ctr);
 
