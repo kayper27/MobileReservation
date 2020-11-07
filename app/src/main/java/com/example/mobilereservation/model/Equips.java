@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Equips{
     private List<String> equipment_id;
-    private List<String> equipment_status;
+    private List<String> status;
 
-    public Equips(List<String> equipment_id, List<String> equipment_status) {
-        this.equipment_id = this.equipment_id;
-        this.equipment_status = this.equipment_status;
+    public Equips(List<String> equipment_id, List<String> tatus) {
+        this.equipment_id = equipment_id;
+        this.status = tatus;
     }
 
     public List<String> getEquipment_id() {
@@ -16,7 +16,7 @@ public class Equips{
     }
 
     public List<String> getEquipment_Status() {
-        return equipment_status;
+        return status;
     }
 
 }
