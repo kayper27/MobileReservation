@@ -6,12 +6,12 @@ import com.example.mobilereservation.model.Request;
 import java.util.List;
 
 import io.reactivex.Single;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -28,15 +28,15 @@ public interface request {
     @GET("booking_service/stat/{status}")
     Single<List<Request>> getSpecificStatus(@Path("status") String status);
 
+    @Headers({"Access-Control-Allow-Methods: POST"})
     @POST("booking_service/")
-    @FormUrlEncoded
-    Call<ResponseBody> requestCreate(@Body CreateRequest request);
+    Call<CreateRequest> createRequest(@Body CreateRequest request);
 
+    @Headers({"Access-Control-Allow-Methods: PATCH"})
     @PATCH("booking_service/{request_id}")
-    @FormUrlEncoded
-    Call<ResponseBody> requestUpdate(@Path("request_id") String request_id);
+    Call<Request> updateRequest(@Header("id") String id, @Path("request_id") String request_id);
 
+    @Headers({"Access-Control-Allow-Methods: DELETE"})
     @DELETE("booking_service/{request_id}")
-    @FormUrlEncoded
-    Call<ResponseBody> requestDelete(@Path("request_id") String username);
+    Call<Request> deleteRequest(@Header("id") String id, @Path("request_id") String username);
 }
