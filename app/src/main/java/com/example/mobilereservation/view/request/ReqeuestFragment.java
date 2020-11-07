@@ -50,11 +50,15 @@ public class ReqeuestFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        RequestAsyncTask asyncTask = new RequestAsyncTask("2015105910");
+        asyncTask.execute();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_reqeuest, container, false);
-
-        RequestAsyncTask asyncTask = new RequestAsyncTask();
-        asyncTask.execute();
 
         expandableListView = root.findViewById(R.id.requestExpandableListView);
 
@@ -71,10 +75,14 @@ public class ReqeuestFragment extends Fragment {
         private ProgressDialog progressDialog;
         private String username;
 
+        RequestAsyncTask(String username){
+            this.username = username;
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
-            DisposableSingleObserver<List<Request>> error = api.getUserRequest("2015105910")
+            DisposableSingleObserver<List<Request>> error = api.getUserRequest(username)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {
