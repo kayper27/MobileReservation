@@ -208,7 +208,6 @@ public class ReservationFragment extends Fragment {
                                 textEndAt.setText("");
                                 textStartAt.setEnabled(true);
                                 textEndAt.setEnabled(true);
-                                fragmentReservationBinding.reservationFacility.setText("");
                                 equipmentData.clear();
                                 reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
                                 fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
@@ -239,16 +238,22 @@ public class ReservationFragment extends Fragment {
                 mLastClickTime = SystemClock.elapsedRealtime();
                 String startAt = textStartAt.getText().toString();
                 String endAt = textEndAt.getText().toString();
-                String facility = fragmentReservationBinding.textViewFacility.getText().toString();
+                String facility = fragmentReservationBinding.reservationFacility.getText().toString();
                 ArrayList<String> equips_id = new ArrayList<>();
                 ArrayList<String> equips_status = new ArrayList<>();
 
-                for(int i = 0; i < selected.length; i++){
-                    equips_id.add(selected[i]);
-                    equips_status.add("Pending");
+                if(facility.isEmpty() && equipmentData.size() == 0){
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Request Invalid","Your request is invalid");
+                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                 }
-                RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest( "2015105910", "2015105910", startAt, endAt, facility, new Equips(equips_id, equips_status)));
-                asyncTask.execute();
+                else {
+                    for(int i = 0; i < selected.length; i++){
+                        equips_id.add(selected[i]);
+                        equips_status.add("Pending");
+                    }
+                    RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest( "2015105910", "2015105910", startAt, endAt, facility, new Equips(equips_id, equips_status)));
+                    asyncTask.execute();
+                }
 
             }
         });
