@@ -1,6 +1,8 @@
 package com.example.mobilereservation.model;
 
-public class CreateRequest {
+import java.io.Serializable;
+
+public class CreateRequest implements Serializable {
 
     private String id;
     private String username;
