@@ -182,7 +182,7 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
     }
 
     private class ReservationAsyncTask extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
         private String start, end;
 
         ReservationAsyncTask(String start, String end){
@@ -224,7 +224,7 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
     }
 
     private class FacilityAsyncTask extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -278,7 +278,7 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
     }
 
     private class EquipmentAsyncTask extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
 
         @Override
         protected Void doInBackground(Void... voids) {

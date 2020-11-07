@@ -68,7 +68,8 @@ public class ReqeuestFragment extends Fragment {
 
     private class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
+        private String username;
 
         @Override
         protected Void doInBackground(Void... voids) {

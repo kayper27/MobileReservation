@@ -95,7 +95,7 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
 
     private class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
 
         @Override
         protected Void doInBackground(Void... voids) {
