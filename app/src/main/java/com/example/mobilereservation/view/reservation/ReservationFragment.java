@@ -1,11 +1,13 @@
 package com.example.mobilereservation.view.reservation;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -23,12 +25,21 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.listAdapter.ReservationEquipmentListAdapter;
 import com.example.mobilereservation.databinding.FragmentReservationBinding;
+import com.example.mobilereservation.model.CreateRequest;
 import com.example.mobilereservation.model.Equipment;
+import com.example.mobilereservation.model.Equips;
+import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.util.DatePickerFragment;
 import com.example.mobilereservation.util.TimePickerFragment;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -226,7 +237,19 @@ public class ReservationFragment extends Fragment {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                
+                String startAt = textStartAt.getText().toString();
+                String endAt = textEndAt.getText().toString();
+                String facility = fragmentReservationBinding.textViewFacility.getText().toString();
+                ArrayList<String> equips_id = new ArrayList<>();
+                ArrayList<String> equips_status = new ArrayList<>();
+
+                for(int i = 0; i < selected.length; i++){
+                    equips_id.add(selected[i]);
+                    equips_status.add("Pending");
+                }
+                RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest( "2015105910", "2015105910", startAt, endAt, facility, new Equips(equips_id, equips_status)));
+                asyncTask.execute();
+
             }
         });
 
@@ -286,6 +309,52 @@ public class ReservationFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private ProgressDialog progressDialog;
+        private CreateRequest request;
+
+        RequestAsyncTask(CreateRequest request){
+            this.request = request;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
+            Call<CreateRequest> call = api.createRequest(request);
+            call.enqueue(new Callback<CreateRequest>() {
+                @Override
+                public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                    if(response.code() == 201 || response.code() == 200){
+                        RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nYour request was successfully sent \n");
+                        requestDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_request");
+                    }
+                    else{
+                        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message());
+                        errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CreateRequest> call, Throwable t) {
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", t.getCause()+"\n=========\n"+t.getMessage());
+                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                }
+
+            });
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching for your requests");
+        }
     }
 
     private void getDateTime(EditText dateTime,@Nullable String startData){
