@@ -183,13 +183,13 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
     }
 
     private void setValueExpandableList(ArrayList<List<Request>> expandableRequestData){ //
-        final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
+        final HashMap<String, List<Request>> expandableList = new HashMap<>();
         for(int i = 0; i < expandableRequestData.size(); i++){
-            expandalbleList.put(expandableRequestData.get(i).get(0).getStartAt().substring(0,10).toUpperCase(), expandableRequestData.get(i));
+            expandableList.put(expandableRequestData.get(i).get(0).getStartAt().substring(0,10).toUpperCase(), expandableRequestData.get(i));
         }
 
         HashMap arrangedRequest = new LinkedHashMap(); //Sort Alphabetically and numerically
-        TreeMap<String, List<Request>> map = new TreeMap<>(expandalbleList);
+        TreeMap<String, List<Request>> map = new TreeMap<>(expandableList);
         Set set2 = map.entrySet();
         Iterator iterator2 = set2.iterator();
         while(iterator2.hasNext()) {

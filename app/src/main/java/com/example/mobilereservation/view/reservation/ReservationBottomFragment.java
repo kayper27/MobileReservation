@@ -196,7 +196,7 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
             end = end.replace(" ","T").concat(":00.000Z");;// Format end for mongodb
             request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
             // "yyyy-MM-ddT00:00:00.000Z" must look like this format MONGODB does not follow any format but this
-            DisposableSingleObserver<List<Request>> error = api.getReservedchedule(start, end)
+            DisposableSingleObserver<List<Request>> error = api.getReservedSchedule(start, end)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {

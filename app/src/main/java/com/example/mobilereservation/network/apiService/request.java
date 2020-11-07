@@ -23,7 +23,7 @@ public interface request {
     Single<List<Request>> getUserRequest(@Path("username") String username);
 
     @GET("booking_service/{start}/{end}")
-    Single<List<Request>> getReservedchedule(@Path("start") String start, @Path("end") String end);
+    Single<List<Request>> getReservedSchedule(@Path("start") String start, @Path("end") String end);
 
     @GET("booking_service/stat/{status}")
     Single<List<Request>> getSpecificStatus(@Path("status") String status);

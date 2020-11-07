@@ -79,7 +79,7 @@ public class ReqeuestFragment extends Fragment {
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {
                         @Override
                         public void onSuccess(List<Request> requests) {
-                            final HashMap<String, List<Request>> expandalbleList = new HashMap<>();
+                            final HashMap<String, List<Request>> expandableList = new HashMap<>();
 
                             for(int i = 0; i < requests.size(); i++){
                                 reqst.add(new Request(
@@ -100,11 +100,11 @@ public class ReqeuestFragment extends Fragment {
                                 }
                             }
                             for(int i = 0; i < requestSeparated.size(); i++){
-                                expandalbleList.put(requestSeparated.get(i).get(0).getStatus().toUpperCase(), requestSeparated.get(i));
+                                expandableList.put(requestSeparated.get(i).get(0).getStatus().toUpperCase(), requestSeparated.get(i));
                             }
 
                             HashMap arrangedRequest = new LinkedHashMap();
-                            TreeMap<String, List<Request>> map = new TreeMap<>(expandalbleList);
+                            TreeMap<String, List<Request>> map = new TreeMap<>(expandableList);
                             Set set2 = map.entrySet();
                             Iterator iterator2 = set2.iterator();
                             while(iterator2.hasNext()) {
