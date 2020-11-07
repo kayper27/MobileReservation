@@ -5,13 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.model.Equips;
 
-public class ToReturnEquipmentListAdapter extends BaseAdapter implements RadioGroup.OnCheckedChangeListener {
+public class ToReturnEquipmentListAdapter extends BaseAdapter  {
 
     private final Context context;
 
@@ -28,15 +30,10 @@ public class ToReturnEquipmentListAdapter extends BaseAdapter implements RadioGr
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        String equipmentData = equipsSet.getEquipment_id().get(position);
+        String equipmentData = equipsSet.getEquipment_Status().get(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
@@ -60,7 +57,18 @@ public class ToReturnEquipmentListAdapter extends BaseAdapter implements RadioGr
         }
 
         viewHolder.toReturn_equipment_id.setText(equipmentData);
-        viewHolder.toReturn_equipment_status.setOnCheckedChangeListener(this);
+        viewHolder.toReturn_equipment_status.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int radioGroup = group.getCheckedRadioButtonId();
+
+                if (radioGroup != -1) {
+                    RadioButton answer = group.findViewById(checkedId);
+                    Toast.makeText(context,equipsSet.getEquipment_Status().get(position)+" "+answer.getText(), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
         // Return the completed view to render on screen
         return convertView;
     }
