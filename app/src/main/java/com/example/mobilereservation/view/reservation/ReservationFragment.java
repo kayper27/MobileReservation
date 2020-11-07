@@ -310,7 +310,7 @@ public class ReservationFragment extends Fragment {
         datePicker.show(getFragmentManager(), "datePicker");
     }
 
-    public boolean isSchduleValid(){
+    private boolean isSchduleValid(){
         boolean flag = false;
         if(textStartAt.getText().length() != 16 || textEndAt.getText().length() != 16){
             ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid Input", "Please select your schedule");
