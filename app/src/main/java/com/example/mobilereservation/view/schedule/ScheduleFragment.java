@@ -93,7 +93,6 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
 
     }
 
-
     private class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
 
         ProgressDialog progressDialog;
@@ -145,6 +144,7 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
             progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching Schedules");
         }
     }
+
     private void saveSeparatedRequest(){
         originalRequest.add(reqst);
         reqst = new ArrayList<>();

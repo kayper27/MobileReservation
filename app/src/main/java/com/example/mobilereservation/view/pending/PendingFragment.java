@@ -135,6 +135,7 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
                     });
             return null;
         }
+
         @Override
         protected void onPostExecute(Void v){
             progressDialog.dismiss();
@@ -145,6 +146,7 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
             progressDialog = ProgressDialog.show(getContext(), "Processing", "Fetching Schedules");
         }
     }
+
     private void saveSeparatedRequest(){
         originalRequest.add(reqst);
         reqst = new ArrayList<>();

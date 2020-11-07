@@ -223,7 +223,6 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
         }
     }
 
-
     private class FacilityAsyncTask extends AsyncTask<Void, Void, Void> {
         ProgressDialog progressDialog;
 

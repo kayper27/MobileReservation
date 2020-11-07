@@ -90,7 +90,6 @@ public class EquipmentFragment extends Fragment implements SearchView.OnQueryTex
 
     }
 
-
     private class EquipmentAsyncTask extends AsyncTask<Void, Void, Void> {
 
         ProgressDialog progressDialog;
