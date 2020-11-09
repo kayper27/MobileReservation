@@ -9,9 +9,9 @@ import retrofit2.http.GET;
 
 public interface facility {
     // Fetch all Facility
-    @GET("facility_management")
+    @GET("facility")
     Single<List<Facility>> getFacilities();
 
-    @GET("facility_management/status/available")
+    @GET("facility/status/available")
     Single<List<Facility>> getAvailableFacilities();
 }
