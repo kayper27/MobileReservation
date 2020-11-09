@@ -9,9 +9,9 @@ import retrofit2.http.GET;
 
 public interface equipment {
     // Fetch all Facility
-    @GET("equipment_management")
+    @GET("equipment")
     Single<List<Equipment>> getEquipments();
 
-    @GET("equipment_management/status/available")
+    @GET("equipment/status/available")
     Single<List<Equipment>> getAvailableEquipments();
 }
