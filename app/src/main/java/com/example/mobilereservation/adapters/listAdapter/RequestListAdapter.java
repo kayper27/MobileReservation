@@ -23,6 +23,7 @@ import com.example.mobilereservation.view.toReturn.ToReturnBottomFragment;
 
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,7 +74,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
     @Override
     public void onClick(View v) {
-
+        Disposable disposable;
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         final Request requestDataModel = (Request)object;
@@ -102,12 +103,12 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                if(requestDataModel.getStatus().equals("Accepted")){
+                if(requestDataModel.getStatus().equals("Accepted")){ // WHEN REQUEST IS DONE WITH ITS FLOW PENDING ->  ACCEPTED -> FINISHED
                     ToReturnBottomFragment toReturnBottomFragment = ToReturnBottomFragment.newInstance(requestDataModel);
                     toReturnBottomFragment.show(fragmentManager,"TAG");
                 }
                 if(requestDataModel.getStatus().equals("Pending")){
-                    requestDataModel.getStatus().replace("Pending", "Accepted");
+                    requestDataModel.getStatus().replace("Pending", "Accepted"); // USER TRASH ITS REQUEST IS PENDING -> ACCEPTED
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                 }
@@ -120,9 +121,11 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
 
-                requestDataModel.getStatus().replace("Pending", "Canceled");
-                RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
-                asyncTask.execute();
+                if(requestDataModel.getStatus().equals("Pending")){
+                    requestDataModel.getStatus().replace("Pending", "Canceled"); // USER TRASH ITS REQUEST NOW STATUS TO PENDING -> CANCELED
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                    asyncTask.execute();
+                }
 
                 break;
 
@@ -132,8 +135,13 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "CANCEL YOU SHIT");
-                equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
+
+                if(requestDataModel.getStatus().equals("Pending")){
+                    requestDataModel.getStatus().replace("Pending", "Finished"); // WHEN REQUEST WAS DENIED  PENDING -> DENIED
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                    asyncTask.execute();
+                }
+
                 break;
         }
         notifyDataSetChanged();
@@ -235,7 +243,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 @Override
                 public void onResponse(Call<Request> call, Response<Request> response) {
                     if(response.code() == 201 || response.code() == 200){
-                        RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nYour request was successfully Updated\n");
+                        RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nRequest was successfully Updated\n");
                         requestDialogFragment.show(fragmentManager, "dialog_request");
                     }
                     else{

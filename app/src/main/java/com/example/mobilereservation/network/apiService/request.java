@@ -8,7 +8,6 @@ import java.util.List;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -36,7 +35,4 @@ public interface request {
     @PATCH("booking_service/{request_id}")
     Call<Request> updateRequest(@Header("id") String id, @Path("request_id") String request_id, @Body Request request);
 
-    @Headers({"Access-Control-Allow-Methods: DELETE"})
-    @DELETE("booking_service/{request_id}")
-    Call<Request> deleteRequest(@Header("id") String id, @Path("request_id") String username);
 }

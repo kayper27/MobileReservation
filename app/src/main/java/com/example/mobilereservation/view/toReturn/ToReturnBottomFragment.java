@@ -1,5 +1,6 @@
 package com.example.mobilereservation.view.toReturn;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,17 @@ import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.listAdapter.ToReturnEquipmentListAdapter;
 import com.example.mobilereservation.databinding.FragmentToReturnBottomBinding;
 import com.example.mobilereservation.model.Request;
+import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ToReturnBottomFragment extends BottomSheetDialogFragment {
@@ -81,8 +88,6 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
         fragmentToReturnBottomBinding.toReturnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Gson gson = new Gson();
-                String json = gson.toJson(request);
                 boolean flag = true;
                 for(int i = 0; i < request.getEquipment().getEquipment_Status().size(); i++){
                     if(request.getEquipment().getEquipment_Status().equals("Pending")){
@@ -93,7 +98,8 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
                     }
                 }
                 if(flag){
-
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", request.getRequest_id(), request);
+                    asyncTask.execute();
                 }
             }
         });
@@ -109,6 +115,50 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
                 request.getEquipment().getEquipment_Status().set(i, "Pending");
             }
         }
+    }
+
+    private class RequestStatusAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private Request request;
+        private String id, request_id;
+
+        RequestStatusAsyncTask(String id, String request_id, Request request){
+            this.id = id;
+            this.request_id = request_id;
+            this.request = request;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            com.example.mobilereservation.network.apiService.request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
+            Call<Request> call = api.updateRequest(id, request_id, request);
+            call.enqueue(new Callback<Request>() {
+                @Override
+                public void onResponse(Call<Request> call, Response<Request> response) {
+                    if(response.code() == 201 || response.code() == 200){
+                        RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nRequest was successfully Updated\n");
+                        requestDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_request");
+                    }
+                    else{
+                        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message());
+                        errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                    }
+                }
+                @Override
+                public void onFailure(Call<Request> call, Throwable t) {
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", t.getCause()+"\n=========\n"+t.getMessage());
+                    errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                }
+
+            });
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){}
+
+        @Override
+        protected void onPreExecute() {}
     }
 
 }
