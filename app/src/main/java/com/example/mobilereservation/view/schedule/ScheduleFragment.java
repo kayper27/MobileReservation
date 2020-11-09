@@ -115,7 +115,9 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
                                         requests.get(i).getStartAt(),
                                         requests.get(i).getEndAt(),
                                         requests.get(i).getFacility(),
-                                        requests.get(i).getEquipment()));
+                                        requests.get(i).getEquipment(),
+                                        requests.get(i).getDateCreated()
+                                ));
 
                                 if(i == requests.size()-1){
                                     saveSeparatedRequest();
@@ -169,8 +171,7 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
                    originalRequest.get(i).get(x).getFacility().toLowerCase().contains(query.toLowerCase()) || // FACILITY
                    flag // EQUIPMENT
                     )
-                 {
-
+                {
                     reqst.add(new Request(
                             originalRequest.get(i).get(x).getRequest_id(),
                             originalRequest.get(i).get(x).getStatus(),
@@ -178,7 +179,9 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
                             originalRequest.get(i).get(x).getStartAt(),
                             originalRequest.get(i).get(x).getEndAt(),
                             originalRequest.get(i).get(x).getFacility(),
-                            originalRequest.get(i).get(x).getEquipment()));
+                            originalRequest.get(i).get(x).getEquipment(),
+                            originalRequest.get(i).get(x).getDateCreated()
+                    ));
                     filteredRequest.add(reqst);
                 }
             }

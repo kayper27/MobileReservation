@@ -11,8 +11,9 @@ public class Request implements Serializable {
     private String endAt;
     private String facility_id;
     private Equips equipment;
+    private String dateCreated;
 
-    public Request(String _id, String status, String username, String startAt, String endAt, String facility_id, Equips equipment){
+    public Request(String _id, String status, String username, String startAt, String endAt, String facility_id, Equips equipment, String dateCreated) {
         this._id = _id;
         this.status = status;
         this.username = username;
@@ -20,6 +21,7 @@ public class Request implements Serializable {
         this.endAt = endAt;
         this.facility_id = facility_id;
         this.equipment = new  Equips(equipment.getEquipment_id(), equipment.getEquipment_Status());
+        this.dateCreated = dateCreated;
     }
 
     public String getRequest_id() {
@@ -58,4 +60,7 @@ public class Request implements Serializable {
         this.equipment = equipment;
     }
 
+    public String getDateCreated() {
+        return dateCreated;
+    }
 }

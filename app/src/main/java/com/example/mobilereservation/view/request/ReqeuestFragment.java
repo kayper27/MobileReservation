@@ -98,7 +98,8 @@ public class ReqeuestFragment extends Fragment {
                                         requests.get(i).getStartAt(),
                                         requests.get(i).getEndAt(),
                                         requests.get(i).getFacility(),
-                                        requests.get(i).getEquipment()
+                                        requests.get(i).getEquipment(),
+                                        requests.get(i).getDateCreated()
                                 ));
 
                                 if(i == requests.size()-1){
