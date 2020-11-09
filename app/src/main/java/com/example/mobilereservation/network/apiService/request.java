@@ -34,7 +34,7 @@ public interface request {
 
     @Headers({"Access-Control-Allow-Methods: PATCH"})
     @PATCH("booking_service/{request_id}")
-    Call<Request> updateRequest(@Header("id") String id, @Path("request_id") String request_id);
+    Call<Request> updateRequest(@Header("id") String id, @Path("request_id") String request_id, @Body Request request);
 
     @Headers({"Access-Control-Allow-Methods: DELETE"})
     @DELETE("booking_service/{request_id}")

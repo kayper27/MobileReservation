@@ -1,6 +1,7 @@
 package com.example.mobilereservation.adapters.listAdapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,18 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.model.Request;
+import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.util.FormatDateTime;
+import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 import com.example.mobilereservation.view.toReturn.ToReturnBottomFragment;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RequestListAdapter extends ArrayAdapter<Request> implements View.OnClickListener{
 
@@ -68,7 +76,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        Request requestDataModel = (Request)object;
+        final Request requestDataModel = (Request)object;
         switch (v.getId())
         {
             case R.id.request_info:
@@ -97,6 +105,11 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     ToReturnBottomFragment toReturnBottomFragment = ToReturnBottomFragment.newInstance(requestDataModel);
                     toReturnBottomFragment.show(fragmentManager,"TAG");
                 }
+                if(requestDataModel.getStatus().equals("Pending")){
+                    requestDataModel.getStatus().replace("Pending", "Accepted");
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                    asyncTask.execute();
+                }
                 break;
 
             case R.id.request_trash:
@@ -107,6 +120,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 mLastClickTime = SystemClock.elapsedRealtime();
                 equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "TRASH YOU SHIT");
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
+
                 break;
 
             case R.id.request_cancel:
@@ -119,6 +133,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
         }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -197,4 +212,49 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         // Return the completed view to render on screen
         return convertView;
     }
+
+    private class RequestStatusAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private Request request;
+        private String id, request_id;
+
+        RequestStatusAsyncTask(String id, String request_id, Request request){
+            this.id = id;
+            this.request_id = request_id;
+            this.request = request;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            request api = ApiClient.getClient(context).create(request.class);
+            Call<Request> call = api.updateRequest(id, request_id, request);
+            call.enqueue(new Callback<Request>() {
+                @Override
+                public void onResponse(Call<Request> call, Response<Request> response) {
+                    if(response.code() == 201 || response.code() == 200){
+                        RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nYour request was successfully Updated\n");
+                        requestDialogFragment.show(fragmentManager, "dialog_request");
+                    }
+                    else{
+                        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message());
+                        errorDialogFragment.show(fragmentManager, "dialog_error");
+                    }
+                }
+                @Override
+                public void onFailure(Call<Request> call, Throwable t) {
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", t.getCause()+"\n=========\n"+t.getMessage());
+                    errorDialogFragment.show(fragmentManager, "dialog_error");
+                }
+
+            });
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){}
+
+        @Override
+        protected void onPreExecute() {}
+    }
+    
 }
