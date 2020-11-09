@@ -248,8 +248,10 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
                             }
                             for (int i = 0; i < facilities.size(); i++) {
                                 boolean checked = false;
-                                if(selected != null && facilities.get(i).getFacility_id().equals(selected[0])){
-                                    checked = true;
+                                if(selected != null){
+                                    if(facilities.get(i).getFacility_id().equals(selected[0])){
+                                        checked = true;
+                                    }
                                 }
                                 filteredFacilities.add(new Facility(facilities.get(i).getFacility_id(), facilities.get(i).getCategory(), facilities.get(i).getStatus(), facilities.get(i).getDescription(), checked));
                             }
