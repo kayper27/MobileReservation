@@ -118,8 +118,10 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), "TRASH YOU SHIT");
-                equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
+
+                requestDataModel.getStatus().replace("Pending", "Canceled");
+                RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                asyncTask.execute();
 
                 break;
 

@@ -123,7 +123,7 @@ public class ReqeuestFragment extends Fragment {
 
                             expandableListDetail = arrangedRequest;
                             expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-                            expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail, false, true, false);
+                            expandableListAdapter = new MangmentExpandableListAdapter(getActivity().getApplicationContext(), getActivity().getSupportFragmentManager(), expandableListTitle, expandableListDetail, false, false, true);
                             expandableListView.setAdapter(expandableListAdapter);
                             for(int i = 0; i < requestSeparated.size(); i++) {
                                 if (requestSeparated.get(i).size() != 0) {
