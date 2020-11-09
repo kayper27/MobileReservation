@@ -89,8 +89,9 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 boolean flag = true;
+
                 for(int i = 0; i < request.getEquipment().getEquipment_Status().size(); i++){
-                    if(request.getEquipment().getEquipment_Status().equals("Pending")){
+                    if(request.getEquipment().getEquipment_Status().get(i).equals("Pending")){
                         flag = false;
                         ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid", "Please select status for equipment");
                         errorDialogFragment.show(getActivity().getSupportFragmentManager(), "error_dialog");
