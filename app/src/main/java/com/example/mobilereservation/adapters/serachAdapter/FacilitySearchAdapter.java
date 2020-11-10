@@ -96,7 +96,7 @@ public class FacilitySearchAdapter extends BaseAdapter implements Filterable {
             if (constraint != null && constraint.length() > 0) {
                 ArrayList<Facility> filterList = new ArrayList<>();
                 for (int i = 0; i < fStringFilterList.size(); i++) {
-                    if ((fStringFilterList.get(i).getFacility_id().toUpperCase()).contains(constraint.toString().toUpperCase()) || fStringFilterList.get(i).getChecked()) {
+                    if ((fStringFilterList.get(i).getFacility_id().toUpperCase()).contains(constraint.toString().toUpperCase()) || flagCheckbox && fStringFilterList.get(i).getChecked() ) {
                         filterList.add(fStringFilterList.get(i));
                     }
                 }
