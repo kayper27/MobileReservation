@@ -16,6 +16,7 @@ import com.example.mobilereservation.databinding.FragmentToReturnBottomBinding;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
+import com.example.mobilereservation.util.PrefUtils;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -99,7 +100,7 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
                     }
                 }
                 if(flag){
-                    request.setIdModerator(request.getUsername());// change to login user set because 2015105910 is debugging
+                    request.setIdModerator(PrefUtils.getUserLogID(getActivity().getApplicationContext()));
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(request.getRequest_id(), request);
                     asyncTask.execute();
                 }

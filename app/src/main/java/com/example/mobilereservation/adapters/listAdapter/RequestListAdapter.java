@@ -17,6 +17,7 @@ import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.util.FormatDateTime;
+import com.example.mobilereservation.util.PrefUtils;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 import com.example.mobilereservation.view.toReturn.ToReturnBottomFragment;
@@ -78,7 +79,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         final Request requestDataModel = (Request)object;
-        requestDataModel.setIdModerator(requestDataModel.getUsername());// change to login user set because 2015105910 is debugging
+        requestDataModel.setIdModerator(PrefUtils.getUserLogID(context));
         switch (v.getId())
         {
             case R.id.request_info:
