@@ -1,6 +1,7 @@
 package com.example.mobilereservation.view.login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.mobilereservation.MainActivity;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.model.LoggedInUser;
 import com.example.mobilereservation.network.ApiClient;
@@ -128,6 +130,8 @@ public class LoginFragment extends Fragment {
                         PrefUtils.storeApiKey(getActivity(), "Bearer "+response.body().getToken());
                         LoggedInUser user = new LoggedInUser(response.body().getAccount_id(), response.body().getUserStatus(), response.body().getAccount_type(), "Bearer "+response.body().getToken());
                         Toast.makeText(getActivity().getApplicationContext(), "Welcome! "+response.body().getAccount_id(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
+                        startActivity(intent);
                     }
 
                 }
