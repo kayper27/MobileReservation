@@ -42,7 +42,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_gravity="start"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/action_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
