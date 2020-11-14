@@ -12,6 +12,7 @@ public class Request implements Serializable {
     private String facility_id;
     private Equips equipment;
     private String dateCreated;
+    private String id;
 
     public Request(String _id, String status, String username, String startAt, String endAt, String facility_id, Equips equipment, String dateCreated) {
         this._id = _id;
@@ -62,5 +63,13 @@ public class Request implements Serializable {
 
     public String getDateCreated() {
         return dateCreated;
+    }
+
+    public String getIdModerator() {
+        return id;
+    }
+
+    public void setIdModerator(String id) {
+        this.id = id;
     }
 }

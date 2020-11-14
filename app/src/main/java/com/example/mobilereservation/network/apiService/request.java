@@ -9,7 +9,6 @@ import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -33,6 +32,6 @@ public interface request {
 
     @Headers({"Access-Control-Allow-Methods: PATCH"})
     @PATCH("booking_service/{request_id}")
-    Call<Request> updateRequest(@Header("id") String id, @Path("request_id") String request_id, @Body Request request);
+    Call<Request> updateRequest(@Path("request_id") String request_id, @Body Request request);
 
 }

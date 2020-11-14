@@ -78,6 +78,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         final Request requestDataModel = (Request)object;
+        requestDataModel.setIdModerator(requestDataModel.getUsername());// change to login user set because 2015105910 is debugging
         switch (v.getId())
         {
             case R.id.request_info:
@@ -109,7 +110,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 if(requestDataModel.getStatus().equals("Pending")){
                     requestDataModel.getStatus().replace("Pending", "Accepted"); // USER TRASH ITS REQUEST IS PENDING -> ACCEPTED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel);
                     asyncTask.execute();
                 }
                 break;
@@ -123,7 +124,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
                 if(requestDataModel.getStatus().equals("Pending")){
                     requestDataModel.getStatus().replace("Pending", "Denied"); // WHEN REQUEST WAS DENIED  PENDING -> DENIED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel);
                     asyncTask.execute();
                 }
                 break;
@@ -137,7 +138,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
                 if(requestDataModel.getStatus().equals("Pending")){
                     requestDataModel.getStatus().replace("Pending", "Canceled"); // USER TRASH ITS REQUEST NOW STATUS TO PENDING -> CANCELED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel);
                     asyncTask.execute();
                 }
                 break;
@@ -225,10 +226,9 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
     private class RequestStatusAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private Request request;
-        private String id, request_id;
+        private String request_id;
 
-        RequestStatusAsyncTask(String id, String request_id, Request request){
-            this.id = id;
+        RequestStatusAsyncTask(String request_id, Request request){
             this.request_id = request_id;
             this.request = request;
         }
@@ -236,7 +236,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         @Override
         protected Void doInBackground(Void... voids) {
             request api = ApiClient.getClient(context).create(request.class);
-            Call<Request> call = api.updateRequest(id, request_id, request);
+            Call<Request> call = api.updateRequest(request_id, request);
             call.enqueue(new Callback<Request>() {
                 @Override
                 public void onResponse(Call<Request> call, Response<Request> response) {

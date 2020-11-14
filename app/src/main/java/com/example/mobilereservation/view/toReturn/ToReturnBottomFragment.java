@@ -99,7 +99,8 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
                     }
                 }
                 if(flag){
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", request.getRequest_id(), request);
+                    request.setIdModerator(request.getUsername());// change to login user set because 2015105910 is debugging
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(request.getRequest_id(), request);
                     asyncTask.execute();
                 }
             }
@@ -121,10 +122,9 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
     private class RequestStatusAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private Request request;
-        private String id, request_id;
+        private String request_id;
 
-        RequestStatusAsyncTask(String id, String request_id, Request request){
-            this.id = id;
+        RequestStatusAsyncTask(String request_id, Request request){
             this.request_id = request_id;
             this.request = request;
         }
@@ -132,7 +132,7 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
         @Override
         protected Void doInBackground(Void... voids) {
             com.example.mobilereservation.network.apiService.request api = ApiClient.getClient(getActivity().getApplicationContext()).create(request.class);
-            Call<Request> call = api.updateRequest(id, request_id, request);
+            Call<Request> call = api.updateRequest(request_id, request);
             call.enqueue(new Callback<Request>() {
                 @Override
                 public void onResponse(Call<Request> call, Response<Request> response) {
