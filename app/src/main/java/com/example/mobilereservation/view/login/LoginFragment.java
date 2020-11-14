@@ -128,7 +128,7 @@ public class LoginFragment extends Fragment {
                     }
                     else{
                         PrefUtils.storeApiKey(getActivity(), "Bearer "+response.body().getToken());
-                        LoggedInUser user = new LoggedInUser(response.body().getAccount_id(), response.body().getUserStatus(), response.body().getAccount_type(), "Bearer "+response.body().getToken());
+                        LoggedInUser user = new LoggedInUser(response.body().getAccount_id(), response.body().getUserStatus(), response.body().getAccount_type());
                         Toast.makeText(getActivity().getApplicationContext(), "Welcome! "+response.body().getAccount_id(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
                         startActivity(intent);

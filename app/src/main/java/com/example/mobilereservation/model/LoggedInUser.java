@@ -7,11 +7,10 @@ public class LoggedInUser {
     private String status;
     private String token;
 
-    public LoggedInUser(String account_id, String account_type, String status, String token) {
+    public LoggedInUser(String account_id, String account_type, String status) {
         this.account_id = account_id;
         this.account_type = account_type;
         this.status = status;
-        this.token = token;
     }
 
     public String getAccount_id() {
