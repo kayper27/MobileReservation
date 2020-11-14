@@ -21,4 +21,9 @@
     <string name="menu_schedule">Schedules</string>
     <string name="menu_toReturn">To Return</string>
     <string name="menu_pending">Pending</string>
+
+    <string name="action_registration">Registration</string>
+    <string name="action_login">login</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_id">ID #</string>
 </resources>
