@@ -22,7 +22,7 @@
             android:visibility="visible" />
 
         <ImageView
-            android:id="@+id/request_trash"
+            android:id="@+id/request_cancel"
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:background="@drawable/red"
@@ -33,7 +33,7 @@
             android:visibility="visible" />
 
         <ImageView
-            android:id="@+id/request_cancel"
+            android:id="@+id/request_denied"
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:background="@drawable/red"

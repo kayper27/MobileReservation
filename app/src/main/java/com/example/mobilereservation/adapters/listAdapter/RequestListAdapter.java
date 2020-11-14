@@ -32,7 +32,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
     private static final String TAG = "RequestListAdapter";
     private final boolean cancelable;
-    private final boolean delete;
+    private final boolean denied;
     private final boolean acceptable;
 
     private RequestDialogFragment equipmentDialogFragment;
@@ -56,19 +56,19 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         TextView request_equipment;
         ImageView request_info;
         ImageView request_approve;
-        ImageView request_trash;
+        ImageView request_denied;
         ImageView request_cancel;
 
     }
 
-    public RequestListAdapter(List<Request> data, int ctr, Context context, FragmentManager fragmentManager, boolean acceptable, boolean cancelable, boolean delete) {
+    public RequestListAdapter(List<Request> data, int ctr, Context context, FragmentManager fragmentManager, boolean acceptable, boolean cancelable, boolean denied) {
         super(context, R.layout.row_request_swipe_item, data);
         this.context = context;
         this.ctr = ctr;
         this.requestDataSet = data;
         this.fragmentManager = fragmentManager;
         this.cancelable = cancelable;
-        this.delete = delete;
+        this.denied = denied;
         this.acceptable = acceptable;
     }
 
@@ -114,7 +114,21 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 break;
 
-            case R.id.request_trash:
+            case R.id.request_denied:
+                // mis-clicking prevention, using threshold
+                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+
+                if(requestDataModel.getStatus().equals("Pending")){
+                    requestDataModel.getStatus().replace("Pending", "Denied"); // WHEN REQUEST WAS DENIED  PENDING -> DENIED
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
+                    asyncTask.execute();
+                }
+                break;
+
+            case R.id.request_cancel:
                 // mis-clicking prevention, using threshold
                 if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
                     return;
@@ -126,22 +140,6 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                 }
-
-                break;
-
-            case R.id.request_cancel:
-                // mis-clicking prevention, using threshold
-                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
-                    return;
-                }
-                mLastClickTime = SystemClock.elapsedRealtime();
-
-                if(requestDataModel.getStatus().equals("Pending")){
-                    requestDataModel.getStatus().replace("Pending", "Finished"); // WHEN REQUEST WAS DENIED  PENDING -> DENIED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel.getRequest_id(), requestDataModel);
-                    asyncTask.execute();
-                }
-
                 break;
         }
         notifyDataSetChanged();
@@ -171,7 +169,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
             viewHolder.request_equipment = (TextView) convertView.findViewById(R.id.request_equipment);
             viewHolder.request_info = (ImageView) convertView.findViewById(R.id.request_info);
             viewHolder.request_approve = (ImageView) convertView.findViewById(R.id.request_approve);
-            viewHolder.request_trash = (ImageView) convertView.findViewById(R.id.request_trash);
+            viewHolder.request_denied = (ImageView) convertView.findViewById(R.id.request_denied);
             viewHolder.request_cancel = (ImageView) convertView.findViewById(R.id.request_cancel);
             result=convertView;
 
@@ -200,14 +198,14 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
             viewHolder.request_approve.setEnabled(false);
         }
 
-        if(delete){
-            viewHolder.request_trash.setEnabled(true);
-            viewHolder.request_trash.setOnClickListener(this);
-            viewHolder.request_trash.setTag(ctr);
+        if(denied){
+            viewHolder.request_denied.setEnabled(true);
+            viewHolder.request_denied.setOnClickListener(this);
+            viewHolder.request_denied.setTag(ctr);
         }
         else {
-            viewHolder.request_trash.setVisibility(View.GONE);
-            viewHolder.request_trash.setEnabled(false);
+            viewHolder.request_denied.setVisibility(View.GONE);
+            viewHolder.request_denied.setEnabled(false);
         }
 
         if(cancelable && requestDataSet.getStatus().equals("Pending")){

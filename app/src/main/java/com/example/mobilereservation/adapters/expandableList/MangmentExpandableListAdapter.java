@@ -22,7 +22,7 @@ public class MangmentExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final boolean acceptable;
     private final boolean cancelable;
-    private final boolean delete;
+    private final boolean denied;
 
     private RequestListAdapter adapter;
 
@@ -32,14 +32,14 @@ public class MangmentExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> expandableListTitle;
     private HashMap<String, List<Request>> expandableListDetail;
 
-    public MangmentExpandableListAdapter(Context context, FragmentManager fragmentManager, List<String> expandableListTitle, HashMap<String, List<Request>> expandableListDetail, boolean acceptable, boolean cancelable, boolean delete) {
+    public MangmentExpandableListAdapter(Context context, FragmentManager fragmentManager, List<String> expandableListTitle, HashMap<String, List<Request>> expandableListDetail, boolean acceptable, boolean cancelable, boolean denied) {
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
         this.acceptable = acceptable;
         this.cancelable = cancelable;
-        this.delete = delete;
+        this.denied = denied;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class MangmentExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
-        adapter = new RequestListAdapter(this.expandableListDetail.get(this.expandableListTitle.get(groupPosition)) , childPosition, context, fragmentManager, acceptable, cancelable, delete);
+        adapter = new RequestListAdapter(this.expandableListDetail.get(this.expandableListTitle.get(groupPosition)) , childPosition, context, fragmentManager, acceptable, cancelable, denied);
         ListView expandedListTextView = (ListView) convertView.findViewById(R.id.expandedListItem);
 
         expandedListTextView.setAdapter(adapter);
