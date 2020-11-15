@@ -112,9 +112,6 @@ public class ReservationFragment extends Fragment {
         textStartAt = (EditText) root.findViewById(R.id.reservation_StartAt);
         textEndAt = (EditText) root.findViewById(R.id.reservation_EndAt);
 
-        textStartAt.setText("2020-11-06 07:00");
-        textEndAt.setText("2020-11-09 20:30");
-
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(facilityReceiver, new IntentFilter("send-facility-data"));// Initiate variables wait form the action key to send data
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(equipmentReceiver, new IntentFilter("send-equipment-data"));
 
