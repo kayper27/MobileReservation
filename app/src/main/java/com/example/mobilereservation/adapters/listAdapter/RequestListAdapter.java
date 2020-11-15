@@ -24,7 +24,6 @@ import com.example.mobilereservation.view.toReturn.ToReturnBottomFragment;
 
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,7 +74,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
     @Override
     public void onClick(View v) {
-        Disposable disposable;
+
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         final Request requestDataModel = (Request)object;
@@ -110,8 +109,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     toReturnBottomFragment.show(fragmentManager,"TAG");
                 }
                 if(requestDataModel.getStatus().equals("Pending")){
-                    requestDataModel.getStatus().replace("Pending", "Accepted"); // USER TRASH ITS REQUEST IS PENDING -> ACCEPTED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel);
+                    requestDataModel.setStatus("Accepted");// USER TRASH ITS REQUEST IS PENDING -> ACCEPTED
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                 }
                 break;
@@ -124,8 +123,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 mLastClickTime = SystemClock.elapsedRealtime();
 
                 if(requestDataModel.getStatus().equals("Pending")){
-                    requestDataModel.getStatus().replace("Pending", "Denied"); // WHEN REQUEST WAS DENIED  PENDING -> DENIED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel);
+                    requestDataModel.setStatus("Denied");// WHEN REQUEST WAS DENIED  PENDING -> DENIED
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                 }
                 break;
@@ -138,8 +137,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 mLastClickTime = SystemClock.elapsedRealtime();
 
                 if(requestDataModel.getStatus().equals("Pending")){
-                    requestDataModel.getStatus().replace("Pending", "Canceled"); // USER TRASH ITS REQUEST NOW STATUS TO PENDING -> CANCELED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask("2015105910", requestDataModel);
+                    requestDataModel.setStatus("Canceled"); // USER TRASH ITS REQUEST NOW STATUS TO PENDING -> CANCELED
+                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                 }
                 break;
@@ -242,6 +241,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 @Override
                 public void onResponse(Call<Request> call, Response<Request> response) {
                     if(response.code() == 201 || response.code() == 200){
+                        requestDataSet.remove(request);
                         RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nRequest was successfully Updated\n");
                         requestDialogFragment.show(fragmentManager, "dialog_request");
                     }

@@ -101,6 +101,7 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
                 }
                 if(flag){
                     request.setIdModerator(PrefUtils.getUserLogID(getActivity().getApplicationContext()));
+                    request.setStatus("Finished");// WHEN REQUEST IS DONE WITH ITS FLOW PENDING ->  ACCEPTED -> FINISHED
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(request.getRequest_id(), request);
                     asyncTask.execute();
                 }
