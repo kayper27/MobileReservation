@@ -155,9 +155,14 @@ public class ReservationFragment extends Fragment {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
+
                 if(facilityData != null){
                     selected = new String [] {fragmentReservationBinding.reservationFacility.getText().toString()};
                 }
+                else{
+                    selected = null;
+                }
+                
                 if(isScheduleValid()){ // Validate if schedule has data
                     ReservationBottomFragment reservationBottomFragment = ReservationBottomFragment.newInstance("facility", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
                     reservationBottomFragment.show(getActivity().getSupportFragmentManager(),"TAG");
