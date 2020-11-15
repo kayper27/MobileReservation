@@ -162,7 +162,7 @@ public class ReservationFragment extends Fragment {
                 else{
                     selected = null;
                 }
-                
+
                 if(isScheduleValid()){ // Validate if schedule has data
                     ReservationBottomFragment reservationBottomFragment = ReservationBottomFragment.newInstance("facility", selected, textStartAt.getText().toString(), textEndAt.getText().toString());
                     reservationBottomFragment.show(getActivity().getSupportFragmentManager(),"TAG");
@@ -249,8 +249,8 @@ public class ReservationFragment extends Fragment {
                     errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                 }
                 else {
-                    for(int i = 0; i < selected.length; i++){
-                        equips_id.add(selected[i]);
+                    for(int i = 0; i < equipmentData.size(); i++){
+                        equips_id.add(equipmentData.get(i).getEquipment_id());
                         equips_status.add("Pending");
                     }
                     RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest( "2015105910", "2015105910", startAt, endAt, facility, new Equips(equips_id, equips_status)));
@@ -339,7 +339,7 @@ public class ReservationFragment extends Fragment {
                         requestDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_request");
                     }
                     else{
-                        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message());
+                        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message()+"\nYour schedule has a conflict with equipment or facility check the schedule tab then search by start date, facility or equipment");
                         errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                     }
                 }
