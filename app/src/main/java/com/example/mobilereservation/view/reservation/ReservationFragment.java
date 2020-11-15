@@ -206,14 +206,7 @@ public class ReservationFragment extends Fragment {
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                textStartAt.setText("");
-                                textEndAt.setText("");
-                                textStartAt.setEnabled(true);
-                                textEndAt.setEnabled(true);
-                                equipmentData.clear();
-                                reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
-                                fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
-                                fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.GONE);
+                                wipeCLean();
                             }
                         });
 
@@ -335,6 +328,7 @@ public class ReservationFragment extends Fragment {
                 @Override
                 public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                     if(response.code() == 201 || response.code() == 200){
+                        wipeCLean();
                         RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nYour request was successfully sent \n");
                         requestDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_request");
                     }
@@ -391,5 +385,17 @@ public class ReservationFragment extends Fragment {
             flag = true;
         }
         return flag;
+    }
+
+    private void wipeCLean(){
+        textStartAt.setText("");
+        textEndAt.setText("");
+        textStartAt.setEnabled(true);
+        textEndAt.setEnabled(true);
+        equipmentData.clear();
+        fragmentReservationBinding.reservationFacility.setText("");
+        reservationEquipmentListAdapter = new ReservationEquipmentListAdapter(equipmentData, getActivity().getApplicationContext());
+        fragmentReservationBinding.reservationEquipmentList.setAdapter(reservationEquipmentListAdapter);
+        fragmentReservationBinding.reservationChangeSchedule.setVisibility(View.GONE);
     }
 }
