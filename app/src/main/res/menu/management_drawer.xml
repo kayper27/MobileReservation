@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_facility"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_facilities"/>
+        <item
+            android:id="@+id/nav_equipment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_equipments"/>
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_schedule"/>
+    </group>
+
+    <item android:title="Administrative">
+        <menu>
+            <item
+                android:id="@+id/nav_toReturn"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/menu_toReturn"/>
+            <item
+                android:id="@+id/nav_pending"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/menu_pending"/>
+        </menu>
+    </item>
+</menu>

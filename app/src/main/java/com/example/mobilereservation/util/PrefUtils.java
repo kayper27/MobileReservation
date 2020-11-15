@@ -44,7 +44,7 @@ public class PrefUtils {
     }
 
     public static String getUserLogType(Context context) {
-        return getSharedPreferences(context).getString("ACCOUNT_ID", null);
+        return getSharedPreferences(context).getString("ACCOUNT_TYPE", null);
     }
 
 }

@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mobilereservation.util.PrefUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -38,10 +39,26 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
+        navigationView.getMenu().clear();
+        switch (PrefUtils.getUserLogType(getApplicationContext())) {
+            
+            case "student":
+            case "professor":
+                navigationView.inflateMenu(R.menu.client_drawer);
+                break;
+
+            case "facilitator":
+            case "administrator":
+                navigationView.inflateMenu(R.menu.management_drawer);
+                break;
+        }
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_facility, R.id.nav_equipment, R.id.nav_request, R.id.nav_reservation, R.id.nav_schedule, R.id.nav_toReturn, R.id.nav_pending)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
