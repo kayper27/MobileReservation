@@ -87,7 +87,6 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
             }
             catch (Exception e){
                 Log.d(TAG, "ERROR IN onReceive "+e.getMessage().toUpperCase());
-                System.out.println("|TEST| "+e.getMessage());
             }
         }
     };
