@@ -76,13 +76,12 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
     @Override
     public void onClick(View v) {
 
-        int position=(Integer) v.getTag();
+        int position = (Integer) v.getTag();
         Object object= getItem(position);
         final Request requestDataModel = (Request)object;
 
         requestDataModel.setIdModerator(PrefUtils.getUserLogID(context));
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.request_info:
                 // mis-clicking prevention, using threshold
                 if (SystemClock.elapsedRealtime() - mLastClickTime < INFO_THRESHOLD){
@@ -145,8 +144,9 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 break;
         }
-        notifyDataSetChanged();
     }
+
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -243,7 +243,6 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 @Override
                 public void onResponse(Call<Request> call, Response<Request> response) {
                     if(response.code() == 201 || response.code() == 200){
-                        requestDataSet.remove(request);
                         RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nRequest was successfully Updated\n");
                         requestDialogFragment.show(fragmentManager, "dialog_request");
                     }
