@@ -251,7 +251,8 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="11dp"
                             android:layout_marginEnd="30dp"
-                            android:layout_marginBottom="3dp" />
+                            android:layout_marginBottom="3dp"
+                            android:password="true" />
 
                         <TextView
                             android:id="@+id/password"
@@ -274,7 +275,8 @@
                             android:layout_marginStart="22dp"
                             android:layout_marginTop="18dp"
                             android:layout_marginEnd="31dp"
-                            android:layout_marginBottom="11dp" />
+                            android:layout_marginBottom="11dp"
+                            android:password="true" />
 
                         <TextView
                             android:id="@+id/repassword"
@@ -299,7 +301,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/reservation_change_schedule"
+        android:id="@+id/registration_register"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
