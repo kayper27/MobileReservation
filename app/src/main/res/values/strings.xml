@@ -27,4 +27,14 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_id">ID #</string>
     <string name="action_logout">Logout</string>
+
+    <string name="hello_blank_fragment">Registration</string>
+    <string name="name">Name</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="identification">Identification</string>
+    <string name="ID">ID #</string>
+    <string name="register">register</string>
+    <string name="password">Password</string>
+    <string name="re_password">Re-password</string>
 </resources>
