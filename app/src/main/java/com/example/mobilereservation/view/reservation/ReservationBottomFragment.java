@@ -71,7 +71,7 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
     private ArrayList<Facility> filteredFacilities = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
     private ArrayList<Equipment> filteredEquipments = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
 
-    private BroadcastReceiver requestReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
+    private BroadcastReceiver requestReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from ReservationAsyncTask
         @Override
         public void onReceive(Context context, Intent intent) {
             requestSet = (ArrayList<Request>) intent.getSerializableExtra("reserved");
