@@ -31,6 +31,7 @@ import com.example.mobilereservation.model.Equips;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.util.DatePickerFragment;
+import com.example.mobilereservation.util.PrefUtils;
 import com.example.mobilereservation.util.TimePickerFragment;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.example.mobilereservation.view.dialog.RequestDialogFragment;
@@ -245,7 +246,7 @@ public class ReservationFragment extends Fragment {
                         equips_id.add(equipmentData.get(i).getEquipment_id());
                         equips_status.add("Pending");
                     }
-                    RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest( "2015105910", "2015105910", startAt, endAt, facility, new Equips(equips_id, equips_status)));
+                    RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest(PrefUtils.getUserLogID(getContext()), PrefUtils.getUserLogID(getContext()), startAt, endAt, facility, new Equips(equips_id, equips_status)));
                     asyncTask.execute();
                 }
 

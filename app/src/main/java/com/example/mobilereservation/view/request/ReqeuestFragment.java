@@ -17,6 +17,7 @@ import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
+import com.example.mobilereservation.util.PrefUtils;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class ReqeuestFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RequestAsyncTask asyncTask = new RequestAsyncTask("2015105910");
+        RequestAsyncTask asyncTask = new RequestAsyncTask(PrefUtils.getUserLogID(getContext()));
         asyncTask.execute();
     }
 

@@ -221,7 +221,6 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
                         @Override
                         public void onSuccess(List<Request> requests) {
                             Intent intent = new Intent("send-reserved-data");
-                            System.out.println("|TEST| "+requests.size());
                             intent.putExtra("reserved", (Serializable) requests);
                             LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
                         }
