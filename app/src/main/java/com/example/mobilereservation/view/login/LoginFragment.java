@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mobilereservation.MainActivity;
 import com.example.mobilereservation.R;
@@ -21,6 +22,7 @@ import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.user;
 import com.example.mobilereservation.util.PrefUtils;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+import com.example.mobilereservation.view.registration.RegistrationFragment;
 
 import java.util.regex.Pattern;
 
@@ -71,6 +73,15 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        registration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegistrationFragment registrationFragment = new RegistrationFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_fragment, registrationFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         // Inflate the layout for this fragment
         return root;
