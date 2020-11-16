@@ -1,7 +1,10 @@
 package com.example.mobilereservation.view.reservation;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +25,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.mobilereservation.R;
 import com.example.mobilereservation.adapters.serachAdapter.EquipmentSearchAdapter;
 import com.example.mobilereservation.adapters.serachAdapter.FacilitySearchAdapter;
-
 import com.example.mobilereservation.databinding.FragmentReservationBottomBinding;
 import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Facility;
@@ -46,6 +48,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ReservationBottomFragment extends BottomSheetDialogFragment {
 
+    private static final String TAG = "ReservationBottomFragme";
+
     private Button buttonOK;
 
     private static final String CATEGORY = "category"; // WHAT KEY TO KNOW WHAT CATEGORY TO WORK
@@ -63,9 +67,31 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
     private BottomSheetDialog dialog;
     private BottomSheetBehavior behavior;
 
-    private List<Request> requestSet = new ArrayList<>();
+    private ArrayList<Request> requestSet = new ArrayList<>();
     private ArrayList<Facility> filteredFacilities = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
     private ArrayList<Equipment> filteredEquipments = new ArrayList<>(); // VARIABLE THAT HOLDS FILTERED LIST DATA
+
+    private BroadcastReceiver requestReceiver = new BroadcastReceiver() {// BroadcastReceiver Variable that listen to intents from BottomFragmentDialog
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            requestSet = (ArrayList<Request>) intent.getSerializableExtra("reserved");
+            try {
+                if(category.equals("facility")){
+                    FacilityAsyncTask facilityAsyncTask = new FacilityAsyncTask();
+                    facilityAsyncTask.execute();
+                }
+                else{
+                    EquipmentAsyncTask equipmentAsyncTask = new EquipmentAsyncTask();
+                    equipmentAsyncTask.execute();
+                }
+            }
+            catch (Exception e){
+                Log.d(TAG, "ERROR IN onReceive "+e.getMessage().toUpperCase());
+                System.out.println("|TEST| "+e.getMessage());
+            }
+        }
+    };
+
 
     public ReservationBottomFragment() {}
 
@@ -91,15 +117,6 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
         }
         ReservationAsyncTask reservationAsyncTask = new ReservationAsyncTask(start, end);
         reservationAsyncTask.execute();
-
-        if(category.equals("facility")){
-            FacilityAsyncTask facilityAsyncTask = new FacilityAsyncTask();
-            facilityAsyncTask.execute();
-        }
-        else{
-            EquipmentAsyncTask equipmentAsyncTask = new EquipmentAsyncTask();
-            equipmentAsyncTask.execute();
-        }
     }
 
     @Nullable
@@ -107,6 +124,8 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentReservationBottomBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_bottom, container, false);
         View root = fragmentReservationBottomBinding.getRoot();
+
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(requestReceiver, new IntentFilter("send-reserved-data"));
 
         root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -202,7 +221,10 @@ public class ReservationBottomFragment extends BottomSheetDialogFragment {
                     .subscribeWith(new DisposableSingleObserver<List<Request>>() {
                         @Override
                         public void onSuccess(List<Request> requests) {
-                            requestSet = requests;
+                            Intent intent = new Intent("send-reserved-data");
+                            System.out.println("|TEST| "+requests.size());
+                            intent.putExtra("reserved", (Serializable) requests);
+                            LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);
                         }
                         @Override
                         public void onError(Throwable e) {
