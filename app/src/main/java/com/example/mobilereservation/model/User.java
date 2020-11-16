@@ -1,6 +1,8 @@
 package com.example.mobilereservation.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String account_id;
     private String password;
