@@ -40,7 +40,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
     private FormatDateTime dateTime = new FormatDateTime();// FOR FORMATTING DATE
 
     private long mLastClickTime = 0;
-    private long THRESHOLD = 1000; // ms threshold
+    private long THRESHOLD = 6000; // ms threshold
+    private long INFO_THRESHOLD = 1000; // ms threshold
 
     private FragmentManager fragmentManager;
     private Context context;
@@ -78,12 +79,13 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         final Request requestDataModel = (Request)object;
+
         requestDataModel.setIdModerator(PrefUtils.getUserLogID(context));
         switch (v.getId())
         {
             case R.id.request_info:
                 // mis-clicking prevention, using threshold
-                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                if (SystemClock.elapsedRealtime() - mLastClickTime < INFO_THRESHOLD){
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
