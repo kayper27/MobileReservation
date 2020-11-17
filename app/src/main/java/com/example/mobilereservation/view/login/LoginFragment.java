@@ -34,7 +34,7 @@ public class LoginFragment extends Fragment {
 
     private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
-    private EditText username, password;
+    private EditText username, passwordTxt;
     private Button login;
     private TextView registration;
 
@@ -54,7 +54,7 @@ public class LoginFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_login, container, false);
 
         username = (EditText) root.findViewById(R.id.username);
-        password = (EditText) root.findViewById(R.id.password);
+        passwordTxt = (EditText) root.findViewById(R.id.password);
         login = (Button) root.findViewById(R.id.login);
         registration = (TextView) root.findViewById(R.id.register);
 
@@ -62,8 +62,8 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isUserNameValid(username.getText().toString()) && isPasswordValid(password.getText().toString())){
-                    LoginAsyncTask asyncTask = new LoginAsyncTask(username.getText().toString(), password.getText().toString());
+                if(isUserNameValid(username.getText().toString()) && isPasswordValid(passwordTxt.getText().toString())){
+                    LoginAsyncTask asyncTask = new LoginAsyncTask(username.getText().toString(), passwordTxt.getText().toString());
                     asyncTask.execute();
                 }
                 else{
@@ -138,9 +138,10 @@ public class LoginFragment extends Fragment {
                         errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                     }
                     else{
+                        passwordTxt.setText("");
                         PrefUtils.storeApiKey(getActivity(), "Bearer "+response.body().getToken());
-                        PrefUtils.storeUserLogID(getActivity(), response.body());
-                        PrefUtils.storeUserLogType(getActivity(), response.body());
+                        PrefUtils.storeUserLogID(getActivity(), response.body().getAccount_id());
+                        PrefUtils.storeUserLogType(getActivity(), response.body().getAccount_type());
 
                         Toast.makeText(getActivity().getApplicationContext(), "Welcome! "+response.body().getAccount_id(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);

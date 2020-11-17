@@ -1,7 +1,9 @@
 package com.example.mobilereservation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mobilereservation.model.LoggedInUser;
 import com.example.mobilereservation.util.PrefUtils;
 import com.google.android.material.navigation.NavigationView;
 
@@ -25,10 +28,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.getMenu().clear();
         switch (PrefUtils.getUserLogType(getApplicationContext())) {
-            
+
             case "student":
             case "professor":
                 navigationView.inflateMenu(R.menu.client_drawer);
@@ -63,6 +68,24 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                LoggedInUser user = null;
+                PrefUtils.storeUserLogType(getApplicationContext(), "");
+                PrefUtils.storeUserLogID(getApplicationContext(), "");
+                PrefUtils.storeApiKey(getApplicationContext(), "");
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

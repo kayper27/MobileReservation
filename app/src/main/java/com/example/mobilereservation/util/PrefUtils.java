@@ -3,8 +3,6 @@ package com.example.mobilereservation.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.mobilereservation.model.LoggedInUser;
-
 public class PrefUtils {
     /**
      * Storing API Key in shared preferences to
@@ -27,9 +25,9 @@ public class PrefUtils {
         return getSharedPreferences(context).getString("API_KEY", null);
     }
 
-    public static void storeUserLogID(Context context, LoggedInUser user) {
+    public static void storeUserLogID(Context context, String userid) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("ACCOUNT_ID", user.getAccount_id());
+        editor.putString("ACCOUNT_ID", userid);
         editor.commit();
     }
 
@@ -37,9 +35,9 @@ public class PrefUtils {
         return getSharedPreferences(context).getString("ACCOUNT_ID", null);
     }
 
-    public static void storeUserLogType(Context context, LoggedInUser user) {
+    public static void storeUserLogType(Context context, String usertype) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("ACCOUNT_TYPE", user.getAccount_type());
+        editor.putString("ACCOUNT_TYPE", usertype);
         editor.commit();
     }
 
