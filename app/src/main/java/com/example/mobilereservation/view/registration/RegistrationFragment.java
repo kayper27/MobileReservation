@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,6 +17,7 @@ import com.example.mobilereservation.model.User;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.user;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
+import com.example.mobilereservation.view.login.LoginFragment;
 
 import java.util.regex.Pattern;
 
@@ -34,6 +36,7 @@ public class RegistrationFragment extends Fragment {
 
     private EditText firstnameTxt, lastnameTxt, numberTxt, passwordTxt, repasswordTxt;
     private Button register;
+    private ImageView backImage;
 
     private String firstname, lastname, idNumber, password, repassword;
 
@@ -63,7 +66,7 @@ public class RegistrationFragment extends Fragment {
         passwordTxt = root.findViewById(R.id.registration_password);
         repasswordTxt = root.findViewById(R.id.registration_re_password);
         register = root.findViewById(R.id.registration_register);
-
+        backImage = root.findViewById(R.id.registration_back);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +101,14 @@ public class RegistrationFragment extends Fragment {
                     asyncTask.execute();
                 }
 
+            }
+        });
+
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginFragment loginFragment = new LoginFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, loginFragment).commit();
             }
         });
 
@@ -152,6 +163,8 @@ public class RegistrationFragment extends Fragment {
                     if(!(response.code() == 201 || response.code() == 200)){
                         ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message());
                         errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+                        LoginFragment loginFragment = new LoginFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, loginFragment).commit();
                     }
                     else{
                         ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Successful", response.code()+"\nRegistration was successful");
