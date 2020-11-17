@@ -88,6 +88,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
+
                 String details = "Status: " +requestDataModel.getStatus() +
                                 "\nUsername: " +requestDataModel.getUsername() +
                                 "\nStart:\n" +dateTime.formatDateTime(requestDataModel.getStartAt())+
@@ -105,6 +106,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
+                
                 if(requestDataModel.getStatus().equals("Accepted")){ // WHEN REQUEST IS DONE WITH ITS FLOW PENDING ->  ACCEPTED -> FINISHED
                     ToReturnBottomFragment toReturnBottomFragment = ToReturnBottomFragment.newInstance(requestDataModel);
                     toReturnBottomFragment.show(fragmentManager,"TAG");
@@ -144,9 +146,6 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 break;
         }
-    }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
