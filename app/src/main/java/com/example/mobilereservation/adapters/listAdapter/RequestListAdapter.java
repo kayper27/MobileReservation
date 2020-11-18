@@ -71,6 +71,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         this.cancelable = cancelable;
         this.denied = denied;
         this.acceptable = acceptable;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -110,11 +111,13 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 if(requestDataModel.getStatus().equals("Accepted")){ // WHEN REQUEST IS DONE WITH ITS FLOW PENDING ->  ACCEPTED -> FINISHED
                     ToReturnBottomFragment toReturnBottomFragment = ToReturnBottomFragment.newInstance(requestDataModel);
                     toReturnBottomFragment.show(fragmentManager,"TAG");
+                    requestDataSet.remove(object);
                 }
                 if(requestDataModel.getStatus().equals("Pending")){
                     requestDataModel.setStatus("Accepted");// USER TRASH ITS REQUEST IS PENDING -> ACCEPTED
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
+                    requestDataSet.remove(object);
                 }
                 break;
 
@@ -129,6 +132,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     requestDataModel.setStatus("Denied");// WHEN REQUEST WAS DENIED  PENDING -> DENIED
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
+                    requestDataSet.remove(object);
                 }
                 break;
 
@@ -143,6 +147,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     requestDataModel.setStatus("Canceled"); // USER TRASH ITS REQUEST NOW STATUS TO PENDING -> CANCELED
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
+                    requestDataSet.remove(object);
                 }
                 break;
         }
