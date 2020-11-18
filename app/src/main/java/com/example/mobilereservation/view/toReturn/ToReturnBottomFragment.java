@@ -104,6 +104,7 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
                     request.setStatus("Finished");// WHEN REQUEST IS DONE WITH ITS FLOW PENDING ->  ACCEPTED -> FINISHED
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(request.getRequest_id(), request);
                     asyncTask.execute();
+
                 }
             }
         });
@@ -139,6 +140,7 @@ public class ToReturnBottomFragment extends BottomSheetDialogFragment {
                 @Override
                 public void onResponse(Call<Request> call, Response<Request> response) {
                     if(response.code() == 201 || response.code() == 200){
+                        dialog.dismiss();
                         RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nRequest was successfully Updated\n");
                         requestDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_request");
                     }
