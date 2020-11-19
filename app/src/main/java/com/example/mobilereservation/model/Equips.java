@@ -19,4 +19,8 @@ public class Equips{
         return status;
     }
 
+    public void setEquipment_Status(List<String> statuses) {
+        this.status = statuses;
+    }
+
 }

@@ -22,6 +22,7 @@ import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 import com.example.mobilereservation.view.toReturn.ToReturnBottomFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -130,6 +131,12 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
                 if(requestDataModel.getStatus().equals("Pending")){
                     requestDataModel.setStatus("Denied");// WHEN REQUEST WAS DENIED  PENDING -> DENIED
+
+                    List<String> EquipmentStatuses = new ArrayList<>();
+                    for(int i = 0; i < requestDataModel.getEquipment().getEquipment_Status().size(); i++){
+                        EquipmentStatuses.add("Denied");
+                    }
+                    requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                     requestDataSet.remove(object);
@@ -145,6 +152,12 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
                 if(requestDataModel.getStatus().equals("Pending")){
                     requestDataModel.setStatus("Canceled"); // USER TRASH ITS REQUEST NOW STATUS TO PENDING -> CANCELED
+
+                    List<String> EquipmentStatuses = new ArrayList<>();
+                    for(int i = 0; i < requestDataModel.getEquipment().getEquipment_Status().size(); i++){
+                        EquipmentStatuses.add("Canceled");
+                    }
+                    requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                     requestDataSet.remove(object);
