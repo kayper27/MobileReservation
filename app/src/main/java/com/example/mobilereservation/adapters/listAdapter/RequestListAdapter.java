@@ -116,7 +116,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 if(requestDataModel.getStatus().equals("Pending")){
                     requestDataModel.setStatus("Accepted");// USER TRASH ITS REQUEST IS PENDING -> ACCEPTED
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
+                    RequestAcceptedAsyncTask asyncTask = new RequestAcceptedAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
                     requestDataSet.remove(object);
                 }
@@ -256,6 +256,49 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
         protected Void doInBackground(Void... voids) {
             request api = ApiClient.getClient(context).create(request.class);
             Call<Request> call = api.updateRequest(request_id, request);
+            call.enqueue(new Callback<Request>() {
+                @Override
+                public void onResponse(Call<Request> call, Response<Request> response) {
+                    if(response.code() == 201 || response.code() == 200){
+                        RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nRequest was successfully Updated\n");
+                        requestDialogFragment.show(fragmentManager, "dialog_request");
+                    }
+                    else{
+                        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message());
+                        errorDialogFragment.show(fragmentManager, "dialog_error");
+                    }
+                }
+                @Override
+                public void onFailure(Call<Request> call, Throwable t) {
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", t.getCause()+"\n=========\n"+t.getMessage());
+                    errorDialogFragment.show(fragmentManager, "dialog_error");
+                }
+
+            });
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void v){}
+
+        @Override
+        protected void onPreExecute() {}
+    }
+
+    private class RequestAcceptedAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private Request request;
+        private String request_id;
+
+        RequestAcceptedAsyncTask(String request_id, Request request){
+            this.request_id = request_id;
+            this.request = request;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            request api = ApiClient.getClient(context).create(request.class);
+            Call<Request> call = api.updateRequest_Accepted(request_id, request.getStartAt(), request.getEndAt(), request);
             call.enqueue(new Callback<Request>() {
                 @Override
                 public void onResponse(Call<Request> call, Response<Request> response) {

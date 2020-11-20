@@ -32,6 +32,13 @@ public interface request {
 
     @Headers({"Access-Control-Allow-Methods: PATCH"})
     @PATCH("booking_service/{request_id}")
-    Call<Request> updateRequest(@Path("request_id") String request_id, @Body Request request);
+    Call<Request> updateRequest(@Path("request_id") String request_id, @Body Request request);// CANCELED, DENIED, FINISHED
+
+    @Headers({"Access-Control-Allow-Methods: PATCH"})
+    @PATCH("booking_service/{request_id}/{startAt}/{endAt}")
+    Call<Request> updateRequest_Accepted(@Path("request_id") String request_id,
+                                         @Path("startAt") String startAt,
+                                         @Path("endAt") String endAt,
+                                         @Body Request request);// ACCEPTED
 
 }
