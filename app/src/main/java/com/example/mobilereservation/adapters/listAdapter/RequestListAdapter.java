@@ -164,6 +164,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                 }
                 break;
         }
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
