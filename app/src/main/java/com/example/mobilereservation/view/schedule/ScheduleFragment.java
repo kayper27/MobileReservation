@@ -114,6 +114,7 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
                                         requests.get(i).getUsername(),
                                         requests.get(i).getStartAt(),
                                         requests.get(i).getEndAt(),
+                                        requests.get(i).getPurpose(),
                                         requests.get(i).getFacility(),
                                         requests.get(i).getEquipment(),
                                         requests.get(i).getDateCreated()
@@ -178,6 +179,7 @@ public class ScheduleFragment extends Fragment implements SearchView.OnQueryText
                             originalRequest.get(i).get(x).getUsername(),
                             originalRequest.get(i).get(x).getStartAt(),
                             originalRequest.get(i).get(x).getEndAt(),
+                            originalRequest.get(i).get(x).getPurpose(),
                             originalRequest.get(i).get(x).getFacility(),
                             originalRequest.get(i).get(x).getEquipment(),
                             originalRequest.get(i).get(x).getDateCreated()

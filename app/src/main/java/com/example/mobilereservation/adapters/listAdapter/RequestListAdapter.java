@@ -96,7 +96,8 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                                 "\nStart:\n" +dateTime.formatDateTime(requestDataModel.getStartAt())+
                                 "\nEnd:\n" +dateTime.formatDateTime(requestDataModel.getEndAt()) +
                                 "\nFacility: " +requestDataModel.getFacility() +
-                                "\nEquipments: \n" +requestDataModel.getEquipment().getEquipment_id()+
+                                "\nEquipments: \n" +requestDataModel.getEquipment().getEquipment_id() +
+                                "\nPurpose:\n" +requestDataModel.getPurpose()+
                                 "\nDate Created: "+dateTime.formatDateTime(requestDataModel.getDateCreated());
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
@@ -104,7 +105,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
 
             case R.id.request_approve:
                 // mis-clicking prevention, using threshold
-                if (SystemClock.elapsedRealtime() - mLastClickTime < THRESHOLD){
+                if (SystemClock.elapsedRealtime() - mLastClickTime < INFO_THRESHOLD){
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();

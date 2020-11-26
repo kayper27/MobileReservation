@@ -53,7 +53,7 @@ public class ReservationFragment extends Fragment {
 
     private FragmentReservationBinding fragmentReservationBinding;
 
-    private EditText textStartAt, textEndAt;
+    private EditText textStartAt, textEndAt, textPurpose;
 
     public static final int REQUEST_CODE = 11; // Used to identify the result
 
@@ -111,6 +111,7 @@ public class ReservationFragment extends Fragment {
 
         textStartAt = (EditText) root.findViewById(R.id.reservation_StartAt);
         textEndAt = (EditText) root.findViewById(R.id.reservation_EndAt);
+        textPurpose = (EditText) root.findViewById(R.id.reservation_purpose);
 
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(facilityReceiver, new IntentFilter("send-facility-data"));// Initiate variables wait form the action key to send data
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(equipmentReceiver, new IntentFilter("send-equipment-data"));
@@ -236,9 +237,9 @@ public class ReservationFragment extends Fragment {
                 String facility = fragmentReservationBinding.reservationFacility.getText().toString();
                 ArrayList<String> equips_id = new ArrayList<>();
                 ArrayList<String> equips_status = new ArrayList<>();
-
-                if(facility.isEmpty() && equipmentData.size() == 0){
-                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Request Invalid","Your request is invalid");
+                String purposeHolder = textPurpose.getText().toString().trim();
+                if((facility.isEmpty() && equipmentData.size() == 0) || purposeHolder.isEmpty()){
+                    ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Request Invalid","Your request is invalid. All request is required to fill up the purpose of their reservation.\nYou can only request 1 at a time");
                     errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                 }
                 else {
@@ -246,7 +247,7 @@ public class ReservationFragment extends Fragment {
                         equips_id.add(equipmentData.get(i).getEquipment_id());
                         equips_status.add("Pending");
                     }
-                    RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest(PrefUtils.getUserLogID(getContext()), PrefUtils.getUserLogID(getContext()), startAt, endAt, facility, new Equips(equips_id, equips_status)));
+                    RequestAsyncTask asyncTask = new RequestAsyncTask(new CreateRequest(PrefUtils.getUserLogID(getContext()), PrefUtils.getUserLogID(getContext()), startAt, endAt, purposeHolder, facility, new Equips(equips_id, equips_status)));
                     asyncTask.execute();
                 }
 
@@ -332,7 +333,7 @@ public class ReservationFragment extends Fragment {
                         RequestDialogFragment requestDialogFragment = RequestDialogFragment.newInstance("Successful", response+"\nYour request was successfully sent \n");
                         requestDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_request");
                     }
-                    else{
+                    if(response.code() == 409){
                         ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Error", response.code()+" "+response.message()+"\nYour schedule has a conflict with equipment or facility check the schedule tab then search by start date, facility or equipment");
                         errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
                     }
@@ -390,6 +391,7 @@ public class ReservationFragment extends Fragment {
     private void wipeCLean(){
         textStartAt.setText("");
         textEndAt.setText("");
+        textPurpose.setText("");
         textStartAt.setEnabled(true);
         textEndAt.setEnabled(true);
         equipmentData.clear();

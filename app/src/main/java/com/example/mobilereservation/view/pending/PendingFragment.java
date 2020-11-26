@@ -115,6 +115,7 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
                                         requests.get(i).getUsername(),
                                         dateTime.formatDateTime(requests.get(i).getStartAt()),
                                         dateTime.formatDateTime(requests.get(i).getEndAt()),
+                                        requests.get(i).getPurpose(),
                                         requests.get(i).getFacility(),
                                         requests.get(i).getEquipment(),
                                         requests.get(i).getDateCreated()
@@ -170,6 +171,7 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
                             originalRequest.get(i).get(x).getUsername(),
                             dateTime.formatDateTime(originalRequest.get(i).get(x).getStartAt()),
                             dateTime.formatDateTime(originalRequest.get(i).get(x).getEndAt()),
+                            originalRequest.get(i).get(x).getPurpose(),
                             originalRequest.get(i).get(x).getFacility(),
                             originalRequest.get(i).get(x).getEquipment(),
                             originalRequest.get(i).get(x).getDateCreated()
