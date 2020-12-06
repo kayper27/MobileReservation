@@ -119,7 +119,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     requestDataModel.setStatus("Accepted");// USER TRASH ITS REQUEST IS PENDING -> ACCEPTED
                     RequestAcceptedAsyncTask asyncTask = new RequestAcceptedAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
-                    requestDataSet.remove(object);
+//                    requestDataSet.remove(object);
                 }
                 break;
 
@@ -140,7 +140,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
-                    requestDataSet.remove(object);
+//                    requestDataSet.remove(object);
                 }
                 break;
 
@@ -161,7 +161,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
-                    requestDataSet.remove(object);
+//                    requestDataSet.remove(object);
                 }
                 break;
         }
