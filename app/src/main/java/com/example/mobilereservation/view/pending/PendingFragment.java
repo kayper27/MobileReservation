@@ -19,7 +19,6 @@ import com.example.mobilereservation.model.Equipment;
 import com.example.mobilereservation.model.Request;
 import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
-import com.example.mobilereservation.util.FormatDateTime;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.util.ArrayList;
@@ -38,8 +37,6 @@ import io.reactivex.schedulers.Schedulers;
 public class PendingFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnClickListener{
 
     private FragmentPendingBinding fragmentPendingBinding; // CALLS LAYOUT
-
-    private FormatDateTime dateTime = new FormatDateTime(); // FOR FORMATTING DATE
 
     //// EXPANDABLE VARIABLES
     private ExpandableListAdapter expandableListAdapter; // ADAPTER FOR THE EXPANDABLE
@@ -113,8 +110,8 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
                                         requests.get(i).getRequest_id(),
                                         requests.get(i).getStatus(),
                                         requests.get(i).getUsername(),
-                                        dateTime.formatDateTime(requests.get(i).getStartAt()),
-                                        dateTime.formatDateTime(requests.get(i).getEndAt()),
+                                        requests.get(i).getStartAt(),
+                                        requests.get(i).getStartAt(),
                                         requests.get(i).getPurpose(),
                                         requests.get(i).getFacility(),
                                         requests.get(i).getEquipment(),
@@ -169,8 +166,8 @@ public class PendingFragment extends Fragment implements SearchView.OnQueryTextL
                             originalRequest.get(i).get(x).getRequest_id(),
                             originalRequest.get(i).get(x).getStatus(),
                             originalRequest.get(i).get(x).getUsername(),
-                            dateTime.formatDateTime(originalRequest.get(i).get(x).getStartAt()),
-                            dateTime.formatDateTime(originalRequest.get(i).get(x).getEndAt()),
+                            originalRequest.get(i).get(x).getStartAt(),
+                            originalRequest.get(i).get(x).getEndAt(),
                             originalRequest.get(i).get(x).getPurpose(),
                             originalRequest.get(i).get(x).getFacility(),
                             originalRequest.get(i).get(x).getEquipment(),
