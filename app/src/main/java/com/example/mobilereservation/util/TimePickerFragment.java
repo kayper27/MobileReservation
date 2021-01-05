@@ -2,17 +2,22 @@ package com.example.mobilereservation.util;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -41,6 +46,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
     }
     
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
         boolean flag = true;
@@ -49,7 +55,17 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         c.set(Calendar.MINUTE, minute);
         String selectedTime = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(c.getTime());
         Log.d(TAG, "onDateSet: " + selectedTime);
-        
+
+        long todayMillis = System.currentTimeMillis();
+        String stringDateTime = dateTime.getText() + " " + selectedTime;
+        LocalDateTime localDateTime = LocalDateTime.parse(stringDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") );
+        long selectedDateTimeMillis = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        if(todayMillis > selectedDateTimeMillis){// IF SELECTED DATE IS PAST THE CURRENT TIME
+            flag = false;
+            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is only in the future");
+            errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
+        }
+
         if(7 > append(hour, minute) || append(hour, minute) > 20.30) { // IF SELECTED VALUE IS GREATER THAN EQUAL 7:00 AM OR SELECTED VALUE GREATER THAN EQUAL 8:30 PM
             flag = false;
             ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is only between 7:00 AM - 8:30 PM");
