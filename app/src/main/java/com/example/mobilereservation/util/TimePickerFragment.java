@@ -60,9 +60,9 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         String stringDateTime = dateTime.getText() + " " + selectedTime;
         LocalDateTime localDateTime = LocalDateTime.parse(stringDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm") );
         long selectedDateTimeMillis = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        if(todayMillis > selectedDateTimeMillis){// IF SELECTED DATE IS PAST THE CURRENT TIME
+        if((todayMillis + 3600000) > selectedDateTimeMillis){// IF SELECTED DATETIME IS 1HR IN ADVANCE THE CURRENT TIME
             flag = false;
-            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is only in the future");
+            ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance("Invalid input", "Time allowed is 1 hour in advance");
             errorDialogFragment.show(getActivity().getSupportFragmentManager(), "dialog_error");
         }
 
