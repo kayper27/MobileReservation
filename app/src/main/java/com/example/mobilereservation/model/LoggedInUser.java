@@ -1,6 +1,8 @@
 package com.example.mobilereservation.model;
 
-public class LoggedInUser {
+import java.io.Serializable;
+
+public class LoggedInUser implements Serializable {
 
     private String account_id;
     private String account_type;
@@ -8,6 +10,7 @@ public class LoggedInUser {
     private String token;
     private String firstname;
     private String lastname;
+    private String details;
 
     public LoggedInUser(String account_id, String account_type, String status, String firstname, String lastname) {
         this.account_id = account_id;
@@ -41,4 +44,11 @@ public class LoggedInUser {
         return lastname;
     }
 
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String detail) {
+        this.details = detail;
+    }
 }

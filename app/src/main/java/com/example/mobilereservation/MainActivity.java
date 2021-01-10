@@ -1,6 +1,7 @@
 package com.example.mobilereservation;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +17,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.mobilereservation.model.LoggedInUser;
+import com.example.mobilereservation.network.ApiClient;
+import com.example.mobilereservation.network.apiService.logs;
 import com.example.mobilereservation.util.PrefUtils;
 import com.google.android.material.navigation.NavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
             }
         });
+        LogsAsyncTask asyncTask = new LogsAsyncTask(new LoggedInUser(PrefUtils.getUserLogID(getApplicationContext()), PrefUtils.getUserLogType(getApplicationContext()), "", "",""), "login");
+        asyncTask.execute();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -52,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
             case "facilitator":
             case "administrator":
                 navigationView.inflateMenu(R.menu.management_drawer);
+                break;
+            default:
                 break;
         }
         name = (TextView) headerView.findViewById(R.id.nav_header_name);
@@ -82,13 +93,8 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_logout:
-                LoggedInUser user = null;
-                PrefUtils.storeUserLogType(getApplicationContext(), "");
-                PrefUtils.storeUserLogID(getApplicationContext(), "");
-                PrefUtils.storeApiKey(getApplicationContext(), "");
-
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                LogsAsyncTask asyncTask = new LogsAsyncTask(new LoggedInUser(PrefUtils.getUserLogID(getApplicationContext()), PrefUtils.getUserLogType(getApplicationContext()), "", "",""), "logout");
+                asyncTask.execute();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -100,5 +106,43 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    private class LogsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private LoggedInUser logUser;
+
+
+        LogsAsyncTask(LoggedInUser logUser, String details) {
+            this.logUser = logUser;
+            logUser.setDetails(details);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            logs api = ApiClient.getClient(getApplicationContext()).create(logs.class);
+            Call<LoggedInUser> call = api.createLogs(logUser);
+            call.enqueue(new Callback<LoggedInUser>() {
+                @Override
+                public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
+                    if (logUser.getDetails().equals("logout")) {
+                        LoggedInUser user = null;
+                        PrefUtils.storeUserLogType(getApplicationContext(), "");
+                        PrefUtils.storeUserLogID(getApplicationContext(), "");
+                        PrefUtils.storeApiKey(getApplicationContext(), "");
+
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LoggedInUser> call, Throwable t) {
+                }
+
+            });
+
+            return null;
+        }
     }
 }
