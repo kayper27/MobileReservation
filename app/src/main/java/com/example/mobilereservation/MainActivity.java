@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView name, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-
         navigationView.getMenu().clear();
         switch (PrefUtils.getUserLogType(getApplicationContext())) {
 
@@ -52,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 navigationView.inflateMenu(R.menu.management_drawer);
                 break;
         }
+        name = (TextView) headerView.findViewById(R.id.nav_header_name);
+        username = (TextView) headerView.findViewById(R.id.nav_header_username);
+
+        username.setText(PrefUtils.getUserLogID(getApplicationContext()));
+        name.setText(PrefUtils.getUserName(getApplicationContext()));
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_facility, R.id.nav_equipment, R.id.nav_request, R.id.nav_reservation, R.id.nav_schedule, R.id.nav_toReturn, R.id.nav_pending)

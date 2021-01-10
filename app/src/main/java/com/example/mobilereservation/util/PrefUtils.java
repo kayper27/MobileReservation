@@ -21,18 +21,10 @@ public class PrefUtils {
         editor.commit();
     }
 
-    public static String getApiKey(Context context) {
-        return getSharedPreferences(context).getString("API_KEY", null);
-    }
-
     public static void storeUserLogID(Context context, String userid) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putString("ACCOUNT_ID", userid);
         editor.commit();
-    }
-
-    public static String getUserLogID(Context context) {
-        return getSharedPreferences(context).getString("ACCOUNT_ID", null);
     }
 
     public static void storeUserLogType(Context context, String usertype) {
@@ -41,8 +33,28 @@ public class PrefUtils {
         editor.commit();
     }
 
+    public static void storeUserName(Context context, String name) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString("NAME", name);
+        editor.commit();
+    }
+
+    public static String getApiKey(Context context) {
+        return getSharedPreferences(context).getString("API_KEY", null);
+    }
+
+    public static String getUserLogID(Context context) {
+        return getSharedPreferences(context).getString("ACCOUNT_ID", null);
+    }
+
     public static String getUserLogType(Context context) {
         return getSharedPreferences(context).getString("ACCOUNT_TYPE", null);
     }
+
+    public static String getUserName(Context context) {
+        return getSharedPreferences(context).getString("NAME", null);
+    }
+
+
 
 }
