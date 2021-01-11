@@ -140,6 +140,9 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
+                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("What is the reason for denying the request?", "", false, requestDataModel, requestDataModel.getRequest_id());
+                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("What is the reason for denying the request?", "", false);
+                    confirmationDialogFragment.show(fragmentManager, "dialog_equipment");
 //                    requestDataSet.remove(object);
                 }
                 break;
@@ -161,6 +164,9 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                     requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
                     RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
                     asyncTask.execute();
+                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Confirmation", "Do you want continue canceling your request?", true,  requestDataModel, requestDataModel.getRequest_id());
+                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Confirmation", "Do you want continue canceling your request?", true);
+                    confirmationDialogFragment.show(fragmentManager, "dialog_equipment");
 //                    requestDataSet.remove(object);
                 }
                 break;

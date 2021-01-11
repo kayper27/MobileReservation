@@ -14,6 +14,7 @@ public class Request implements Serializable {
     private Equips equipment;
     private String dateCreated;
     private String id;
+    private String reason;
 
     public Request(String _id, String status, String username, String startAt, String endAt, String purpose, String facility_id, Equips equipment, String dateCreated) {
         this._id = _id;
@@ -59,14 +60,6 @@ public class Request implements Serializable {
         return equipment;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setEquipment(Equips equipment) {
-        this.equipment = equipment;
-    }
-
     public String getDateCreated() {
         return dateCreated;
     }
@@ -75,9 +68,23 @@ public class Request implements Serializable {
         return id;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setEquipment(Equips equipment) {
+        this.equipment = equipment;
+    }
+
     public void setIdModerator(String id) {
         this.id = id;
     }
 
-
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 }
