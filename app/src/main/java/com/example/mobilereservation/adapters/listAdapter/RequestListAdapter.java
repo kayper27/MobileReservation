@@ -18,6 +18,7 @@ import com.example.mobilereservation.network.ApiClient;
 import com.example.mobilereservation.network.apiService.request;
 import com.example.mobilereservation.util.FormatDateTime;
 import com.example.mobilereservation.util.PrefUtils;
+import com.example.mobilereservation.view.bottomFragment.ConfirmationBottomFragment;
 import com.example.mobilereservation.view.dialog.ErrorDialogFragment;
 import com.example.mobilereservation.view.dialog.RequestDialogFragment;
 import com.example.mobilereservation.view.toReturn.ToReturnBottomFragment;
@@ -97,7 +98,7 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                                 "\nEnd:\n" +dateTime.formatDateTime(requestDataModel.getEndAt()) +
                                 "\nFacility: " +requestDataModel.getFacility() +
                                 "\nEquipments: \n" +requestDataModel.getEquipment().getEquipment_id() +
-                                "\nPurpose:\n" +requestDataModel.getPurpose()
+                                "\nPurpose:\n" +requestDataModel.getPurpose();
                 RequestDialogFragment equipmentDialogFragment = RequestDialogFragment.newInstance(requestDataModel.getRequest_id(), details);
                 equipmentDialogFragment.show(fragmentManager, "dialog_equipment");
                 break;
@@ -137,11 +138,10 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                         EquipmentStatuses.add("Denied");
                     }
                     requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
-                    asyncTask.execute();
-                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("What is the reason for denying the request?", "", false, requestDataModel, requestDataModel.getRequest_id());
-                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("What is the reason for denying the request?", "", false);
-                    confirmationDialogFragment.show(fragmentManager, "dialog_equipment");
+
+                    ConfirmationBottomFragment confirmationBottomFragment = ConfirmationBottomFragment.newInstance(requestDataModel, true);
+                    confirmationBottomFragment.show(fragmentManager,"TAG");
+
 //                    requestDataSet.remove(object);
                 }
                 break;
@@ -161,11 +161,10 @@ public class RequestListAdapter extends ArrayAdapter<Request> implements View.On
                         EquipmentStatuses.add("Canceled");
                     }
                     requestDataModel.getEquipment().setEquipment_Status(EquipmentStatuses);
-                    RequestStatusAsyncTask asyncTask = new RequestStatusAsyncTask(requestDataModel.getRequest_id(), requestDataModel);
-                    asyncTask.execute();
-                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Confirmation", "Do you want continue canceling your request?", true,  requestDataModel, requestDataModel.getRequest_id());
-                    ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newInstance("Confirmation", "Do you want continue canceling your request?", true);
-                    confirmationDialogFragment.show(fragmentManager, "dialog_equipment");
+
+                    ConfirmationBottomFragment confirmationBottomFragment = ConfirmationBottomFragment.newInstance(requestDataModel, false);
+                    confirmationBottomFragment.show(fragmentManager,"TAG");
+
 //                    requestDataSet.remove(object);
                 }
                 break;
