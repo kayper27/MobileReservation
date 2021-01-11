@@ -5,17 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
-
 import com.example.mobilereservation.R;
+import com.example.mobilereservation.databinding.FragmentConfirmationBottomBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class ConfirmationBottomFragment extends Fragment {
+public class ConfirmationBottomFragment extends BottomSheetDialogFragment {
 
+    private FragmentConfirmationBottomBinding fragmentConfirmationBottomBinding;
 
     public ConfirmationBottomFragment() {
         // Required empty public constructor
     }
-    
+
     public static ConfirmationBottomFragment newInstance() {
         ConfirmationBottomFragment fragment = new ConfirmationBottomFragment();
         Bundle args = new Bundle();
